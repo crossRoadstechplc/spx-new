@@ -1,0 +1,224 @@
+// Phase 4: Comprehensive Prisma schema (SQLite now, migration-friendly for Postgres later)
+// Uses UUID-based identifiers for content entities
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// Enums
+// ============================================
+
+enum PublishStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum UserRole {
+  ADMIN
+  EDITOR
+}
+
+enum MediaType {
+  IMAGE
+  VIDEO
+  DOCUMENT
+  OTHER
+}
+
+// ============================================
+// User & Authentication
+// ============================================
+
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  passwordHash  String
+  name          String
+  role          UserRole  @default(EDITOR)
+  isActive      Boolean   @default(true)
+  lastLoginAt   DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  insights      Insight[]
+  sessions      Session[]
+
+  @@index([email])
+  @@index([role])
+}
+
+// Session management for authentication
+model Session {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([token])
+  @@index([expiresAt])
+}
+
+// ============================================
+// Content Structure
+// ============================================
+
+// Author profiles (for editorial attribution)
+model Author {
+  id        String   @id @default(uuid())
+  name      String
+  slug      String   @unique
+  bio       String?
+  email     String?
+  avatarUrl String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  insights  Insight[]
+
+  @@index([slug])
+}
+
+// Content categories
+model Category {
+  id          String   @id @default(uuid())
+  name        String
+  slug        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  insights    Insight[]
+
+  @@index([slug])
+}
+
+// Content tags
+model Tag {
+  id          String       @id @default(uuid())
+  name        String
+  slug        String       @unique
+  description String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  // Relations
+  insights    InsightTag[]
+
+  @@index([slug])
+}
+
+// ============================================
+// Media Management
+// ============================================
+
+// Generic media model (images, videos, documents)
+model Media {
+  id          String    @id @default(uuid())
+  filename    String
+  filepath    String    // Relative path from UPLOAD_DIR
+  url         String    // Public URL
+  mimeType    String
+  sizeBytes   Int
+  width       Int?
+  height      Int?
+  alt         String?
+  caption     String?
+  type        MediaType @default(IMAGE)
+  
+  // Optional association with insight (null = media library item)
+  insightId   String?
+  insight     Insight?  @relation(fields: [insightId], references: [id], onDelete: SetNull)
+  
+  // Metadata
+  uploadedBy  String?   // User ID who uploaded
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // Relations
+  coverImageFor  Insight[] @relation("InsightCoverImage")
+
+  @@index([insightId])
+  @@index([type])
+  @@index([createdAt])
+}
+
+// ============================================
+// Core Content: Insights
+// ============================================
+
+model Insight {
+  id            String        @id @default(uuid())
+  slug          String        @unique
+  title         String
+  excerpt       String?
+  
+  // Canonical editor content is stored as JSON (Tiptap JSON)
+  contentJson   Json
+  // Optional pre-rendered HTML for public read performance (not canonical)
+  contentHtml   String?
+  
+  // Publishing
+  status        PublishStatus @default(DRAFT)
+  publishedAt   DateTime?
+  featuredAt    DateTime?     // For featured/pinned content
+  
+  // SEO
+  metaTitle     String?
+  metaDescription String?
+  
+  // Timestamps
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  
+  // Relations
+  authorId      String?
+  author        Author?       @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  
+  categoryId    String?
+  category      Category?     @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  
+  coverImageId  String?
+  coverImage    Media?        @relation("InsightCoverImage", fields: [coverImageId], references: [id], onDelete: SetNull)
+  
+  createdById   String?
+  createdBy     User?         @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  
+  // Many-to-many relations
+  tags          InsightTag[]
+  media         Media[]       // Gallery/inline images
+
+  @@index([status, publishedAt])
+  @@index([createdAt])
+  @@index([slug])
+  @@index([authorId])
+  @@index([categoryId])
+  @@index([featuredAt])
+}
+
+// Join table for Insight-Tag many-to-many relationship
+model InsightTag {
+  id         String   @id @default(uuid())
+  insightId  String
+  insight    Insight  @relation(fields: [insightId], references: [id], onDelete: Cascade)
+  tagId      String
+  tag        Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+
+  @@unique([insightId, tagId])
+  @@index([insightId])
+  @@index([tagId])
+}
+
