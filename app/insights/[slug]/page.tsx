@@ -83,7 +83,7 @@ export default async function InsightDetailPage({ params }: PageProps) {
           {insight.tags.length > 0 && (
             <div className="mt-12 pt-8 border-t border-border">
               <div className="flex flex-wrap gap-2">
-                {insight.tags.map((insightTag) => (
+                {insight.tags.map((insightTag: (typeof insight.tags)[number]) => (
                   <span
                     key={insightTag.id}
                     className="px-3 py-1 bg-muted text-muted-foreground rounded-full text-sm"

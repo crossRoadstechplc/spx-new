@@ -69,7 +69,7 @@ export default async function InsightsPage() {
             </div>
           ) : (
             <div className="space-y-12">
-              {insights.map((insight, idx) => (
+              {insights.map((insight: (typeof insights)[number], idx: number) => (
                 <article
                   key={insight.id}
                   className={`
@@ -114,7 +114,7 @@ export default async function InsightsPage() {
 
                     {insight.tags.length > 0 && (
                       <div className="flex flex-wrap gap-2">
-                        {insight.tags.map((insightTag) => (
+                        {insight.tags.map((insightTag: (typeof insight.tags)[number]) => (
                           <span
                             key={insightTag.id}
                             className="px-2.5 py-0.5 bg-muted text-muted-foreground rounded-full text-xs"

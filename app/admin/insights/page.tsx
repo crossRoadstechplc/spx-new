@@ -158,7 +158,7 @@ export default async function AdminInsightsPage({ searchParams }: PageProps) {
                 </tr>
               </thead>
               <tbody className="divide-y divide-border">
-                {insights.map((insight) => (
+                {insights.map((insight: (typeof insights)[number]) => (
                   <tr key={insight.id} className="hover:bg-muted/30">
                     <td className="px-4 py-3">
                       <Link

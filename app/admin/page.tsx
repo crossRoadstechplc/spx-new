@@ -143,7 +143,7 @@ async function RecentInsightsList() {
 
   return (
     <div className="space-y-3">
-      {recentInsights.map((insight) => (
+      {recentInsights.map((insight: (typeof recentInsights)[number]) => (
         <Link
           key={insight.id}
           href={`/admin/insights/${insight.id}/edit`}
