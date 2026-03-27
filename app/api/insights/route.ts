@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
+export const dynamic = "force-dynamic";
+
 const DEFAULT_LIMIT = 6;
 const MAX_LIMIT = 12;
 

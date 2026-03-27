@@ -1,14 +1,15 @@
 /* Phase 4: Admin login form component */
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useFormState, useFormStatus } from "react-dom";
 import { loginAction, type LoginResult } from "@/app/admin/login/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { AlertCircle } from "lucide-react";
+import Link from "next/link";
+import { AlertCircle, Eye, EyeOff } from "lucide-react";
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -27,6 +28,7 @@ function SubmitButton() {
 
 export function LoginForm() {
   const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
   const [state, formAction] = useFormState<LoginResult | null, FormData>(
     loginAction,
     null
@@ -74,17 +76,34 @@ export function LoginForm() {
 
       <div className="space-y-2">
         <Label htmlFor="password">Password</Label>
-        <Input
-          id="password"
-          name="password"
-          type="password"
-          placeholder="Enter your password"
-          required
-          autoComplete="current-password"
-        />
+        <div className="relative">
+          <Input
+            id="password"
+            name="password"
+            type={showPassword ? "text" : "password"}
+            placeholder="Enter your password"
+            required
+            autoComplete="current-password"
+            className="pr-10"
+          />
+          <button
+            type="button"
+            aria-label={showPassword ? "Hide password" : "Show password"}
+            onClick={() => setShowPassword((prev) => !prev)}
+            className="absolute inset-y-0 right-0 flex items-center px-3 text-muted-foreground hover:text-foreground"
+          >
+            {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+          </button>
+        </div>
       </div>
 
       <SubmitButton />
+
+      <div className="pt-1 text-center">
+        <Link href="/" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+          Back to website
+        </Link>
+      </div>
     </form>
   );
 }

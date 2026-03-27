@@ -11,6 +11,9 @@ import { formatDate } from "@/lib/utils";
 import Link from "next/link";
 import Image from "next/image";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 interface PageProps {
   params: Promise<{
     slug: string;
@@ -132,37 +135,49 @@ export default async function InsightDetailPage({ params }: PageProps) {
       <Container className="py-10 md:py-14">
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_360px] gap-10 lg:h-[calc(100vh-7.5rem)]">
           <article className="min-w-0 lg:overflow-y-auto lg:pr-6 lg:border-r lg:border-border/70 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-            <header className="mb-10 pb-8 border-b border-border">
-              <h1 className="text-3xl md:text-5xl font-bold tracking-tight leading-tight mb-5">{insight.title}</h1>
+            <header className="mb-12 pb-8 border-b border-border/80">
+              <div className="mb-3 text-xs uppercase tracking-[0.18em] text-muted-foreground font-semibold">
+                SPX Insights Desk
+              </div>
+              <h1 className="text-3xl md:text-5xl font-semibold tracking-tight leading-[1.1] mb-6 text-foreground">
+                {insight.title}
+              </h1>
               {insight.excerpt ? (
-                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-5 max-w-3xl">
+                <p className="text-lg md:text-2xl text-foreground/80 leading-relaxed mb-6 max-w-3xl font-light">
                   {insight.excerpt}
                 </p>
               ) : null}
-              <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
-                {insight.author ? <span className="font-medium text-foreground">{insight.author.name}</span> : null}
+              <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
+                {insight.author ? (
+                  <span className="inline-flex items-center rounded-full border border-primary/30 bg-primary/5 px-3 py-1 font-semibold text-primary">
+                    By {insight.author.name}
+                  </span>
+                ) : null}
                 {insight.publishedAt ? <span>{formatDate(insight.publishedAt)}</span> : null}
                 {insight.category ? (
-                  <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-medium">
+                  <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-semibold uppercase tracking-wider">
                     {insight.category.name}
                   </span>
                 ) : null}
               </div>
             </header>
 
-            <div className="prose prose-slate prose-lg md:prose-xl max-w-none prose-headings:tracking-tight prose-headings:text-foreground prose-p:leading-8 prose-p:text-foreground/90 prose-p:my-6 prose-a:text-primary prose-a:font-medium prose-blockquote:border-primary prose-blockquote:text-foreground/80 prose-img:rounded-xl">
+            <div className="prose prose-slate prose-lg md:prose-xl max-w-none prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-foreground prose-h2:mt-14 prose-h3:mt-10 prose-p:leading-8 prose-p:text-foreground/90 prose-p:my-6 prose-a:text-primary prose-a:font-medium prose-blockquote:border-primary prose-blockquote:text-foreground/80 prose-blockquote:bg-muted/30 prose-blockquote:px-5 prose-blockquote:py-3 prose-img:rounded-none prose-img:border prose-img:border-border/60 prose-img:shadow-sm first-letter:text-5xl first-letter:font-semibold first-letter:mr-1 first-letter:float-left first-letter:leading-none">
               {isStrictInsightContent(insight.contentJson)
                 ? renderStrictInsightContent(insight.contentJson)
                 : renderTiptapContent(insight.contentJson as unknown as TiptapContent)}
             </div>
 
             {insight.tags.length > 0 && (
-              <div className="mt-12 pt-8 border-t border-border">
-                <div className="flex flex-wrap gap-2">
+              <div className="mt-14 pt-8 border-t border-border">
+                <div className="mb-3 text-xs uppercase tracking-[0.16em] text-muted-foreground font-semibold">
+                  Tagged As
+                </div>
+                <div className="flex flex-wrap gap-2.5">
                   {insight.tags.map((insightTag: (typeof insight.tags)[number]) => (
                     <span
                       key={insightTag.id}
-                      className="px-3 py-1 bg-muted text-muted-foreground rounded-full text-sm"
+                      className="px-3 py-1.5 bg-primary/10 text-primary border border-primary/25 rounded-full text-xs font-semibold uppercase tracking-wide"
                     >
                       {insightTag.tag.name}
                     </span>

@@ -126,6 +126,7 @@ export async function createInsightAction(
     }
 
     revalidatePath("/admin/insights");
+    revalidatePath("/insights");
     redirect("/admin/insights");
   } catch (error) {
     if (error instanceof z.ZodError) {
@@ -264,6 +265,8 @@ export async function updateInsightAction(
 
     revalidatePath("/admin/insights");
     revalidatePath(`/admin/insights/${id}/edit`);
+    revalidatePath("/insights");
+    revalidatePath(`/insights/${validated.slug}`);
     redirect("/admin/insights");
   } catch (error) {
     if (error instanceof z.ZodError) {
@@ -272,6 +275,11 @@ export async function updateInsightAction(
         error: "Validation failed",
         fieldErrors: error.flatten().fieldErrors as Record<string, string[]>,
       };
+    }
+
+    // Next.js redirect() throws internally; rethrow so navigation can complete.
+    if (error instanceof Error && error.message === "NEXT_REDIRECT") {
+      throw error;
     }
 
     console.error("Update insight error:", error);
@@ -289,6 +297,7 @@ export async function deleteInsightAction(id: string): Promise<{ success: boolea
     await db.insight.delete({ where: { id } });
 
     revalidatePath("/admin/insights");
+    revalidatePath("/insights");
     
     return { success: true };
   } catch (error) {

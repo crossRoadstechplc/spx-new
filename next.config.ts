@@ -15,6 +15,13 @@ const nextConfig: NextConfig = {
     ],
     qualities: [75, 90, 100],
   },
+  webpack: (config, { dev }) => {
+    // Avoid intermittent Windows file lock issues in .next cache.
+    if (dev) {
+      config.cache = false;
+    }
+    return config;
+  },
 };
 
 export default nextConfig;

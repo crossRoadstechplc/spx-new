@@ -55,7 +55,7 @@ export function SiteHeader() {
           href="/"
           className="flex items-center space-x-2"
         >
-          <span className="text-[1.75rem] font-bold tracking-tight text-foreground leading-none">SPX</span>
+          <span className="text-[2.625rem] font-bold tracking-tight text-foreground leading-none">SPX</span>
         </Link>
 
         {/* Desktop Navigation */}

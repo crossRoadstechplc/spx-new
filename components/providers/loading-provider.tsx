@@ -30,7 +30,11 @@ export function LoadingProvider({ children }: { children: React.ReactNode }) {
 
   // Show popup loading for internal CTA/navigation link clicks.
   useEffect(() => {
+    const handleShowLoading = () => setShowPopupLoading(true);
+
     const handleClick = (event: MouseEvent) => {
+      if (event.defaultPrevented) return;
+
       const target = event.target as HTMLElement | null;
       if (!target) return;
 
@@ -46,12 +50,21 @@ export function LoadingProvider({ children }: { children: React.ReactNode }) {
       const opensNewContext = anchor.target === "_blank" || anchor.hasAttribute("download");
 
       if (isInternalRoute && !isNonNavigatingHref && !isModifiedClick && !opensNewContext) {
-        setShowPopupLoading(true);
+        // Defer until other click handlers run (e.g. unsaved-changes guards).
+        setTimeout(() => {
+          if (!event.defaultPrevented) {
+            setShowPopupLoading(true);
+          }
+        }, 0);
       }
     };
 
-    document.addEventListener("click", handleClick, true);
-    return () => document.removeEventListener("click", handleClick, true);
+    document.addEventListener("click", handleClick);
+    window.addEventListener("spx:show-loading", handleShowLoading);
+    return () => {
+      document.removeEventListener("click", handleClick);
+      window.removeEventListener("spx:show-loading", handleShowLoading);
+    };
   }, []);
 
   const handleLoadingComplete = () => {

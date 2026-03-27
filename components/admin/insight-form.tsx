@@ -1,7 +1,7 @@
 /* Phase 7: Strict block-based insight form */
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -31,6 +31,11 @@ export function InsightForm({ insight, authors, categories, tags }: InsightFormP
   const [fieldErrors, setFieldErrors] = useState<Record<string, string[]>>({});
   const [title, setTitle] = useState(insight?.title || "");
   const [slug, setSlug] = useState(insight?.slug || "");
+  const [excerpt, setExcerpt] = useState(insight?.excerpt || "");
+  const [metaTitle, setMetaTitle] = useState(insight?.metaTitle || "");
+  const [metaDescription, setMetaDescription] = useState(insight?.metaDescription || "");
+  const [metaTitleTouched, setMetaTitleTouched] = useState(Boolean(insight?.metaTitle));
+  const [metaDescriptionTouched, setMetaDescriptionTouched] = useState(Boolean(insight?.metaDescription));
   const [selectedTagIds, setSelectedTagIds] = useState<string[]>(
     insight?.tags.map((t) => t.tagId) || []
   );
@@ -43,6 +48,70 @@ export function InsightForm({ insight, authors, categories, tags }: InsightFormP
   const [isMediaSelectorOpen, setIsMediaSelectorOpen] = useState(false);
   const [mediaTarget, setMediaTarget] = useState<{ type: "featured" } | { type: "block"; blockId: string } | null>(null);
   const [uploadingByBlockId, setUploadingByBlockId] = useState<Record<string, boolean>>({});
+  const [isDirty, setIsDirty] = useState(false);
+
+  const initialSnapshot = useMemo(
+    () =>
+      JSON.stringify({
+        title: insight?.title || "",
+        slug: insight?.slug || "",
+        tags: insight?.tags.map((t) => t.tagId) || [],
+        blocks: isStrictInsightContent(insight?.contentJson)
+          ? insight!.contentJson.blocks
+          : [{ id: "initial", type: "text", content: "" }],
+        featuredImageId: insight?.coverImage?.id || null,
+      }),
+    [insight]
+  );
+
+  const currentSnapshot = useMemo(
+    () =>
+      JSON.stringify({
+        title,
+        slug,
+        tags: selectedTagIds,
+        blocks,
+        featuredImageId: featuredImage?.id || null,
+      }),
+    [title, slug, selectedTagIds, blocks, featuredImage]
+  );
+
+  useEffect(() => {
+    setIsDirty(currentSnapshot !== initialSnapshot);
+  }, [currentSnapshot, initialSnapshot]);
+
+  useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      if (!isDirty || isSubmitting) return;
+      event.preventDefault();
+      event.returnValue = "";
+    };
+
+    const handleDocumentClick = (event: MouseEvent) => {
+      if (!isDirty || isSubmitting) return;
+      const target = event.target as HTMLElement | null;
+      if (!target) return;
+      const link = target.closest("a[href]") as HTMLAnchorElement | null;
+      if (!link) return;
+      const href = link.getAttribute("href");
+      if (!href || !href.startsWith("/admin")) return;
+
+      const shouldLeave = confirm(
+        "You have unsaved changes. Please save as draft before switching tabs. Continue without saving?"
+      );
+      if (!shouldLeave) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    document.addEventListener("click", handleDocumentClick, true);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      document.removeEventListener("click", handleDocumentClick, true);
+    };
+  }, [isDirty, isSubmitting]);
 
   // Auto-generate slug from title
   useEffect(() => {
@@ -54,6 +123,19 @@ export function InsightForm({ insight, authors, categories, tags }: InsightFormP
       return () => clearTimeout(timeoutId);
     }
   }, [title, insight]);
+
+  // Auto-default SEO fields from title/excerpt unless user has manually edited them.
+  useEffect(() => {
+    if (!metaTitleTouched) {
+      setMetaTitle(title);
+    }
+  }, [title, metaTitleTouched]);
+
+  useEffect(() => {
+    if (!metaDescriptionTouched) {
+      setMetaDescription(excerpt);
+    }
+  }, [excerpt, metaDescriptionTouched]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -261,7 +343,8 @@ export function InsightForm({ insight, authors, categories, tags }: InsightFormP
           <Textarea
             id="excerpt"
             name="excerpt"
-            defaultValue={insight?.excerpt || ""}
+            value={excerpt}
+            onChange={(e) => setExcerpt(e.target.value)}
             rows={3}
             placeholder="Brief summary of the insight"
           />
@@ -500,28 +583,40 @@ export function InsightForm({ insight, authors, categories, tags }: InsightFormP
 
         <div className="space-y-2">
           <Label>Tags</Label>
-          <div className="flex flex-wrap gap-2">
-            {tags.map((tag) => (
-              <button
-                key={tag.id}
-                type="button"
-                onClick={() => {
-                  setSelectedTagIds((prev) =>
-                    prev.includes(tag.id)
-                      ? prev.filter((id) => id !== tag.id)
-                      : [...prev, tag.id]
-                  );
-                }}
-                className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
-                  selectedTagIds.includes(tag.id)
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-muted text-muted-foreground hover:bg-muted/80"
-                }`}
-              >
-                {tag.name}
-              </button>
-            ))}
+          <p className="text-xs text-muted-foreground">
+            Click tags to select or remove them.
+          </p>
+          <div className="rounded-md border border-border/70 p-3 bg-muted/20">
+            <div className="flex flex-wrap gap-2">
+              {tags.map((tag) => (
+                <button
+                  key={tag.id}
+                  type="button"
+                  onClick={() => {
+                    setSelectedTagIds((prev) =>
+                      prev.includes(tag.id)
+                        ? prev.filter((id) => id !== tag.id)
+                        : [...prev, tag.id]
+                    );
+                  }}
+                  className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-md text-sm font-medium transition-all border cursor-pointer ${
+                    selectedTagIds.includes(tag.id)
+                      ? "bg-primary text-primary-foreground border-primary shadow-sm"
+                      : "bg-background text-foreground border-border hover:border-primary/40 hover:bg-primary/5"
+                  }`}
+                  aria-pressed={selectedTagIds.includes(tag.id)}
+                  title={selectedTagIds.includes(tag.id) ? "Click to remove tag" : "Click to add tag"}
+                >
+                  {selectedTagIds.includes(tag.id) ? "✓" : "+"} {tag.name}
+                </button>
+              ))}
+            </div>
           </div>
+          {selectedTagIds.length > 0 && (
+            <p className="text-xs text-primary font-medium">
+              {selectedTagIds.length} tag{selectedTagIds.length === 1 ? "" : "s"} selected
+            </p>
+          )}
           {tags.length === 0 && (
             <p className="text-sm text-muted-foreground">
               No tags available. Create tags first.
@@ -539,7 +634,11 @@ export function InsightForm({ insight, authors, categories, tags }: InsightFormP
           <Input
             id="metaTitle"
             name="metaTitle"
-            defaultValue={insight?.metaTitle || ""}
+            value={metaTitle}
+            onChange={(e) => {
+              setMetaTitleTouched(true);
+              setMetaTitle(e.target.value);
+            }}
             placeholder="SEO title (leave empty to use title)"
           />
         </div>
@@ -549,7 +648,11 @@ export function InsightForm({ insight, authors, categories, tags }: InsightFormP
           <Textarea
             id="metaDescription"
             name="metaDescription"
-            defaultValue={insight?.metaDescription || ""}
+            value={metaDescription}
+            onChange={(e) => {
+              setMetaDescriptionTouched(true);
+              setMetaDescription(e.target.value);
+            }}
             rows={3}
             placeholder="SEO description"
           />
@@ -576,7 +679,15 @@ export function InsightForm({ insight, authors, categories, tags }: InsightFormP
           <Button
             type="button"
             variant="outline"
-            onClick={() => router.push("/admin/insights")}
+            onClick={() => {
+              if (isDirty && !isSubmitting) {
+                const shouldLeave = confirm(
+                  "You have unsaved changes. Please save as draft before leaving. Continue without saving?"
+                );
+                if (!shouldLeave) return;
+              }
+              router.push("/admin/insights");
+            }}
             disabled={isSubmitting}
           >
             Cancel

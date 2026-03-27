@@ -73,8 +73,7 @@ export async function updateAuthorAction(
 
     revalidatePath("/admin/authors");
     revalidatePath(`/admin/authors/${id}/edit`);
-
-    return { success: true, authorId: id };
+    redirect("/admin/authors");
   } catch (error) {
     if (error instanceof z.ZodError) {
       return {
@@ -82,6 +81,10 @@ export async function updateAuthorAction(
         error: "Validation failed",
         fieldErrors: error.flatten().fieldErrors as Record<string, string[]>,
       };
+    }
+
+    if (error instanceof Error && error.message === "NEXT_REDIRECT") {
+      throw error;
     }
 
     console.error("Update author error:", error);

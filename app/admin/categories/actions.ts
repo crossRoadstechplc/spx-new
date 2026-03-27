@@ -110,8 +110,7 @@ export async function updateCategoryAction(
     });
 
     revalidatePath("/admin/categories");
-
-    return { success: true, categoryId: id };
+    redirect("/admin/categories");
   } catch (error) {
     if (error instanceof z.ZodError) {
       return {
@@ -119,6 +118,10 @@ export async function updateCategoryAction(
         error: "Validation failed",
         fieldErrors: error.flatten().fieldErrors as Record<string, string[]>,
       };
+    }
+
+    if (error instanceof Error && error.message === "NEXT_REDIRECT") {
+      throw error;
     }
 
     console.error("Update category error:", error);

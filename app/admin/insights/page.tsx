@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { Plus, Search } from "lucide-react";
+import { InsightTableActions } from "@/components/admin/insight-table-actions";
 
 export const metadata = {
   title: "Insights | SPX Admin",
@@ -196,9 +197,7 @@ export default async function AdminInsightsPage({ searchParams }: PageProps) {
                       {new Date(insight.updatedAt).toLocaleDateString()}
                     </td>
                     <td className="px-4 py-3 text-right">
-                      <Button asChild variant="ghost" size="sm">
-                        <Link href={`/admin/insights/${insight.id}/edit`}>Edit</Link>
-                      </Button>
+                      <InsightTableActions insightId={insight.id} />
                     </td>
                   </tr>
                 ))}

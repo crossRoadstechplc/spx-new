@@ -4,7 +4,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { deleteMediaAction } from "@/app/admin/media/actions";
-import { Trash2, ExternalLink } from "lucide-react";
+import { Trash2, ExternalLink, X } from "lucide-react";
 import Image from "next/image";
 import type { Media } from "@prisma/client";
 
@@ -14,6 +14,7 @@ interface MediaGridProps {
 
 export function MediaGrid({ media }: MediaGridProps) {
   const [deleting, setDeleting] = useState<string | null>(null);
+  const [previewItem, setPreviewItem] = useState<Media | null>(null);
 
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this media file?")) {
@@ -75,12 +76,10 @@ export function MediaGrid({ media }: MediaGridProps) {
                 size="sm"
                 variant="ghost"
                 className="flex-1"
-                asChild
+                onClick={() => setPreviewItem(item)}
               >
-                <a href={item.url} target="_blank" rel="noopener noreferrer">
                   <ExternalLink className="h-3 w-3 mr-1" />
                   View
-                </a>
               </Button>
               <Button
                 size="sm"
@@ -94,6 +93,42 @@ export function MediaGrid({ media }: MediaGridProps) {
           </div>
         </div>
       ))}
+
+      {previewItem && (
+        <div
+          className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4"
+          onClick={() => setPreviewItem(null)}
+        >
+          <div
+            className="relative w-full max-w-5xl max-h-[90vh] bg-background border border-border rounded-lg overflow-hidden"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="flex items-center justify-between px-4 py-3 border-b border-border">
+              <div className="min-w-0">
+                <p className="text-sm font-medium truncate">{previewItem.filename}</p>
+                <p className="text-xs text-muted-foreground truncate">{previewItem.url}</p>
+              </div>
+              <Button variant="ghost" size="icon" onClick={() => setPreviewItem(null)} aria-label="Close preview">
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
+            <div className="relative w-full h-[70vh] bg-muted">
+              {previewItem.type === "IMAGE" ? (
+                <Image
+                  src={previewItem.url}
+                  alt={previewItem.alt || previewItem.filename}
+                  fill
+                  className="object-contain"
+                />
+              ) : (
+                <div className="h-full flex items-center justify-center text-muted-foreground">
+                  Preview unavailable for this file type.
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

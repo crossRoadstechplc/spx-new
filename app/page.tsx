@@ -20,9 +20,9 @@ export default function HomePage() {
         subtitle="Platform"
         description="We work at the intersection of business and development to design, build, and scale market-shaping systems across emerging markets."
         carouselImages={[
-          "/assets/images/hero/image3.webp",
-          "/assets/images/hero/image1.webp",
-          "/assets/images/hero/image5.webp",
+          "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1600&q=80",
+          "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1600&q=80",
+          "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=1600&q=80",
         ]}
       >
         <Button asChild size="lg" className="font-medium">
@@ -39,7 +39,7 @@ export default function HomePage() {
           <MediaContentBlock 
             layout="image-right" 
             imageVariant="landscape"
-            imageSrc="/assets/images/xtras/image15.webp"
+            imageSrc="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80"
             imageAlt="Strategy platform"
           >
             <div className="space-y-4">
@@ -137,7 +137,7 @@ export default function HomePage() {
           <MediaContentBlock 
             layout="image-left" 
             imageVariant="wide"
-            imageSrc="/assets/images/xtras/image20.webp"
+            imageSrc="https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=1200&q=80"
             imageAlt="Our methodology"
           >
             <div className="space-y-4">
@@ -184,17 +184,17 @@ export default function HomePage() {
                 {
                   title: "Agriculture",
                   description: "Building integrated value chains and improving productivity, resilience, and market access.",
-                  imageSrc: "/assets/images/projects/image5.webp"
+                  imageSrc: "https://images.unsplash.com/photo-1471193945509-9ad0617afabf?auto=format&fit=crop&w=1200&q=80"
                 },
                 {
                   title: "Technology & Platforms",
                   description: "Developing digital infrastructure and platforms that enable trade, data, and services.",
-                  imageSrc: "/assets/images/xtras/image25.webp"
+                  imageSrc: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80"
                 },
                 {
                   title: "Energy & Sustainability",
                   description: "Advancing scalable solutions in renewable energy, resource efficiency, and circular systems.",
-                  imageSrc: "/assets/images/projects/image15.webp"
+                  imageSrc: "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1200&q=80"
                 }
               ]}
             />

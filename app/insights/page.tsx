@@ -1,9 +1,12 @@
 /* Phase 6: Insights listing page with database integration */
-import { SiteLayout, PageHero, SectionIntro, Container } from "@/components/layout";
+import { SiteLayout, PageHero, Container } from "@/components/layout";
 import { db } from "@/lib/db";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { InsightsFeed } from "./insights-feed";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export const metadata = {
   title: "Insights | SPX",
@@ -51,17 +54,6 @@ export default async function InsightsPage() {
         title="Insights"
         description="Strategic research and editorial analysis exploring complexity, systems, and organizational challenges."
       />
-
-      <section className="py-16 md:py-24">
-        <Container>
-          <SectionIntro
-            align="center"
-            eyebrow="Recent Thinking"
-            title="Strategic Research & Analysis"
-            description="We share selected research, frameworks, and perspectives developed through our work across sectors."
-          />
-        </Container>
-      </section>
 
       <section className="py-16 md:py-24">
         <Container>

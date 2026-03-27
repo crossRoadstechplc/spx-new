@@ -34,7 +34,10 @@ export function InsightsFeed({ initialItems, initialHasMore }: InsightsFeedProps
   const [hasMore, setHasMore] = useState(initialHasMore);
   const [page, setPage] = useState(2);
   const [isLoading, setIsLoading] = useState(false);
+  const [failedImageIds, setFailedImageIds] = useState<Record<string, boolean>>({});
   const sentinelRef = useRef<HTMLDivElement | null>(null);
+  const fallbackImage =
+    "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=80";
 
   const loadMore = useCallback(async () => {
     if (isLoading || !hasMore) return;
@@ -52,7 +55,11 @@ export function InsightsFeed({ initialItems, initialHasMore }: InsightsFeedProps
 
       const data: { items: InsightItem[]; hasMore: boolean; nextPage: number | null } = await res.json();
 
-      setItems((prev) => [...prev, ...data.items]);
+      setItems((prev) => {
+        const existingIds = new Set(prev.map((item) => item.id));
+        const dedupedIncoming = data.items.filter((item) => !existingIds.has(item.id));
+        return [...prev, ...dedupedIncoming];
+      });
       setHasMore(data.hasMore);
       if (data.nextPage) {
         setPage(data.nextPage);
@@ -61,6 +68,14 @@ export function InsightsFeed({ initialItems, initialHasMore }: InsightsFeedProps
       setIsLoading(false);
     }
   }, [hasMore, isLoading, page]);
+
+  useEffect(() => {
+    if (!hasMore || isLoading || !sentinelRef.current) return;
+    const rect = sentinelRef.current.getBoundingClientRect();
+    if (rect.top < window.innerHeight + 220) {
+      void loadMore();
+    }
+  }, [items.length, hasMore, isLoading, loadMore]);
 
   useEffect(() => {
     const sentinel = sentinelRef.current;
@@ -107,10 +122,23 @@ export function InsightsFeed({ initialItems, initialHasMore }: InsightsFeedProps
         {items.map((insight) => (
           <Card key={insight.id} className="overflow-hidden border-border/40 hover:border-primary/40 transition-colors">
             <div className="relative aspect-[16/9] bg-muted">
-              {insight.coverImage ? (
+              {insight.coverImage && !failedImageIds[insight.id] ? (
                 <Image
                   src={insight.coverImage.url}
                   alt={insight.coverImage.alt || insight.title}
+                  fill
+                  className="object-cover"
+                  onError={() =>
+                    setFailedImageIds((prev) => ({
+                      ...prev,
+                      [insight.id]: true,
+                    }))
+                  }
+                />
+              ) : failedImageIds[insight.id] ? (
+                <Image
+                  src={fallbackImage}
+                  alt={insight.title}
                   fill
                   className="object-cover"
                 />
@@ -165,8 +193,17 @@ export function InsightsFeed({ initialItems, initialHasMore }: InsightsFeedProps
       </div>
 
       {(hasMore || isLoading) && (
-        <div ref={sentinelRef} className="py-8 flex justify-center">
+        <div ref={sentinelRef} className="py-8 flex flex-col items-center gap-3">
           {isLoading ? <span className="text-sm text-muted-foreground">Loading more insights...</span> : null}
+          {!isLoading && hasMore ? (
+            <button
+              type="button"
+              onClick={() => void loadMore()}
+              className="text-sm font-medium text-primary hover:underline"
+            >
+              Load more insights
+            </button>
+          ) : null}
         </div>
       )}
     </div>

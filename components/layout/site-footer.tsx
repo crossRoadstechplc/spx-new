@@ -2,6 +2,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { Linkedin, Instagram } from "lucide-react";
 
 interface FooterLink {
   label: string;
@@ -37,7 +38,7 @@ const footerSections: FooterSection[] = [
     links: [
       { label: "Contact", href: "/contact" },
       { label: "LinkedIn", href: "https://linkedin.com" },
-      { label: "Twitter", href: "https://twitter.com" },
+      { label: "X", href: "https://x.com" },
     ],
   },
 ];
@@ -56,11 +57,42 @@ export function SiteFooter() {
               href="/"
               className="inline-block mb-4"
             >
-              <span className="text-2xl font-bold tracking-tight text-foreground">SPX</span>
+              <span className="text-4xl font-bold tracking-tight text-foreground">SPX</span>
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-md">
               A strategy-to-implementation platform designing, building, and scaling market-shaping systems across emerging markets.
             </p>
+            <div className="mt-5 flex items-center gap-3">
+              <Link
+                href="https://x.com"
+                target="_blank"
+                rel="noreferrer noopener"
+                aria-label="Follow SPX on X"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:text-primary hover:border-primary/40"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 fill-current">
+                  <path d="M18.244 2H21.5l-7.11 8.127L22.75 22h-6.544l-5.124-6.72L5.2 22H1.94l7.604-8.693L1.25 2h6.71l4.63 6.158L18.244 2Zm-1.141 18.05h1.805L6.976 3.86H5.04L17.103 20.05Z" />
+                </svg>
+              </Link>
+              <Link
+                href="https://linkedin.com"
+                target="_blank"
+                rel="noreferrer noopener"
+                aria-label="Follow SPX on LinkedIn"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:text-primary hover:border-primary/40"
+              >
+                <Linkedin className="h-4 w-4" />
+              </Link>
+              <Link
+                href="https://instagram.com"
+                target="_blank"
+                rel="noreferrer noopener"
+                aria-label="Follow SPX on Instagram"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:text-primary hover:border-primary/40"
+              >
+                <Instagram className="h-4 w-4" />
+              </Link>
+            </div>
           </div>
 
           {/* Footer Links */}

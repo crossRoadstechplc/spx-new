@@ -66,8 +66,7 @@ export async function updateTagAction(
     await db.tag.update({ where: { id }, data });
 
     revalidatePath("/admin/tags");
-
-    return { success: true, tagId: id };
+    redirect("/admin/tags");
   } catch (error) {
     if (error instanceof z.ZodError) {
       return {
@@ -75,6 +74,10 @@ export async function updateTagAction(
         error: "Validation failed",
         fieldErrors: error.flatten().fieldErrors as Record<string, string[]>,
       };
+    }
+
+    if (error instanceof Error && error.message === "NEXT_REDIRECT") {
+      throw error;
     }
 
     console.error("Update tag error:", error);
