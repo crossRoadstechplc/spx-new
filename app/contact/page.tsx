@@ -51,10 +51,10 @@ export default function ContactPage() {
                   <div>
                     <div className="font-medium mb-1">Phone</div>
                     <a
-                      href="tel:+251930199157"
+                      href="tel:+251930199525"
                       className="text-muted-foreground hover:text-primary transition-colors"
                     >
-                      +251930199157
+                      +251930199525
                     </a>
                   </div>
                 </div>
@@ -117,8 +117,8 @@ export default function ContactPage() {
                 info@spxafrica.com
               </a>{" "}
               or call us at{" "}
-              <a href="tel:+251930199157" className="text-primary hover:underline font-medium">
-                +251930199157
+              <a href="tel:+251930199525" className="text-primary hover:underline font-medium">
+                +251930199525
               </a>
               . We&apos;re happy to schedule an introductory call to explore collaboration opportunities.
             </p>

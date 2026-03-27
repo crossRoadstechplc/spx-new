@@ -52,22 +52,12 @@ export function ParticleBackground() {
 
     const handlePointerMove = (event: PointerEvent) => {
       pointer = { x: event.clientX, y: event.clientY, active: true };
-      
-      // Check if cursor is near any particle
-      const HOVER_RADIUS = 25; // Distance to show pointer cursor
-      const nearParticle = particles.some((p) => {
-        const dx = p.x - event.clientX;
-        const dy = p.y - event.clientY;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        return dist < HOVER_RADIUS;
-      });
-      
-      canvas.style.cursor = nearParticle ? "pointer" : "default";
+      canvas.style.cursor = "pointer";
     };
 
     const handlePointerLeave = () => {
       pointer = { ...pointer, active: false };
-      canvas.style.cursor = "default";
+      canvas.style.cursor = "pointer";
     };
 
     const handlePointerEnter = (event: PointerEvent) => {

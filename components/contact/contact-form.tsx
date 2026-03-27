@@ -122,7 +122,7 @@ export function ContactForm({ className }: ContactFormProps) {
 
         <div className="space-y-2">
           <Label htmlFor="phone">Phone</Label>
-          <Input id="phone" name="phone" type="tel" placeholder="+251930199157" />
+          <Input id="phone" name="phone" type="tel" placeholder="+251912345678" />
           {state?.success === false && state.fieldErrors?.phone && (
             <p className="text-sm text-destructive">{state.fieldErrors.phone[0]}</p>
           )}
