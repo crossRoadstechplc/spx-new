@@ -2,7 +2,6 @@
 import { db } from "@/lib/db";
 import { notFound } from "next/navigation";
 import { SimpleCRUDForm } from "@/components/admin/simple-crud-form";
-import { updateCategoryAction, deleteCategoryAction, generateCategorySlugAction } from "../../actions";
 
 export const metadata = {
   title: "Edit Category | SPX Admin",
@@ -32,10 +31,8 @@ export default async function EditCategoryPage({ params }: PageProps) {
 
       <SimpleCRUDForm
         type="category"
+        itemId={id}
         item={category}
-        onSubmit={(formData) => updateCategoryAction(id, formData)}
-        onDelete={() => deleteCategoryAction(id)}
-        generateSlug={generateCategorySlugAction}
       />
     </div>
   );

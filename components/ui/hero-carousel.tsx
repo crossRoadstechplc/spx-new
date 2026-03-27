@@ -13,6 +13,12 @@ interface HeroCarouselProps {
 
 export function HeroCarousel({ images, interval = 5000, children }: HeroCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [failedImages, setFailedImages] = useState<Record<string, boolean>>({});
+  const fallbackImages = [
+    "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1600&q=80",
+    "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1600&q=80",
+    "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=1600&q=80",
+  ];
 
   useEffect(() => {
     if (images.length <= 1) return;
@@ -38,12 +44,18 @@ export function HeroCarousel({ images, interval = 5000, children }: HeroCarousel
             className="absolute inset-0"
           >
             <Image
-              src={images[currentIndex]}
+              src={failedImages[images[currentIndex]] ? fallbackImages[currentIndex % fallbackImages.length] : images[currentIndex]}
               alt=""
               fill
               className="object-cover"
               priority={currentIndex === 0}
               quality={90}
+              onError={() =>
+                setFailedImages((prev) => ({
+                  ...prev,
+                  [images[currentIndex]]: true,
+                }))
+              }
             />
           </motion.div>
         </AnimatePresence>
@@ -57,29 +69,6 @@ export function HeroCarousel({ images, interval = 5000, children }: HeroCarousel
       <div className="relative z-10">
         {children}
       </div>
-
-      {/* Carousel Indicators */}
-      {images.length > 1 && (
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
-          {images.map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => setCurrentIndex(idx)}
-              className={cn(
-                "h-1.5 rounded-full transition-all",
-                idx === currentIndex
-                  ? "w-8 bg-primary"
-                  : "w-1.5 bg-white/50 hover:bg-white/75"
-              )}
-              aria-label={`Go to slide ${idx + 1}`}
-            />
-          ))}
-        </div>
-      )}
     </div>
   );
-}
-
-function cn(...classes: (string | boolean | undefined)[]) {
-  return classes.filter(Boolean).join(" ");
 }

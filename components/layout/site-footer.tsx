@@ -1,7 +1,6 @@
 /* Phase 2: Site footer with clear information hierarchy */
 import * as React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 interface FooterLink {
@@ -57,13 +56,7 @@ export function SiteFooter() {
               href="/"
               className="inline-block mb-4"
             >
-              <Image
-                src="/assets/logos/SPX.png"
-                alt="SPX"
-                width={100}
-                height={40}
-                className="h-10 w-auto"
-              />
+              <span className="text-2xl font-bold tracking-tight text-foreground">SPX</span>
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-md">
               A strategy-to-implementation platform designing, building, and scaling market-shaping systems across emerging markets.

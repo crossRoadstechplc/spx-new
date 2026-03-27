@@ -70,30 +70,30 @@ async function main() {
   // ============================================
   const categories = await Promise.all([
     prisma.category.upsert({
-      where: { slug: "strategy" },
+      where: { slug: "reports" },
       update: {},
       create: {
-        name: "Strategy",
-        slug: "strategy",
-        description: "Strategic research and analysis",
+        name: "Reports",
+        slug: "reports",
+        description: "Research reports and long-form analysis",
       },
     }),
     prisma.category.upsert({
-      where: { slug: "technology" },
+      where: { slug: "articles" },
       update: {},
       create: {
-        name: "Technology",
-        slug: "technology",
-        description: "Technology trends and systems thinking",
+        name: "Articles",
+        slug: "articles",
+        description: "Editorial articles and perspectives",
       },
     }),
     prisma.category.upsert({
-      where: { slug: "editorial" },
+      where: { slug: "events" },
       update: {},
       create: {
-        name: "Editorial",
-        slug: "editorial",
-        description: "Editorial perspectives and frameworks",
+        name: "Events",
+        slug: "events",
+        description: "Event summaries, announcements, and updates",
       },
     }),
   ]);

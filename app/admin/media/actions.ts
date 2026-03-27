@@ -7,7 +7,7 @@ import { revalidatePath } from "next/cache";
 import { db } from "@/lib/db";
 import { requireAuth } from "@/lib/session";
 import { envConfig } from "@/lib/env";
-import { generateUniqueFilename, isAllowedImageType, isAllowedFileSize } from "@/lib/upload-utils";
+import { generateUniqueFilename, isAllowedImageType, isAllowedFileSize, sanitizeFilename } from "@/lib/upload-utils";
 
 export type UploadResult =
   | { success: true; mediaId: string; url: string }
@@ -19,6 +19,7 @@ export async function uploadMediaAction(formData: FormData): Promise<UploadResul
 
     const file = formData.get("file") as File;
     const insightId = formData.get("insightId") as string | null;
+    const draftToken = formData.get("draftToken") as string | null;
     const alt = formData.get("alt") as string | null;
     const caption = formData.get("caption") as string | null;
 
@@ -43,18 +44,24 @@ export async function uploadMediaAction(formData: FormData): Promise<UploadResul
       };
     }
 
-    // Generate unique filename
-    const filename = generateUniqueFilename(file.name);
+    const uploadScopeRaw = insightId || draftToken || "library";
+    const uploadScope = uploadScopeRaw
+      .toLowerCase()
+      .replace(/[^a-z0-9-]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+    const baseFilename = sanitizeFilename(file.name);
+    const filename = `${uploadScope}-${generateUniqueFilename(baseFilename)}`;
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // Ensure upload directory exists
-    const uploadDir = join(process.cwd(), "public", "uploads");
+    // Ensure upload directory exists (post-scoped under /uploads)
+    const uploadDir = join(process.cwd(), "public", "uploads", uploadScope);
     await mkdir(uploadDir, { recursive: true });
 
     // Write file
     const filepath = join(uploadDir, filename);
     await writeFile(filepath, buffer);
+    const publicUrl = `/uploads/${uploadScope}/${filename}`;
 
     // Get image dimensions (basic implementation - to be enhanced in future)
     const width: number | null = null;
@@ -64,8 +71,8 @@ export async function uploadMediaAction(formData: FormData): Promise<UploadResul
     const media = await db.media.create({
       data: {
         filename,
-        filepath: `/uploads/${filename}`,
-        url: `/uploads/${filename}`,
+        filepath: publicUrl,
+        url: publicUrl,
         mimeType: file.type,
         sizeBytes: file.size,
         width,

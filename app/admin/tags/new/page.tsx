@@ -1,6 +1,5 @@
 /* Phase 5: New tag page */
 import { SimpleCRUDForm } from "@/components/admin/simple-crud-form";
-import { createTagAction, generateTagSlugAction } from "../actions";
 
 export const metadata = {
   title: "New Tag | SPX Admin",
@@ -17,8 +16,6 @@ export default function NewTagPage() {
 
       <SimpleCRUDForm
         type="tag"
-        onSubmit={createTagAction}
-        generateSlug={generateTagSlugAction}
       />
     </div>
   );

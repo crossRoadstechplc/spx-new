@@ -2,7 +2,6 @@
 import { db } from "@/lib/db";
 import { notFound } from "next/navigation";
 import { SimpleCRUDForm } from "@/components/admin/simple-crud-form";
-import { updateAuthorAction, deleteAuthorAction, generateAuthorSlugAction } from "../../actions";
 
 export const metadata = {
   title: "Edit Author | SPX Admin",
@@ -32,10 +31,8 @@ export default async function EditAuthorPage({ params }: PageProps) {
 
       <SimpleCRUDForm
         type="author"
+        itemId={id}
         item={author}
-        onSubmit={(formData) => updateAuthorAction(id, formData)}
-        onDelete={() => deleteAuthorAction(id)}
-        generateSlug={generateAuthorSlugAction}
       />
     </div>
   );

@@ -36,10 +36,10 @@ export default function ContactPage() {
                   <div>
                     <div className="font-medium mb-1">Email</div>
                     <a
-                      href="mailto:contact@spx.com"
+                      href="mailto:info@spxafrica.com"
                       className="text-muted-foreground hover:text-primary transition-colors"
                     >
-                      contact@spx.com
+                      info@spxafrica.com
                     </a>
                   </div>
                 </div>
@@ -51,10 +51,10 @@ export default function ContactPage() {
                   <div>
                     <div className="font-medium mb-1">Phone</div>
                     <a
-                      href="tel:+1-555-0100"
+                      href="tel:+251930199157"
                       className="text-muted-foreground hover:text-primary transition-colors"
                     >
-                      +1 (555) 010-0100
+                      +251930199157
                     </a>
                   </div>
                 </div>
@@ -66,7 +66,7 @@ export default function ContactPage() {
                   <div>
                     <div className="font-medium mb-1">Location</div>
                     <p className="text-muted-foreground">
-                      Based in Ethiopia,<br />working across emerging markets.
+                      Addis Ababa, Ethiopia
                     </p>
                   </div>
                 </div>
@@ -113,12 +113,12 @@ export default function ContactPage() {
             </h2>
             <p className="text-muted-foreground leading-relaxed">
               If you&apos;d rather discuss your market opportunity directly, feel free to email us at{" "}
-              <a href="mailto:contact@spx.com" className="text-primary hover:underline font-medium">
-                contact@spx.com
+              <a href="mailto:info@spxafrica.com" className="text-primary hover:underline font-medium">
+                info@spxafrica.com
               </a>{" "}
               or call us at{" "}
-              <a href="tel:+1-555-0100" className="text-primary hover:underline font-medium">
-                +1 (555) 010-0100
+              <a href="tel:+251930199157" className="text-primary hover:underline font-medium">
+                +251930199157
               </a>
               . We&apos;re happy to schedule an introductory call to explore collaboration opportunities.
             </p>

@@ -45,6 +45,16 @@ export function ImagePlaceholder({
   ...props
 }: ImagePlaceholderProps) {
   const ratio = aspectRatio || aspectRatioMap[variant];
+  const fallbackSources = [
+    "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80",
+  ];
+  const [resolvedSrc, setResolvedSrc] = React.useState(src);
+
+  React.useEffect(() => {
+    setResolvedSrc(src);
+  }, [src]);
 
   return (
     <div className={cn("group relative", className)} {...props}>
@@ -53,20 +63,26 @@ export function ImagePlaceholder({
         data-testid="image-placeholder"
         className={cn(
           "relative overflow-hidden rounded-lg border-2 border-border",
-          !src && "bg-muted/30",
+          !resolvedSrc && "bg-muted/30",
           "transition-all duration-300",
           "hover:border-primary/40 hover:bg-muted/50"
         )}
         style={{ aspectRatio: ratio }}
       >
         {/* Actual Image */}
-        {src && (
+        {resolvedSrc && (
           <Image
-            src={src}
+            src={resolvedSrc}
             alt={alt || ""}
             fill
             className="object-cover"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            onError={() => {
+              const fallback = fallbackSources[Math.floor(Math.random() * fallbackSources.length)];
+              if (resolvedSrc !== fallback) {
+                setResolvedSrc(fallback);
+              }
+            }}
           />
         )}
 
@@ -74,7 +90,7 @@ export function ImagePlaceholder({
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10" />
 
         {/* Center icon (only show if no src) */}
-        {!src && showIcon && (
+        {!resolvedSrc && showIcon && (
           <div className="absolute inset-0 flex items-center justify-center">
             <ImageIcon className="h-12 w-12 text-muted-foreground/30 transition-colors group-hover:text-primary/40" />
           </div>
@@ -90,7 +106,7 @@ export function ImagePlaceholder({
         )}
 
         {/* Decorative corner accent */}
-        {!src && (
+        {!resolvedSrc && (
           <div className="absolute bottom-0 right-0 h-16 w-16 translate-x-8 translate-y-8 rounded-full bg-primary/5 blur-2xl" />
         )}
       </div>

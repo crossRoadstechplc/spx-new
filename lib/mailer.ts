@@ -52,6 +52,10 @@ export function getMailTransporter(): Transporter {
       user: smtpUser,
       pass: smtpPass,
     },
+    // Prevent indefinite hangs on misconfigured/slow SMTP endpoints.
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+    socketTimeout: 15000,
   });
 
   return transporter;
@@ -65,14 +69,21 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
     const transport = getMailTransporter();
     const from = process.env.SMTP_FROM || "noreply@spx.com";
     const fromName = process.env.SMTP_FROM_NAME || "SPX";
-
-    await transport.sendMail({
-      from: `${fromName} <${from}>`,
+    const formattedFrom = from.includes("<") && from.includes(">")
+      ? from
+      : `${fromName} <${from}>`;
+    const sendMailPromise = transport.sendMail({
+      from: formattedFrom,
       to: options.to,
       subject: options.subject,
       text: options.text,
       html: options.html,
     });
+    const timeoutPromise = new Promise<never>((_, reject) =>
+      setTimeout(() => reject(new Error("SMTP send timed out")), 20000)
+    );
+
+    await Promise.race([sendMailPromise, timeoutPromise]);
 
     return true;
   } catch (error) {

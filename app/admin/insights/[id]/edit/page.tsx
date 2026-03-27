@@ -2,6 +2,7 @@
 import { db } from "@/lib/db";
 import { InsightForm } from "@/components/admin/insight-form";
 import { notFound } from "next/navigation";
+import { ensureDefaultInsightCategories } from "@/lib/insight-categories";
 
 export const metadata = {
   title: "Edit Insight | SPX Admin",
@@ -21,6 +22,7 @@ export default async function EditInsightPage({ params }: PageProps) {
   const insight = await db.insight.findUnique({
     where: { id },
     include: {
+      coverImage: true,
       tags: {
         include: { tag: true },
       },
@@ -34,7 +36,7 @@ export default async function EditInsightPage({ params }: PageProps) {
   // Fetch options for dropdowns
   const [authors, categories, tags] = await Promise.all([
     db.author.findMany({ orderBy: { name: "asc" } }),
-    db.category.findMany({ orderBy: { name: "asc" } }),
+    ensureDefaultInsightCategories(),
     db.tag.findMany({ orderBy: { name: "asc" } }),
   ]);
 

@@ -38,6 +38,7 @@ export function PageHero({
   carouselImages,
 }: PageHeroProps) {
   const isLarge = size === "large";
+  const hasSubtitle = Boolean(subtitle);
 
   const content = (
     <section
@@ -56,9 +57,11 @@ export function PageHero({
         >
           <h1
             className={cn(
-              "font-bold tracking-tight",
+              "font-bold tracking-tight leading-tight",
               isLarge
-                ? "text-4xl md:text-5xl lg:text-6xl"
+                ? hasSubtitle
+                  ? "text-3xl sm:text-4xl md:text-5xl lg:text-5xl"
+                  : "text-4xl md:text-5xl lg:text-6xl"
                 : "text-3xl md:text-4xl lg:text-5xl"
             )}
           >

@@ -2,7 +2,6 @@
 import { db } from "@/lib/db";
 import { notFound } from "next/navigation";
 import { SimpleCRUDForm } from "@/components/admin/simple-crud-form";
-import { updateTagAction, deleteTagAction, generateTagSlugAction } from "../../actions";
 
 export const metadata = {
   title: "Edit Tag | SPX Admin",
@@ -32,10 +31,8 @@ export default async function EditTagPage({ params }: PageProps) {
 
       <SimpleCRUDForm
         type="tag"
+        itemId={id}
         item={tag}
-        onSubmit={(formData) => updateTagAction(id, formData)}
-        onDelete={() => deleteTagAction(id)}
-        generateSlug={generateTagSlugAction}
       />
     </div>
   );

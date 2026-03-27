@@ -1,6 +1,5 @@
 /* Phase 5: New category page */
 import { SimpleCRUDForm } from "@/components/admin/simple-crud-form";
-import { createCategoryAction, generateCategorySlugAction } from "../actions";
 
 export const metadata = {
   title: "New Category | SPX Admin",
@@ -17,8 +16,6 @@ export default function NewCategoryPage() {
 
       <SimpleCRUDForm
         type="category"
-        onSubmit={createCategoryAction}
-        generateSlug={generateCategorySlugAction}
       />
     </div>
   );

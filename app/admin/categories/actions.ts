@@ -6,6 +6,7 @@ import { revalidatePath } from "next/cache";
 import { db } from "@/lib/db";
 import { requireAuth } from "@/lib/session";
 import { generateSlug } from "@/lib/slug";
+import { DEFAULT_INSIGHT_CATEGORIES } from "@/lib/insight-categories";
 import { z } from "zod";
 
 const categorySchema = z.object({
@@ -28,7 +29,28 @@ export async function createCategoryAction(formData: FormData): Promise<Category
       description: formData.get("description") || undefined,
     });
 
-    await db.category.create({ data });
+    const allowedCategory = DEFAULT_INSIGHT_CATEGORIES.find(
+      (category) => category.slug === data.slug || category.name === data.name
+    );
+    if (!allowedCategory) {
+      return {
+        success: false,
+        error: "Only Reports, Articles, and Events categories are allowed.",
+      };
+    }
+
+    await db.category.upsert({
+      where: { slug: allowedCategory.slug },
+      update: {
+        name: allowedCategory.name,
+        description: allowedCategory.description,
+      },
+      create: {
+        name: allowedCategory.name,
+        slug: allowedCategory.slug,
+        description: allowedCategory.description,
+      },
+    });
 
     revalidatePath("/admin/categories");
     redirect("/admin/categories");
@@ -63,7 +85,29 @@ export async function updateCategoryAction(
       description: formData.get("description") || undefined,
     });
 
-    await db.category.update({ where: { id }, data });
+    const existing = await db.category.findUnique({ where: { id } });
+    if (!existing) {
+      return { success: false, error: "Category not found" };
+    }
+
+    const allowedCategory = DEFAULT_INSIGHT_CATEGORIES.find(
+      (category) => category.slug === existing.slug
+    );
+    if (!allowedCategory) {
+      return {
+        success: false,
+        error: "Only Reports, Articles, and Events categories are allowed.",
+      };
+    }
+
+    await db.category.update({
+      where: { id },
+      data: {
+        name: allowedCategory.name,
+        slug: allowedCategory.slug,
+        description: data.description || allowedCategory.description,
+      },
+    });
 
     revalidatePath("/admin/categories");
 
@@ -85,6 +129,18 @@ export async function updateCategoryAction(
 export async function deleteCategoryAction(id: string): Promise<{ success: boolean; error?: string }> {
   try {
     await requireAuth();
+    const category = await db.category.findUnique({ where: { id } });
+    if (!category) {
+      return { success: false, error: "Category not found" };
+    }
+
+    if (DEFAULT_INSIGHT_CATEGORIES.some((item) => item.slug === category.slug)) {
+      return {
+        success: false,
+        error: "Default insight categories cannot be deleted.",
+      };
+    }
+
     await db.category.delete({ where: { id } });
     revalidatePath("/admin/categories");
     return { success: true };

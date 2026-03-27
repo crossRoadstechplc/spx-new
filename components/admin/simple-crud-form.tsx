@@ -7,6 +7,24 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  createAuthorAction,
+  deleteAuthorAction,
+  generateAuthorSlugAction,
+  updateAuthorAction,
+} from "@/app/admin/authors/actions";
+import {
+  createCategoryAction,
+  deleteCategoryAction,
+  generateCategorySlugAction,
+  updateCategoryAction,
+} from "@/app/admin/categories/actions";
+import {
+  createTagAction,
+  deleteTagAction,
+  generateTagSlugAction,
+  updateTagAction,
+} from "@/app/admin/tags/actions";
 import { AlertCircle, Loader2 } from "lucide-react";
 
 interface SimpleFormItem {
@@ -24,14 +42,14 @@ interface FormResult {
 
 interface SimpleFormProps {
   type: "author" | "category" | "tag";
+  itemId?: string;
   item?: SimpleFormItem;
-  onSubmit: (formData: FormData) => Promise<FormResult | void>;
-  onDelete?: () => Promise<FormResult>;
-  generateSlug: (name: string) => Promise<string>;
 }
 
-export function SimpleCRUDForm({ type, item, onSubmit, onDelete, generateSlug }: SimpleFormProps) {
+export function SimpleCRUDForm({ type, item, itemId }: SimpleFormProps) {
   const router = useRouter();
+  const adminListPath =
+    type === "author" ? "/admin/authors" : type === "category" ? "/admin/categories" : "/admin/tags";
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [name, setName] = useState(item?.name || "");
@@ -40,12 +58,17 @@ export function SimpleCRUDForm({ type, item, onSubmit, onDelete, generateSlug }:
   useEffect(() => {
     if (!item && name) {
       const timeoutId = setTimeout(async () => {
-        const generated = await generateSlug(name);
+        const generated =
+          type === "author"
+            ? await generateAuthorSlugAction(name)
+            : type === "category"
+              ? await generateCategorySlugAction(name)
+              : await generateTagSlugAction(name);
         setSlug(generated);
       }, 500);
       return () => clearTimeout(timeoutId);
     }
-  }, [name, item, generateSlug]);
+  }, [name, item, type]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -53,7 +76,18 @@ export function SimpleCRUDForm({ type, item, onSubmit, onDelete, generateSlug }:
     setError(null);
 
     const formData = new FormData(e.currentTarget);
-    const result = await onSubmit(formData);
+    const result =
+      type === "author"
+        ? itemId
+          ? await updateAuthorAction(itemId, formData)
+          : await createAuthorAction(formData)
+        : type === "category"
+          ? itemId
+            ? await updateCategoryAction(itemId, formData)
+            : await createCategoryAction(formData)
+          : itemId
+            ? await updateTagAction(itemId, formData)
+            : await createTagAction(formData);
 
     if (result && !result.success) {
       setError(result.error || "An error occurred");
@@ -68,17 +102,22 @@ export function SimpleCRUDForm({ type, item, onSubmit, onDelete, generateSlug }:
   };
 
   const handleDelete = async () => {
-    if (!onDelete || !item) return;
+    if (!itemId || !item) return;
 
     if (!confirm(`Are you sure you want to delete this ${type}?`)) {
       return;
     }
 
     setIsSubmitting(true);
-    const result = await onDelete();
+    const result =
+      type === "author"
+        ? await deleteAuthorAction(itemId)
+        : type === "category"
+          ? await deleteCategoryAction(itemId)
+          : await deleteTagAction(itemId);
 
     if (result.success) {
-      router.push(`/admin/${type}s`);
+      router.push(adminListPath);
     } else {
       setError(result.error || "Failed to delete");
       setIsSubmitting(false);
@@ -160,7 +199,7 @@ export function SimpleCRUDForm({ type, item, onSubmit, onDelete, generateSlug }:
 
       <div className="flex items-center justify-between">
         <div>
-          {item && onDelete && (
+          {item && itemId && (
             <Button
               type="button"
               variant="destructive"
@@ -176,7 +215,7 @@ export function SimpleCRUDForm({ type, item, onSubmit, onDelete, generateSlug }:
           <Button
             type="button"
             variant="outline"
-            onClick={() => router.push(`/admin/${type}s`)}
+            onClick={() => router.push(adminListPath)}
             disabled={isSubmitting}
           >
             Cancel

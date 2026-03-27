@@ -1,7 +1,8 @@
 /* Phase 7: Contact form component with email integration */
 "use client";
 
-import { useFormState, useFormStatus } from "react-dom";
+import { useActionState } from "react";
+import { useFormStatus } from "react-dom";
 import { submitContactForm } from "@/app/contact/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -33,7 +34,7 @@ interface ContactFormProps {
 }
 
 export function ContactForm({ className }: ContactFormProps) {
-  const [state, formAction] = useFormState(submitContactForm, null);
+  const [state, formAction] = useActionState(submitContactForm, null);
 
   return (
     <div className={className}>
@@ -121,7 +122,10 @@ export function ContactForm({ className }: ContactFormProps) {
 
         <div className="space-y-2">
           <Label htmlFor="phone">Phone</Label>
-          <Input id="phone" name="phone" type="tel" placeholder="+1 (555) 123-4567" />
+          <Input id="phone" name="phone" type="tel" placeholder="+251930199157" />
+          {state?.success === false && state.fieldErrors?.phone && (
+            <p className="text-sm text-destructive">{state.fieldErrors.phone[0]}</p>
+          )}
         </div>
 
         <div className="space-y-2">

@@ -8,7 +8,11 @@ const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Please enter a valid email address"),
   organization: z.string().optional(),
-  phone: z.string().optional(),
+  phone: z
+    .string()
+    .regex(/^(?:\+2519\d{8}|09\d{8})$/, "Phone must be a valid Ethiopian number (e.g. +251930199157)")
+    .optional()
+    .or(z.literal("")),
   inquiryType: z.string().min(1, "Please select an inquiry type"),
   message: z.string().min(10, "Message must be at least 10 characters"),
   privacyConsent: z.literal("true", {

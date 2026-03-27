@@ -1,6 +1,5 @@
 /* Phase 5: New author page */
 import { SimpleCRUDForm } from "@/components/admin/simple-crud-form";
-import { createAuthorAction, generateAuthorSlugAction } from "../actions";
 
 export const metadata = {
   title: "New Author | SPX Admin",
@@ -17,8 +16,6 @@ export default function NewAuthorPage() {
 
       <SimpleCRUDForm
         type="author"
-        onSubmit={createAuthorAction}
-        generateSlug={generateAuthorSlugAction}
       />
     </div>
   );

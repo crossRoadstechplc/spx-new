@@ -3,7 +3,6 @@
 
 import * as React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
@@ -56,14 +55,7 @@ export function SiteHeader() {
           href="/"
           className="flex items-center space-x-2"
         >
-          <Image
-            src="/assets/logos/SPX.png"
-            alt="SPX"
-            width={80}
-            height={32}
-            className="h-8 w-auto"
-            priority
-          />
+          <span className="text-[1.75rem] font-bold tracking-tight text-foreground leading-none">SPX</span>
         </Link>
 
         {/* Desktop Navigation */}

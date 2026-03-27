@@ -6,13 +6,14 @@ import { revalidatePath } from "next/cache";
 import { db } from "@/lib/db";
 import { requireAuth } from "@/lib/session";
 import { generateSlug } from "@/lib/slug";
+import { extractMediaIdsFromStrictContent, strictInsightContentSchema } from "@/lib/insight-blocks";
 import { z } from "zod";
 
 const insightSchema = z.object({
   title: z.string().min(1, "Title is required"),
   slug: z.string().min(1, "Slug is required"),
   excerpt: z.string().optional(),
-  contentJson: z.any(), // Tiptap JSON
+  contentJson: z.any(),
   contentHtml: z.string().optional(),
   status: z.enum(["DRAFT", "PUBLISHED", "ARCHIVED"]),
   authorId: z.string().optional(),
@@ -51,8 +52,18 @@ export async function createInsightAction(
       featuredAt: formData.get("featuredAt") || undefined,
     };
 
-    // Validate
+    // Validate basic fields
     const validated = insightSchema.parse(data);
+    const strictContent = strictInsightContentSchema.safeParse(validated.contentJson);
+    if (!strictContent.success) {
+      return {
+        success: false,
+        error: "Invalid content blocks. Please fix the editor blocks and try again.",
+        fieldErrors: {
+          contentJson: strictContent.error.issues.map((issue) => issue.message),
+        },
+      };
+    }
 
     // Check for slug uniqueness
     const existing = await db.insight.findUnique({
@@ -73,7 +84,7 @@ export async function createInsightAction(
         title: validated.title,
         slug: validated.slug,
         excerpt: validated.excerpt,
-        contentJson: validated.contentJson,
+        contentJson: strictContent.data,
         contentHtml: validated.contentHtml,
         status: validated.status,
         authorId: validated.authorId,
@@ -98,8 +109,24 @@ export async function createInsightAction(
       });
     }
 
+    // Link uploaded media used in blocks (and cover image) to this insight
+    const contentMediaIds = extractMediaIdsFromStrictContent(strictContent.data);
+    const linkedMediaIds = Array.from(
+      new Set([...(validated.coverImageId ? [validated.coverImageId] : []), ...contentMediaIds])
+    );
+    if (linkedMediaIds.length > 0) {
+      await db.media.updateMany({
+        where: {
+          id: { in: linkedMediaIds },
+        },
+        data: {
+          insightId: insight.id,
+        },
+      });
+    }
+
     revalidatePath("/admin/insights");
-    redirect(`/admin/insights/${insight.id}/edit`);
+    redirect("/admin/insights");
   } catch (error) {
     if (error instanceof z.ZodError) {
       return {
@@ -146,8 +173,18 @@ export async function updateInsightAction(
       featuredAt: formData.get("featuredAt") || undefined,
     };
 
-    // Validate
+    // Validate basic fields
     const validated = insightSchema.parse(data);
+    const strictContent = strictInsightContentSchema.safeParse(validated.contentJson);
+    if (!strictContent.success) {
+      return {
+        success: false,
+        error: "Invalid content blocks. Please fix the editor blocks and try again.",
+        fieldErrors: {
+          contentJson: strictContent.error.issues.map((issue) => issue.message),
+        },
+      };
+    }
 
     // Check for slug uniqueness (excluding current insight)
     const existing = await db.insight.findFirst({
@@ -172,7 +209,7 @@ export async function updateInsightAction(
         title: validated.title,
         slug: validated.slug,
         excerpt: validated.excerpt,
-        contentJson: validated.contentJson,
+        contentJson: strictContent.data,
         contentHtml: validated.contentHtml,
         status: validated.status,
         authorId: validated.authorId,
@@ -198,10 +235,36 @@ export async function updateInsightAction(
       });
     }
 
+    const contentMediaIds = extractMediaIdsFromStrictContent(strictContent.data);
+    const linkedMediaIds = Array.from(
+      new Set([...(validated.coverImageId ? [validated.coverImageId] : []), ...contentMediaIds])
+    );
+
+    // Unlink media currently tied to this insight but no longer referenced.
+    await db.media.updateMany({
+      where: {
+        insightId: id,
+        ...(linkedMediaIds.length > 0 ? { id: { notIn: linkedMediaIds } } : {}),
+      },
+      data: {
+        insightId: null,
+      },
+    });
+
+    if (linkedMediaIds.length > 0) {
+      await db.media.updateMany({
+        where: {
+          id: { in: linkedMediaIds },
+        },
+        data: {
+          insightId: id,
+        },
+      });
+    }
+
     revalidatePath("/admin/insights");
     revalidatePath(`/admin/insights/${id}/edit`);
-
-    return { success: true, insightId: id };
+    redirect("/admin/insights");
   } catch (error) {
     if (error instanceof z.ZodError) {
       return {

@@ -1,6 +1,7 @@
 /* Phase 5: Create new insight page */
 import { db } from "@/lib/db";
 import { InsightForm } from "@/components/admin/insight-form";
+import { ensureDefaultInsightCategories } from "@/lib/insight-categories";
 
 export const metadata = {
   title: "New Insight | SPX Admin",
@@ -11,7 +12,7 @@ export default async function NewInsightPage() {
   // Fetch options for dropdowns
   const [authors, categories, tags] = await Promise.all([
     db.author.findMany({ orderBy: { name: "asc" } }),
-    db.category.findMany({ orderBy: { name: "asc" } }),
+    ensureDefaultInsightCategories(),
     db.tag.findMany({ orderBy: { name: "asc" } }),
   ]);
 

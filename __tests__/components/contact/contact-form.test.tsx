@@ -7,10 +7,14 @@ jest.mock("@/app/contact/actions", () => ({
   submitContactForm: jest.fn(),
 }));
 
-// Mock react-dom hooks
+// Mock react hooks
+jest.mock("react", () => ({
+  ...jest.requireActual("react"),
+  useActionState: () => [null, jest.fn()],
+}));
+
 jest.mock("react-dom", () => ({
   ...jest.requireActual("react-dom"),
-  useFormState: () => [null, jest.fn()],
   useFormStatus: () => ({ pending: false }),
 }));
 
