@@ -11,6 +11,8 @@ import {
   Users,
   FolderOpen,
   Tag,
+  BarChart3,
+  Mail,
 } from "lucide-react";
 
 const navigation = [
@@ -43,6 +45,16 @@ const navigation = [
     name: "Tags",
     href: "/admin/tags",
     icon: Tag,
+  },
+  {
+    name: "Analytics",
+    href: "/admin/analytics",
+    icon: BarChart3,
+  },
+  {
+    name: "Newsletter",
+    href: "/admin/newsletter",
+    icon: Mail,
   },
 ];
 

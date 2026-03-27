@@ -7,6 +7,7 @@ import { db } from "@/lib/db";
 import { requireAuth } from "@/lib/session";
 import { generateSlug } from "@/lib/slug";
 import { extractMediaIdsFromStrictContent, strictInsightContentSchema } from "@/lib/insight-blocks";
+import { notifySubscribersForInsight } from "@/lib/newsletter";
 import { z } from "zod";
 
 const insightSchema = z.object({
@@ -125,6 +126,10 @@ export async function createInsightAction(
       });
     }
 
+    if (validated.status === "PUBLISHED") {
+      await notifySubscribersForInsight(insight.id);
+    }
+
     revalidatePath("/admin/insights");
     revalidatePath("/insights");
     redirect("/admin/insights");
@@ -203,6 +208,18 @@ export async function updateInsightAction(
       };
     }
 
+    const previousInsight = await db.insight.findUnique({
+      where: { id },
+      select: { status: true },
+    });
+
+    if (!previousInsight) {
+      return {
+        success: false,
+        error: "Insight not found.",
+      };
+    }
+
     // Update insight
     await db.insight.update({
       where: { id },
@@ -261,6 +278,12 @@ export async function updateInsightAction(
           insightId: id,
         },
       });
+    }
+
+    const transitionedToPublished =
+      previousInsight.status !== "PUBLISHED" && validated.status === "PUBLISHED";
+    if (transitionedToPublished) {
+      await notifySubscribersForInsight(id);
     }
 
     revalidatePath("/admin/insights");

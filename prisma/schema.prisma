@@ -32,6 +32,11 @@ enum MediaType {
   OTHER
 }
 
+enum NewsletterSubscriberStatus {
+  ACTIVE
+  UNSUBSCRIBED
+}
+
 // ============================================
 // User & Authentication
 // ============================================
@@ -199,6 +204,7 @@ model Insight {
   // Many-to-many relations
   tags          InsightTag[]
   media         Media[]       // Gallery/inline images
+  emailDispatches InsightEmailDispatch[]
 
   @@index([status, publishedAt])
   @@index([createdAt])
@@ -220,5 +226,90 @@ model InsightTag {
   @@unique([insightId, tagId])
   @@index([insightId])
   @@index([tagId])
+}
+
+// ============================================
+// Analytics
+// ============================================
+
+model TrafficEvent {
+  id          String   @id @default(uuid())
+  path        String
+  visitorHash String
+  referrer    String?
+  userAgent   String?
+  deviceType  String?
+  createdAt   DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([path, createdAt])
+  @@index([visitorHash, createdAt])
+}
+
+model TrafficDailyPage {
+  id             String   @id @default(uuid())
+  date           DateTime
+  path           String
+  views          Int      @default(0)
+  uniqueVisitors Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@unique([date, path])
+  @@index([date])
+  @@index([path, date])
+}
+
+model TrafficDailySite {
+  id             String   @id @default(uuid())
+  date           DateTime @unique
+  views          Int      @default(0)
+  uniqueVisitors Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([date])
+}
+
+model TrafficVisitorDaily {
+  id          String   @id @default(uuid())
+  date        DateTime
+  scope       String
+  visitorHash String
+  createdAt   DateTime @default(now())
+
+  @@unique([date, scope, visitorHash])
+  @@index([date, scope])
+}
+
+model NewsletterSubscriber {
+  id             String                     @id @default(uuid())
+  email          String                     @unique
+  unsubscribeToken String                   @unique @default(uuid())
+  status         NewsletterSubscriberStatus @default(ACTIVE)
+  subscribedAt   DateTime                   @default(now())
+  unsubscribedAt DateTime?
+  createdAt      DateTime                   @default(now())
+  updatedAt      DateTime                   @updatedAt
+
+  dispatches     InsightEmailDispatch[]
+
+  @@index([status])
+  @@index([createdAt])
+}
+
+model InsightEmailDispatch {
+  id            String               @id @default(uuid())
+  insightId     String
+  insight       Insight              @relation(fields: [insightId], references: [id], onDelete: Cascade)
+  subscriberId  String
+  subscriber    NewsletterSubscriber @relation(fields: [subscriberId], references: [id], onDelete: Cascade)
+  sentAt        DateTime             @default(now())
+  createdAt     DateTime             @default(now())
+
+  @@unique([insightId, subscriberId])
+  @@index([insightId])
+  @@index([subscriberId])
+  @@index([sentAt])
 }
 

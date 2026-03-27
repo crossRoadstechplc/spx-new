@@ -27,6 +27,12 @@ export interface ContactFormData {
   message: string;
 }
 
+export interface InsightAnnouncementData {
+  title: string;
+  excerpt?: string | null;
+  slug: string;
+}
+
 /**
  * Get or create Nodemailer transporter
  */
@@ -240,4 +246,124 @@ export async function verifyMailConfig(): Promise<boolean> {
     console.error("SMTP verification failed:", error);
     return false;
   }
+}
+
+function escapeHtml(input: string): string {
+  return input
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+export async function sendNewsletterWelcome(email: string, unsubscribeToken: string): Promise<boolean> {
+  const contactEmail = process.env.CONTACT_TO_EMAIL || process.env.ADMIN_EMAIL || "hello@spx.com";
+  const appUrl = (process.env.APP_URL || "http://localhost:3002").replace(/\/$/, "");
+  const unsubscribeUrl = `${appUrl}/newsletter/unsubscribe/${encodeURIComponent(unsubscribeToken)}`;
+  const text = `
+You are now subscribed to SPX Insights.
+
+We will notify you when new insights are published.
+
+For support, contact ${contactEmail}.
+
+Unsubscribe anytime: ${unsubscribeUrl}
+
+SPX Team
+  `.trim();
+
+  const html = `
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; }
+    .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+    .header { background: #00BFFF; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
+    .content { background: white; padding: 30px; border: 1px solid #e5e7eb; border-radius: 0 0 8px 8px; }
+    .footer { margin-top: 20px; color: #6b7280; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1 style="margin: 0; font-size: 24px;">SPX</h1>
+    </div>
+    <div class="content">
+      <p>You are now subscribed to <strong>SPX Insights</strong>.</p>
+      <p>We will notify you when new insights are published.</p>
+      <p><a href="${unsubscribeUrl}">Unsubscribe from these updates</a></p>
+      <p class="footer">For support, contact <a href="mailto:${contactEmail}">${contactEmail}</a>.</p>
+    </div>
+  </div>
+</body>
+</html>
+  `.trim();
+
+  return sendEmail({
+    to: email,
+    subject: "You are subscribed to SPX Insights",
+    text,
+    html,
+  });
+}
+
+export async function sendInsightAnnouncement(
+  to: string,
+  insight: InsightAnnouncementData,
+  unsubscribeToken: string
+): Promise<boolean> {
+  const appUrl = process.env.APP_URL || "http://localhost:3002";
+  const insightUrl = `${appUrl.replace(/\/$/, "")}/insights/${insight.slug}`;
+  const unsubscribeUrl = `${appUrl.replace(/\/$/, "")}/newsletter/unsubscribe/${encodeURIComponent(unsubscribeToken)}`;
+  const safeTitle = escapeHtml(insight.title);
+  const safeExcerpt = insight.excerpt ? escapeHtml(insight.excerpt) : "";
+
+  const text = `
+New SPX insight published:
+${insight.title}
+
+Read it: ${insightUrl}
+
+${insight.excerpt || ""}
+
+Unsubscribe: ${unsubscribeUrl}
+  `.trim();
+
+  const html = `
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; }
+    .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+    .header { background: #00BFFF; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
+    .content { background: white; padding: 30px; border: 1px solid #e5e7eb; border-radius: 0 0 8px 8px; }
+    .btn { display: inline-block; margin-top: 16px; background: #111827; color: white !important; text-decoration: none; padding: 10px 16px; border-radius: 6px; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1 style="margin: 0; font-size: 24px;">New SPX Insight</h1>
+    </div>
+    <div class="content">
+      <h2 style="margin-top: 0;">${safeTitle}</h2>
+      ${safeExcerpt ? `<p>${safeExcerpt}</p>` : ""}
+      <a class="btn" href="${insightUrl}">Read the full insight</a>
+      <p style="margin-top: 18px; color: #6b7280; font-size: 14px;">If the button does not work, use this link: ${insightUrl}</p>
+      <p style="margin-top: 12px; color: #6b7280; font-size: 14px;"><a href="${unsubscribeUrl}">Unsubscribe from future insight emails</a></p>
+    </div>
+  </div>
+</body>
+</html>
+  `.trim();
+
+  return sendEmail({
+    to,
+    subject: `New Insight: ${insight.title}`,
+    text,
+    html,
+  });
 }

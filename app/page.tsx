@@ -4,6 +4,7 @@ import { MediaContentBlock, MediaCardGrid } from "@/components/ui/media-content-
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { NewsletterSection } from "@/components/home/newsletter-section";
 
 export const metadata = {
   title: "SPX | Strategy-to-Implementation Platform",
@@ -260,7 +261,10 @@ export default function HomePage() {
 
       <AccentDivider variant="gradient" className="my-16" />
 
+      <NewsletterSection />
+
       {/* Final CTA */}
+
       <CTASection
         variant="primary"
         title="Ready to Transform Markets?"

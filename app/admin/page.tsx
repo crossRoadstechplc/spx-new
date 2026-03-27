@@ -1,9 +1,10 @@
 /* Phase 5: Admin dashboard page */
 import { getCurrentUser } from "@/lib/session";
 import { db } from "@/lib/db";
-import { FileText, Image as ImageIcon } from "lucide-react";
+import { FileText, Image as ImageIcon, BarChart3 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { getTrafficSummary, getRangeForDays } from "@/lib/analytics";
 
 export const metadata = {
   title: "Dashboard | SPX Admin",
@@ -16,11 +17,13 @@ async function getStats() {
     draftInsights,
     publishedInsights,
     mediaCount,
+    traffic30d,
   ] = await Promise.all([
     db.insight.count(),
     db.insight.count({ where: { status: "DRAFT" } }),
     db.insight.count({ where: { status: "PUBLISHED" } }),
     db.media.count(),
+    getTrafficSummary(getRangeForDays(30)),
   ]);
 
   return {
@@ -28,6 +31,7 @@ async function getStats() {
     draftInsights,
     publishedInsights,
     media: mediaCount,
+    trafficViews30d: traffic30d.views,
   };
 }
 
@@ -47,7 +51,7 @@ export default async function AdminDashboard() {
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
         <StatCard
           title="Total Insights"
           value={stats.totalInsights}
@@ -71,6 +75,12 @@ export default async function AdminDashboard() {
           value={stats.media}
           icon={<ImageIcon className="h-6 w-6" />}
           href="/admin/media"
+        />
+        <StatCard
+          title="Views (30d)"
+          value={stats.trafficViews30d}
+          icon={<BarChart3 className="h-6 w-6" />}
+          href="/admin/analytics"
         />
       </div>
 

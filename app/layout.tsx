@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { LoadingProvider } from "@/components/providers/loading-provider";
 import { ParticleBackground } from "@/components/ui/particle-background";
+import { AnalyticsTracker } from "@/components/providers/analytics-tracker";
 
 const inter = Inter({ subsets: ["latin"] });
 const siteUrl = process.env.APP_URL || "http://localhost:3000";
@@ -100,6 +101,7 @@ export default function RootLayout({
           }}
         />
         <LoadingProvider>
+          <AnalyticsTracker />
           <ParticleBackground />
           <div className="relative z-10">{children}</div>
         </LoadingProvider>
