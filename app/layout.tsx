@@ -6,9 +6,11 @@ import { LoadingProvider } from "@/components/providers/loading-provider";
 import { ParticleBackground } from "@/components/ui/particle-background";
 
 const inter = Inter({ subsets: ["latin"] });
+const siteUrl = process.env.APP_URL || "http://localhost:3000";
+const defaultSeoImage = `${siteUrl}/opengraph-image`;
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.APP_URL || "http://localhost:3000"),
+  metadataBase: new URL(siteUrl),
   title: {
     default: "SPX — Systems Layer Company",
     template: "%s | SPX",
@@ -25,6 +27,9 @@ export const metadata: Metadata = {
   authors: [{ name: "SPX" }],
   creator: "SPX",
   publisher: "SPX",
+  alternates: {
+    canonical: "/",
+  },
   formatDetection: {
     email: false,
     address: false,
@@ -38,12 +43,21 @@ export const metadata: Metadata = {
     title: "SPX — Systems Layer Company",
     description:
       "Strategic research, editorial, and systems thinking for organizations navigating complexity.",
+    images: [
+      {
+        url: defaultSeoImage,
+        width: 1200,
+        height: 630,
+        alt: "SPX - Strategy-to-Implementation Platform",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "SPX — Systems Layer Company",
     description:
       "Strategic research, editorial, and systems thinking for organizations navigating complexity.",
+    images: [defaultSeoImage],
   },
   robots: {
     index: true,
@@ -66,6 +80,25 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "SPX",
+              url: siteUrl,
+              logo: `${siteUrl}/opengraph-image`,
+              email: "info@spxafrica.com",
+              telephone: "+251930199157",
+              address: {
+                "@type": "PostalAddress",
+                addressLocality: "Addis Ababa",
+                addressCountry: "Ethiopia",
+              },
+            }),
+          }}
+        />
         <LoadingProvider>
           <ParticleBackground />
           <div className="relative z-10">{children}</div>

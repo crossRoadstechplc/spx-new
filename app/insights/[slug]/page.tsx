@@ -19,8 +19,17 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
+  const siteUrl = process.env.APP_URL || "http://localhost:3000";
   const insight = await db.insight.findUnique({
     where: { slug },
+    include: {
+      coverImage: {
+        select: { url: true, alt: true },
+      },
+      author: {
+        select: { name: true },
+      },
+    },
   });
 
   if (!insight) {
@@ -32,6 +41,33 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: insight.metaTitle || insight.title,
     description: insight.metaDescription || insight.excerpt || undefined,
+    alternates: {
+      canonical: `/insights/${slug}`,
+    },
+    openGraph: {
+      type: "article",
+      url: `/insights/${slug}`,
+      title: insight.metaTitle || insight.title,
+      description: insight.metaDescription || insight.excerpt || undefined,
+      publishedTime: insight.publishedAt?.toISOString(),
+      authors: insight.author?.name ? [insight.author.name] : undefined,
+      images: [
+        {
+          url: insight.coverImage?.url
+            ? `${siteUrl}${insight.coverImage.url}`
+            : `${siteUrl}/opengraph-image`,
+          alt: insight.coverImage?.alt || insight.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: insight.metaTitle || insight.title,
+      description: insight.metaDescription || insight.excerpt || undefined,
+      images: [
+        insight.coverImage?.url ? `${siteUrl}${insight.coverImage.url}` : `${siteUrl}/opengraph-image`,
+      ],
+    },
   };
 }
 
