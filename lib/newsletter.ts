@@ -153,7 +153,6 @@ export async function notifySubscribersForInsight(insightId: string): Promise<vo
           insightId: insight.id,
           subscriberId: subscriber.id,
         })),
-        skipDuplicates: true,
       });
     } catch (error) {
       console.error("Failed to create insight dispatch records:", error);
