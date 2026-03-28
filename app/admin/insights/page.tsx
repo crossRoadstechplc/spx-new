@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { Plus, Search } from "lucide-react";
-import { InsightTableActions } from "@/components/admin/insight-table-actions";
+import { InsightsListTable } from "@/components/admin/insights-list-table";
 
 export const metadata = {
   title: "Insights | SPX Admin",
@@ -23,15 +23,13 @@ export default async function AdminInsightsPage({ searchParams }: PageProps) {
 
   // Build query filters
   const where: {
-    OR?: Array<{ title?: { contains: string; mode: "insensitive" }; excerpt?: { contains: string; mode: "insensitive" } }>;
+    OR?: Array<{ title?: { contains: string }; excerpt?: { contains: string } }>;
     status?: "DRAFT" | "PUBLISHED" | "ARCHIVED";
   } = {};
-  
+
   if (q) {
-    where.OR = [
-      { title: { contains: q, mode: "insensitive" as const } },
-      { excerpt: { contains: q, mode: "insensitive" as const } },
-    ];
+    // SQLite (local dev) does not support Prisma's `mode: "insensitive"` on string filters.
+    where.OR = [{ title: { contains: q } }, { excerpt: { contains: q } }];
   }
   
   if (status && (status === "DRAFT" || status === "PUBLISHED" || status === "ARCHIVED")) {
@@ -146,64 +144,18 @@ export default async function AdminInsightsPage({ searchParams }: PageProps) {
             </div>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-muted/50 border-b border-border">
-                <tr>
-                  <th className="text-left px-4 py-3 text-sm font-medium">Title</th>
-                  <th className="text-left px-4 py-3 text-sm font-medium">Author</th>
-                  <th className="text-left px-4 py-3 text-sm font-medium">Category</th>
-                  <th className="text-left px-4 py-3 text-sm font-medium">Status</th>
-                  <th className="text-left px-4 py-3 text-sm font-medium">Updated</th>
-                  <th className="text-right px-4 py-3 text-sm font-medium">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border">
-                {insights.map((insight: (typeof insights)[number]) => (
-                  <tr key={insight.id} className="hover:bg-muted/30">
-                    <td className="px-4 py-3">
-                      <Link
-                        href={`/admin/insights/${insight.id}/edit`}
-                        className="font-medium hover:text-primary"
-                      >
-                        {insight.title}
-                      </Link>
-                      {insight._count.tags > 0 && (
-                        <span className="ml-2 text-xs text-muted-foreground">
-                          {insight._count.tags} {insight._count.tags === 1 ? "tag" : "tags"}
-                        </span>
-                      )}
-                    </td>
-                    <td className="px-4 py-3 text-sm text-muted-foreground">
-                      {insight.author?.name || "—"}
-                    </td>
-                    <td className="px-4 py-3 text-sm text-muted-foreground">
-                      {insight.category?.name || "—"}
-                    </td>
-                    <td className="px-4 py-3">
-                      <span
-                        className={`inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ${
-                          insight.status === "PUBLISHED"
-                            ? "bg-green-50 text-green-700"
-                            : insight.status === "DRAFT"
-                            ? "bg-yellow-50 text-yellow-700"
-                            : "bg-gray-50 text-gray-700"
-                        }`}
-                      >
-                        {insight.status}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 text-sm text-muted-foreground">
-                      {new Date(insight.updatedAt).toLocaleDateString()}
-                    </td>
-                    <td className="px-4 py-3 text-right">
-                      <InsightTableActions insightId={insight.id} />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <InsightsListTable
+            insights={insights.map((insight) => ({
+              id: insight.id,
+              title: insight.title,
+              slug: insight.slug,
+              status: insight.status,
+              updatedAt: insight.updatedAt.toISOString(),
+              authorName: insight.author?.name ?? null,
+              categoryName: insight.category?.name ?? null,
+              tagCount: insight._count.tags,
+            }))}
+          />
         )}
       </div>
     </div>

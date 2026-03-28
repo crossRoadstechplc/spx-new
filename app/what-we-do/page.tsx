@@ -70,7 +70,7 @@ export default function WhatWeDoPage() {
           <MediaContentBlock 
             layout="image-left" 
             imageVariant="wide"
-            imageSrc="/assets/images/projects/image8.webp"
+            imageSrc="/assets/images/about/image6.webp"
             imageAlt="Program implementation"
           >
             <div className="space-y-4">

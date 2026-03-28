@@ -7,7 +7,10 @@ import { db } from "@/lib/db";
 import { requireAuth } from "@/lib/session";
 import { generateSlug } from "@/lib/slug";
 import { extractMediaIdsFromStrictContent, strictInsightContentSchema } from "@/lib/insight-blocks";
-import { notifySubscribersForInsight } from "@/lib/newsletter";
+import {
+  clearInsightEmailDispatches,
+  notifySubscribersForInsight,
+} from "@/lib/newsletter";
 import { z } from "zod";
 
 const insightSchema = z.object({
@@ -93,7 +96,14 @@ export async function createInsightAction(
         coverImageId: validated.coverImageId,
         metaTitle: validated.metaTitle,
         metaDescription: validated.metaDescription,
-        publishedAt: validated.publishedAt ? new Date(validated.publishedAt) : null,
+        publishedAt:
+          validated.status === "PUBLISHED"
+            ? validated.publishedAt
+              ? new Date(validated.publishedAt)
+              : new Date()
+            : validated.publishedAt
+              ? new Date(validated.publishedAt)
+              : null,
         featuredAt: validated.featuredAt ? new Date(validated.featuredAt) : null,
         createdById: user.id,
       },
@@ -210,7 +220,7 @@ export async function updateInsightAction(
 
     const previousInsight = await db.insight.findUnique({
       where: { id },
-      select: { status: true },
+      select: { status: true, publishedAt: true },
     });
 
     if (!previousInsight) {
@@ -317,11 +327,18 @@ export async function deleteInsightAction(id: string): Promise<{ success: boolea
   try {
     await requireAuth();
 
+    const row = await db.insight.findUnique({
+      where: { id },
+      select: { slug: true },
+    });
     await db.insight.delete({ where: { id } });
 
     revalidatePath("/admin/insights");
     revalidatePath("/insights");
-    
+    if (row) {
+      revalidatePath(`/insights/${row.slug}`);
+    }
+
     return { success: true };
   } catch (error) {
     console.error("Delete insight error:", error);
@@ -329,6 +346,160 @@ export async function deleteInsightAction(id: string): Promise<{ success: boolea
       success: false,
       error: "Failed to delete insight. Please try again.",
     };
+  }
+}
+
+const insightStatusEnum = z.enum(["DRAFT", "PUBLISHED", "ARCHIVED"]);
+
+function applyPublishedAtForStatus(
+  previous: { status: string; publishedAt: Date | null },
+  next: "DRAFT" | "PUBLISHED" | "ARCHIVED"
+): Date | null {
+  if (next === "DRAFT") {
+    return null;
+  }
+  if (next === "ARCHIVED") {
+    return previous.publishedAt;
+  }
+  // PUBLISHED
+  return previous.publishedAt ?? new Date();
+}
+
+export async function setInsightStatusAction(
+  id: string,
+  status: z.infer<typeof insightStatusEnum>
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    await requireAuth();
+    const parsed = insightStatusEnum.safeParse(status);
+    if (!parsed.success) {
+      return { success: false, error: "Invalid status." };
+    }
+
+    const insight = await db.insight.findUnique({
+      where: { id },
+      select: { id: true, status: true, publishedAt: true, slug: true },
+    });
+    if (!insight) {
+      return { success: false, error: "Insight not found." };
+    }
+    if (insight.status === parsed.data) {
+      return { success: true };
+    }
+
+    const publishedAt = applyPublishedAtForStatus(insight, parsed.data);
+    const transitionedToPublished =
+      insight.status !== "PUBLISHED" && parsed.data === "PUBLISHED";
+
+    await db.insight.update({
+      where: { id },
+      data: { status: parsed.data, publishedAt },
+    });
+
+    if (insight.status === "PUBLISHED" && parsed.data !== "PUBLISHED") {
+      await clearInsightEmailDispatches(id);
+    }
+
+    if (transitionedToPublished) {
+      await notifySubscribersForInsight(id);
+    }
+
+    revalidatePath("/admin/insights");
+    revalidatePath("/insights");
+    revalidatePath(`/insights/${insight.slug}`);
+
+    return { success: true };
+  } catch (error) {
+    console.error("setInsightStatusAction error:", error);
+    return { success: false, error: "Failed to update status." };
+  }
+}
+
+const bulkIdsSchema = z.array(z.string().min(1)).min(1).max(200);
+
+export async function bulkSetInsightsStatusAction(
+  ids: string[],
+  status: z.infer<typeof insightStatusEnum>
+): Promise<{ success: boolean; error?: string; updated?: number }> {
+  try {
+    await requireAuth();
+    const idList = bulkIdsSchema.safeParse(ids);
+    const parsedStatus = insightStatusEnum.safeParse(status);
+    if (!idList.success || !parsedStatus.success) {
+      return { success: false, error: "Invalid request." };
+    }
+
+    const insights = await db.insight.findMany({
+      where: { id: { in: idList.data } },
+      select: { id: true, status: true, publishedAt: true, slug: true },
+    });
+
+    let updated = 0;
+    for (const insight of insights) {
+      if (insight.status === parsedStatus.data) {
+        continue;
+      }
+      const publishedAt = applyPublishedAtForStatus(insight, parsedStatus.data);
+      const transitionedToPublished =
+        insight.status !== "PUBLISHED" && parsedStatus.data === "PUBLISHED";
+
+      await db.insight.update({
+        where: { id: insight.id },
+        data: { status: parsedStatus.data, publishedAt },
+      });
+      updated += 1;
+
+      if (insight.status === "PUBLISHED" && parsedStatus.data !== "PUBLISHED") {
+        await clearInsightEmailDispatches(insight.id);
+      }
+
+      if (transitionedToPublished) {
+        await notifySubscribersForInsight(insight.id);
+      }
+    }
+
+    revalidatePath("/admin/insights");
+    revalidatePath("/insights");
+    for (const insight of insights) {
+      revalidatePath(`/insights/${insight.slug}`);
+    }
+
+    return { success: true, updated };
+  } catch (error) {
+    console.error("bulkSetInsightsStatusAction error:", error);
+    return { success: false, error: "Failed to update insights." };
+  }
+}
+
+export async function bulkDeleteInsightsAction(
+  ids: string[]
+): Promise<{ success: boolean; error?: string; deleted?: number }> {
+  try {
+    await requireAuth();
+    const idList = bulkIdsSchema.safeParse(ids);
+    if (!idList.success) {
+      return { success: false, error: "Invalid request." };
+    }
+
+    const rows = await db.insight.findMany({
+      where: { id: { in: idList.data } },
+      select: { slug: true },
+    });
+
+    const result = await db.insight.deleteMany({
+      where: { id: { in: idList.data } },
+    });
+
+    revalidatePath("/admin/insights");
+    revalidatePath("/insights");
+    for (const row of rows) {
+      revalidatePath(`/insights/${row.slug}`);
+    }
+
+    return { success: true, deleted: result.count };
+  } catch (error) {
+    console.error("bulkDeleteInsightsAction error:", error);
+    return { success: false, error: "Failed to delete insights." };
   }
 }
 

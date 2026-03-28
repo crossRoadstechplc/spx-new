@@ -24,6 +24,9 @@ This creates:
 
 ### 3. Run E2E Tests
 
+Playwright uses **`http://localhost:3002`** as the default `baseURL` (same as `npm run dev`).  
+To override: `BASE_URL=http://localhost:XXXX npx playwright test`.
+
 ```bash
 # Run all E2E tests
 npm run test:e2e

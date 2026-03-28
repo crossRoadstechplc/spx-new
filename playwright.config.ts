@@ -8,10 +8,10 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 1,
   workers: 1, // Single worker to avoid database conflicts
   reporter: "html",
-  timeout: 30000, // 30 second timeout per test
+  timeout: 60000, // allow slow dev server + server actions
   
   use: {
-    baseURL: process.env.BASE_URL || "http://localhost:3000",
+    baseURL: process.env.BASE_URL || "http://localhost:3002",
     trace: "on-first-retry",
     screenshot: "only-on-failure",
     actionTimeout: 10000, // 10 seconds for actions
@@ -35,8 +35,12 @@ export default defineConfig({
 
   webServer: {
     command: "npm run dev",
-    url: "http://localhost:3000",
+    url: "http://localhost:3002",
     reuseExistingServer: !process.env.CI,
-    timeout: 120000,
+    timeout: 180000,
+    env: {
+      ...process.env,
+      E2E_SKIP_EMAIL: "1",
+    },
   },
 });

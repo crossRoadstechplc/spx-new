@@ -71,7 +71,9 @@ export function PopupLoadingAnimation({ label = "Loading..." }: PopupLoadingAnim
             ))}
           </div>
 
-          <p className="text-xs uppercase tracking-wider text-muted-foreground">{}</p>
+          <p className="text-center text-xs uppercase tracking-wider text-muted-foreground">
+            {label}
+          </p>
         </div>
       </motion.div>
     </div>

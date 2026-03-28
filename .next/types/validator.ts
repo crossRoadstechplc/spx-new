@@ -272,6 +272,15 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
   type __Unused = __Check
 }
 
+// Validate ../../app/newsletter/unsubscribe-email/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/newsletter/unsubscribe-email">> = Specific
+  const handler = {} as typeof import("../../app/newsletter/unsubscribe-email/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
 // Validate ../../app/newsletter/unsubscribe/[token]/page.tsx
 {
   type __IsExpected<Specific extends AppPageConfig<"/newsletter/unsubscribe/[token]">> = Specific
@@ -411,6 +420,15 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
 {
   type __IsExpected<Specific extends RouteHandlerConfig<"/api/newsletter/subscribe">> = Specific
   const handler = {} as typeof import("../../app/api/newsletter/subscribe/route.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../app/api/newsletter/unsubscribe-by-email/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/newsletter/unsubscribe-by-email">> = Specific
+  const handler = {} as typeof import("../../app/api/newsletter/unsubscribe-by-email/route.js")
   type __Check = __IsExpected<typeof handler>
   // @ts-ignore
   type __Unused = __Check

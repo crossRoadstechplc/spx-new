@@ -1,5 +1,6 @@
 /* Final Phase: E2E tests for admin authentication */
 import { test, expect } from "@playwright/test";
+import { loginAsAdmin } from "./helpers/admin-login";
 
 test.describe("Admin Authentication", () => {
   test("admin login page loads", async ({ page }) => {
@@ -10,19 +11,7 @@ test.describe("Admin Authentication", () => {
   });
 
   test("admin login with valid credentials", async ({ page }) => {
-    await page.goto("/admin/login", { waitUntil: "domcontentloaded" });
-    
-    // Fill in credentials (using default seeded admin)
-    await page.fill('input[name="email"]', "admin@spx.com");
-    await page.fill('input[name="password"]', "admin123");
-    
-    // Submit form
-    await page.click('button[type="submit"]');
-    
-    // Wait for navigation to complete
-    await page.waitForURL("/admin", { timeout: 20000 });
-    
-    // Verify we're on the dashboard by checking URL
+    await loginAsAdmin(page);
     expect(page.url()).toContain("/admin");
   });
 
@@ -47,12 +36,7 @@ test.describe("Admin Authentication", () => {
   });
 
   test("admin logout", async ({ page }) => {
-    // Login first
-    await page.goto("/admin/login", { waitUntil: "networkidle" });
-    await page.fill('input[name="email"]', "admin@spx.com");
-    await page.fill('input[name="password"]', "admin123");
-    await page.click('button[type="submit"]');
-    await page.waitForURL("/admin", { timeout: 10000 });
+    await loginAsAdmin(page);
     
     // Click logout
     await page.click('text=Logout');

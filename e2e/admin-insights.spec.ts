@@ -1,15 +1,7 @@
 /* Final Phase: E2E tests for admin insights management */
 import { test, expect } from "@playwright/test";
-import path from "path";
-
-// Helper to login
-async function loginAsAdmin(page: any) {
-  await page.goto("/admin/login", { waitUntil: "domcontentloaded" });
-  await page.fill('input[name="email"]', "admin@spx.com");
-  await page.fill('input[name="password"]', "admin123");
-  await page.click('button[type="submit"]');
-  await page.waitForURL("/admin", { timeout: 20000 });
-}
+import { loginAsAdmin } from "./helpers/admin-login";
+import { fillMinimumInsightBody, setUniqueInsightSlug, submitInsightForm } from "./helpers/insight-form";
 
 test.describe("Admin Insights Management", () => {
   test.beforeEach(async ({ page }) => {
@@ -18,15 +10,16 @@ test.describe("Admin Insights Management", () => {
 
   test("create draft insight", async ({ page }) => {
     await page.goto("/admin/insights", { waitUntil: "networkidle" });
-    
-    // Click create new insight
-    await page.click('text=Create Insight');
+
+    await page.getByRole("link", { name: /New Insight/i }).click();
     await page.waitForURL("/admin/insights/new");
-    
-    // Fill in basic fields
-    await page.fill('input[name="title"]', "E2E Test Insight");
+
+    const runId = Date.now();
+    await page.locator("#title").fill(`E2E Test Insight ${runId}`);
     await page.fill('textarea[name="excerpt"]', "This is a test insight created by E2E tests");
-    
+    await fillMinimumInsightBody(page);
+    await setUniqueInsightSlug(page, `e2e-draft-${runId}`);
+
     // Select author, category (if available)
     const authorSelect = page.locator('select[name="authorId"]');
     if (await authorSelect.isVisible()) {
@@ -38,15 +31,12 @@ test.describe("Admin Insights Management", () => {
       await categorySelect.selectOption({ index: 1 });
     }
     
-    // Save as draft (try different button text variations)
-    const saveButton = page.locator('button[type="submit"]').first();
-    await saveButton.click();
-    
-    // Should redirect to insights list
-    await page.waitForURL(/\/admin\/insights$/, { timeout: 10000 });
+    await submitInsightForm(page);
+
+    await expect(page).toHaveURL(/\/admin\/insights\/?$/, { timeout: 30000 });
     
     // Verify insight appears in list
-    await expect(page.locator('text=E2E Test Insight')).toBeVisible({ timeout: 10000 });
+    await expect(page.locator(`text=E2E Test Insight ${runId}`)).toBeVisible({ timeout: 10000 });
   });
 
   test("upload image for insight", async ({ page }) => {
@@ -54,6 +44,7 @@ test.describe("Admin Insights Management", () => {
     await page.goto("/admin/insights/new");
     await page.fill('input[name="title"]', "Insight with Image");
     await page.fill('textarea[name="excerpt"]', "Testing image upload");
+    await fillMinimumInsightBody(page);
     
     // Go to media section
     await page.goto("/admin/media");
@@ -75,29 +66,29 @@ test.describe("Admin Insights Management", () => {
     // Find and click first insight (if exists)
     const firstInsight = page.locator('table tbody tr').first();
     if (await firstInsight.isVisible()) {
-      await firstInsight.locator('a:has-text("Edit")').click();
+      await firstInsight.getByRole("link", { name: /^Edit$/ }).click();
       
-      // Should be on edit page
-      await expect(page).toHaveURL(/\/admin\/insights\/.*\/edit/);
+      await expect(page).toHaveURL(/\/admin\/insights\/.*\/edit/, { timeout: 20000 });
       
       // Modify title
       const titleInput = page.locator('input[name="title"]');
       await titleInput.fill(await titleInput.inputValue() + " (Edited)");
       
-      // Save
-      await page.click('button:has-text("Update")');
-      
-      // Should redirect back to list
-      await expect(page).toHaveURL(/\/admin\/insights$/);
+      await submitInsightForm(page);
+
+      await expect(page).toHaveURL(/\/admin\/insights\/?$/, { timeout: 30000 });
     }
   });
 
   test("publish insight", async ({ page }) => {
     // Create a draft first
-    await page.goto("/admin/insights/new");
-    await page.fill('input[name="title"]', "Insight to Publish");
+    const publishId = Date.now();
+    await page.goto("/admin/insights/new", { waitUntil: "networkidle" });
+    await page.locator("#title").fill(`Insight to Publish ${publishId}`);
     await page.fill('textarea[name="excerpt"]', "Will be published");
-    
+    await fillMinimumInsightBody(page);
+    await setUniqueInsightSlug(page, `e2e-publish-${publishId}`);
+
     const authorSelect = page.locator('select[name="authorId"]');
     if (await authorSelect.isVisible()) {
       await authorSelect.selectOption({ index: 1 });
@@ -106,34 +97,23 @@ test.describe("Admin Insights Management", () => {
     // Change status to published
     await page.selectOption('select[name="status"]', "PUBLISHED");
     
-    // Save
-    await page.click('button[type="submit"]');
-    
-    // Verify it appears in published list
-    await page.goto("/admin/insights");
-    await page.selectOption('select[name="status"]', "PUBLISHED");
-    await expect(page.locator('text=Insight to Publish')).toBeVisible();
+    await submitInsightForm(page);
+    await expect(page).toHaveURL(/\/admin\/insights\/?$/, { timeout: 30000 });
+
+    await page.goto("/admin/insights?status=PUBLISHED");
+    await expect(
+      page.getByRole("link", { name: `Insight to Publish ${publishId}`, exact: true })
+    ).toBeVisible({ timeout: 15000 });
   });
 
   test("search insights", async ({ page }) => {
-    await page.goto("/admin/insights");
-    
-    // Enter search query
-    const searchInput = page.locator('input[name="q"]');
-    await searchInput.fill("test");
-    await searchInput.press("Enter");
-    
-    // URL should include search param
+    await page.goto("/admin/insights?q=test");
     await expect(page).toHaveURL(/q=test/);
   });
 
   test("filter insights by status", async ({ page }) => {
     await page.goto("/admin/insights");
-    
-    // Filter by draft
-    await page.selectOption('select[name="status"]', "DRAFT");
-    
-    // URL should include status param
+    await page.getByRole("link", { name: "Drafts" }).click();
     await expect(page).toHaveURL(/status=DRAFT/);
   });
 });

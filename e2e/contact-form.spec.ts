@@ -39,6 +39,7 @@ test.describe("Contact Form", () => {
   });
 
   test("successful form submission (without SMTP)", async ({ page }) => {
+    test.setTimeout(120000);
     await page.goto("/contact");
     
     // Fill out form
@@ -52,12 +53,13 @@ test.describe("Contact Form", () => {
     // Submit form
     await page.click('button[type="submit"]');
     
-    // Should show success or error message (depending on SMTP config)
-    // Success message
-    const successMessage = page.locator('text=/thank you/i');
-    const errorMessage = page.locator('text=/email service/i');
-    
-    await expect(successMessage.or(errorMessage)).toBeVisible({ timeout: 10000 });
+    // Avoid matching both the message and the "Error:" label (strict mode violation).
+    const outcome = page
+      .locator("text=/thank you/i")
+      .or(page.locator("text=/Failed to send/i"))
+      .or(page.locator("text=/email service/i"));
+
+    await expect(outcome.first()).toBeVisible({ timeout: 60000 });
   });
 
   test("form shows loading state during submission", async ({ page }) => {

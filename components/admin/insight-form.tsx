@@ -294,7 +294,14 @@ export function InsightForm({ insight, authors, categories, tags }: InsightFormP
         onSelect={handleMediaSelect}
       />
     
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form
+        method="post"
+        className="space-y-6"
+        onSubmit={(e) => {
+          e.preventDefault();
+          void handleSubmit(e);
+        }}
+      >
       {error && (
         <div className="p-4 rounded-lg bg-destructive/10 border border-destructive/20 flex items-start gap-3">
           <AlertCircle className="h-5 w-5 text-destructive flex-shrink-0 mt-0.5" />

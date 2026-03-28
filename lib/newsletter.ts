@@ -1,5 +1,9 @@
 import { db } from "@/lib/db";
-import { sendInsightAnnouncement, sendNewsletterWelcome } from "@/lib/mailer";
+import {
+  getNewsletterEnvelopeTo,
+  sendInsightAnnouncementBcc,
+  sendNewsletterWelcome,
+} from "@/lib/mailer";
 
 export type SubscribeResult = {
   status: "subscribed" | "already_subscribed";
@@ -51,7 +55,19 @@ export async function subscribeToNewsletter(email: string): Promise<SubscribeRes
   return { status: "subscribed" };
 }
 
+/**
+ * Removes per-subscriber send records so the next transition to PUBLISHED
+ * can notify everyone again (e.g. draft → publish → draft → publish).
+ */
+export async function clearInsightEmailDispatches(insightId: string): Promise<void> {
+  await db.insightEmailDispatch.deleteMany({ where: { insightId } });
+}
+
 export async function notifySubscribersForInsight(insightId: string): Promise<void> {
+  if (process.env.E2E_SKIP_EMAIL === "1") {
+    return;
+  }
+
   const insight = await db.insight.findUnique({
     where: { id: insightId },
     select: {
@@ -88,45 +104,108 @@ export async function notifySubscribersForInsight(insightId: string): Promise<vo
     return;
   }
 
-  const BATCH_SIZE = 20;
-  const BATCH_DELAY_MS = 400;
-  for (let start = 0; start < pendingSubscribers.length; start += BATCH_SIZE) {
-    const batch = pendingSubscribers.slice(start, start + BATCH_SIZE);
+  const appUrl = (process.env.APP_URL || "http://localhost:3002").replace(
+    /\/$/,
+    ""
+  );
+  const genericUnsubscribeUrl = `${appUrl}/newsletter/unsubscribe-email`;
+  const envelopeTo = getNewsletterEnvelopeTo();
 
-    await Promise.allSettled(
-      batch.map(async (subscriber) => {
-        const sent = await sendInsightAnnouncement(
-          subscriber.email,
-          {
-            title: insight.title,
-            excerpt: insight.excerpt,
-            slug: insight.slug,
-          },
-          subscriber.unsubscribeToken
-        );
+  const configured = parseInt(
+    process.env.NEWSLETTER_BCC_BATCH_SIZE || "0",
+    10
+  );
+  const chunkSize =
+    Number.isFinite(configured) && configured > 0
+      ? configured
+      : pendingSubscribers.length;
 
-        if (!sent) {
-          return;
-        }
+  const batches = chunkArray(pendingSubscribers, chunkSize);
 
-        try {
-          await db.insightEmailDispatch.create({
-            data: {
-              insightId: insight.id,
-              subscriberId: subscriber.id,
-            },
-          });
-        } catch (error) {
-          console.error("Failed to create insight dispatch record:", error);
-        }
-      })
+  for (let b = 0; b < batches.length; b++) {
+    const batch = batches[b];
+    const bccEmails = batch.map((s) => s.email);
+
+    const sent = await sendInsightAnnouncementBcc(
+      envelopeTo,
+      bccEmails,
+      {
+        title: insight.title,
+        excerpt: insight.excerpt,
+        slug: insight.slug,
+      },
+      genericUnsubscribeUrl
     );
 
-    const hasRemaining = start + BATCH_SIZE < pendingSubscribers.length;
-    if (hasRemaining) {
-      await new Promise((resolve) => setTimeout(resolve, BATCH_DELAY_MS));
+    if (!sent) {
+      console.error(
+        "Insight newsletter BCC send failed for batch",
+        b + 1,
+        "of",
+        batches.length
+      );
+      continue;
+    }
+
+    try {
+      await db.insightEmailDispatch.createMany({
+        data: batch.map((subscriber) => ({
+          insightId: insight.id,
+          subscriberId: subscriber.id,
+        })),
+        skipDuplicates: true,
+      });
+    } catch (error) {
+      console.error("Failed to create insight dispatch records:", error);
+    }
+
+    if (b < batches.length - 1) {
+      const delay = parseInt(
+        process.env.NEWSLETTER_BCC_BATCH_DELAY_MS || "400",
+        10
+      );
+      await new Promise((r) =>
+        setTimeout(r, Number.isFinite(delay) && delay >= 0 ? delay : 400)
+      );
     }
   }
+}
+
+function chunkArray<T>(arr: T[], chunkSize: number): T[][] {
+  if (chunkSize <= 0 || arr.length === 0) {
+    return [arr];
+  }
+  const out: T[][] = [];
+  for (let i = 0; i < arr.length; i += chunkSize) {
+    out.push(arr.slice(i, i + chunkSize));
+  }
+  return out;
+}
+
+/**
+ * Unsubscribe using the email address (for use from BCC broadcast emails where
+ * per-recipient token links are not included).
+ */
+export async function unsubscribeByEmail(
+  email: string
+): Promise<"unsubscribed" | "not_found"> {
+  const normalized = normalizeEmail(email);
+  if (!normalized) {
+    return "not_found";
+  }
+
+  const updated = await db.newsletterSubscriber.updateMany({
+    where: {
+      email: normalized,
+      status: "ACTIVE",
+    },
+    data: {
+      status: "UNSUBSCRIBED",
+      unsubscribedAt: new Date(),
+    },
+  });
+
+  return updated.count > 0 ? "unsubscribed" : "not_found";
 }
 
 export async function unsubscribeFromNewsletter(token: string): Promise<"unsubscribed" | "not_found"> {

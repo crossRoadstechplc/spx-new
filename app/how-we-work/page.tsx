@@ -195,7 +195,7 @@ export default function HowWeWorkPage() {
           <MediaContentBlock 
             layout="image-left" 
             imageVariant="wide"
-            imageSrc="/assets/images/projects/image12.webp"
+            imageSrc="/assets/images/projects/image7.webp"
             imageAlt="Execution model"
           >
             <div className="space-y-4">

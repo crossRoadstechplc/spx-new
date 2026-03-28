@@ -16,6 +16,8 @@ export interface EmailOptions {
   subject: string;
   text: string;
   html: string;
+  /** Blind carbon copy — recipients do not see each other's addresses */
+  bcc?: string | string[];
 }
 
 export interface ContactFormData {
@@ -81,6 +83,9 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
     const sendMailPromise = transport.sendMail({
       from: formattedFrom,
       to: options.to,
+      ...(options.bcc
+        ? { bcc: options.bcc }
+        : {}),
       subject: options.subject,
       text: options.text,
       html: options.html,
@@ -309,14 +314,46 @@ SPX Team
   });
 }
 
-export async function sendInsightAnnouncement(
-  to: string,
+/**
+ * Address used as SMTP "To" when sending BCC broadcasts (recipients are only in BCC).
+ * Set NEWSLETTER_ENVELOPE_TO explicitly, or we derive from SMTP_FROM / SMTP_USER.
+ */
+export function getNewsletterEnvelopeTo(): string {
+  const explicit = process.env.NEWSLETTER_ENVELOPE_TO?.trim();
+  if (explicit) {
+    return explicit;
+  }
+  const from = process.env.SMTP_FROM || "";
+  const angle = from.match(/<([^>]+)>/);
+  if (angle?.[1]?.includes("@")) {
+    return angle[1].trim();
+  }
+  if (from.includes("@") && !from.includes(" ")) {
+    return from.trim();
+  }
+  const user = process.env.SMTP_USER?.trim();
+  if (user?.includes("@")) {
+    return user;
+  }
+  return "noreply@spx.com";
+}
+
+/**
+ * One message to all subscribers via BCC (addresses hidden from each other).
+ * `genericUnsubscribeUrl` must not contain subscriber-specific tokens.
+ */
+export async function sendInsightAnnouncementBcc(
+  envelopeTo: string,
+  bccAddresses: string[],
   insight: InsightAnnouncementData,
-  unsubscribeToken: string
+  genericUnsubscribeUrl: string
 ): Promise<boolean> {
+  if (bccAddresses.length === 0) {
+    return false;
+  }
+
   const appUrl = process.env.APP_URL || "http://localhost:3002";
   const insightUrl = `${appUrl.replace(/\/$/, "")}/insights/${insight.slug}`;
-  const unsubscribeUrl = `${appUrl.replace(/\/$/, "")}/newsletter/unsubscribe/${encodeURIComponent(unsubscribeToken)}`;
   const safeTitle = escapeHtml(insight.title);
   const safeExcerpt = insight.excerpt ? escapeHtml(insight.excerpt) : "";
 
@@ -328,7 +365,8 @@ Read it: ${insightUrl}
 
 ${insight.excerpt || ""}
 
-Unsubscribe: ${unsubscribeUrl}
+Unsubscribe from insight emails (use the email you subscribed with):
+${genericUnsubscribeUrl}
   `.trim();
 
   const html = `
@@ -353,7 +391,7 @@ Unsubscribe: ${unsubscribeUrl}
       ${safeExcerpt ? `<p>${safeExcerpt}</p>` : ""}
       <a class="btn" href="${insightUrl}">Read the full insight</a>
       <p style="margin-top: 18px; color: #6b7280; font-size: 14px;">If the button does not work, use this link: ${insightUrl}</p>
-      <p style="margin-top: 12px; color: #6b7280; font-size: 14px;"><a href="${unsubscribeUrl}">Unsubscribe from future insight emails</a></p>
+      <p style="margin-top: 12px; color: #6b7280; font-size: 14px;"><a href="${genericUnsubscribeUrl}">Unsubscribe from future insight emails</a></p>
     </div>
   </div>
 </body>
@@ -361,7 +399,8 @@ Unsubscribe: ${unsubscribeUrl}
   `.trim();
 
   return sendEmail({
-    to,
+    to: envelopeTo,
+    bcc: bccAddresses,
     subject: `New Insight: ${insight.title}`,
     text,
     html,

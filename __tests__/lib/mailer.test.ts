@@ -1,5 +1,13 @@
 /* Phase 7: Mailer utility tests */
-import { sendContactEmail, sendContactConfirmation, getMailTransporter, resetMailTransporter } from "@/lib/mailer";
+import nodemailer from "nodemailer";
+import {
+  sendContactEmail,
+  sendContactConfirmation,
+  getMailTransporter,
+  resetMailTransporter,
+  getNewsletterEnvelopeTo,
+  sendInsightAnnouncementBcc,
+} from "@/lib/mailer";
 import type { ContactFormData } from "@/lib/mailer";
 
 // Mock nodemailer
@@ -82,6 +90,50 @@ describe("Mailer utilities", () => {
 
       const result = await sendContactConfirmation(data);
       expect(result).toBe(true);
+    });
+  });
+
+  describe("getNewsletterEnvelopeTo", () => {
+    it("prefers NEWSLETTER_ENVELOPE_TO", () => {
+      process.env.NEWSLETTER_ENVELOPE_TO = "broadcasts@spx.com";
+      expect(getNewsletterEnvelopeTo()).toBe("broadcasts@spx.com");
+      delete process.env.NEWSLETTER_ENVELOPE_TO;
+    });
+  });
+
+  describe("sendInsightAnnouncementBcc", () => {
+    afterEach(() => {
+      (nodemailer.createTransport as jest.Mock).mockReturnValue({
+        sendMail: jest.fn().mockResolvedValue({ messageId: "test-message-id" }),
+        verify: jest.fn().mockResolvedValue(true),
+      });
+    });
+
+    it("passes bcc array to nodemailer", async () => {
+      const sendMail = jest.fn().mockResolvedValue({ messageId: "id" });
+      (nodemailer.createTransport as jest.Mock).mockReturnValue({
+        sendMail,
+        verify: jest.fn().mockResolvedValue(true),
+      });
+      resetMailTransporter();
+
+      const ok = await sendInsightAnnouncementBcc(
+        "noreply@spx.com",
+        ["one@test.com", "two@test.com"],
+        { title: "Hello", excerpt: "Ex", slug: "hello" },
+        "https://spx.com/newsletter/unsubscribe-email"
+      );
+
+      expect(ok).toBe(true);
+      expect(sendMail).toHaveBeenCalledTimes(1);
+      const arg = sendMail.mock.calls[0][0] as {
+        to: string;
+        bcc: string[];
+        subject: string;
+      };
+      expect(arg.to).toBe("noreply@spx.com");
+      expect(arg.bcc).toEqual(["one@test.com", "two@test.com"]);
+      expect(arg.subject).toContain("Hello");
     });
   });
 });
