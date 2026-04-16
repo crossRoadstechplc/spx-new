@@ -2,7 +2,9 @@
 // Uses UUID-based identifiers for content entities
 
 generator client {
-  provider = "prisma-client-js"
+  provider   = "prisma-client-js"
+  // Avoids Windows EPERM on renaming query_engine-windows.dll.node when dev servers lock the binary.
+  engineType = "library"
 }
 
 datasource db {

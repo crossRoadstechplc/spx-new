@@ -7,6 +7,7 @@
 /coverage
 
 # next.js
+/.next/
 /out/
 
 # production
@@ -40,3 +41,6 @@ next-env.d.ts
 /test-results/
 /playwright-report/
 /playwright/.cache/
+
+# Markdown (all *.md; already-tracked files stay until removed with git rm --cached)
+*.md
