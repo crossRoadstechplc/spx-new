@@ -12,16 +12,16 @@ export default function WhatWeDoPage() {
     <SiteLayout>
       <PageHero
         title="What We Do"
-        description="Integrated capabilities for designing, building, and scaling market-shaping systems."
+        description="Work across strategy, implementation, and system design."
       />
 
       <section className="py-16 md:py-24">
         <Container>
           <SectionIntro
             align="center"
-            eyebrow="Core Capabilities"
-            title="Five Integrated Service Areas"
-            description="We combine strategic advisory, implementation, ecosystem building, venture creation, and research to deliver comprehensive solutions."
+            eyebrow=""
+            title="Core Capabilities"
+            description=""
           />
         </Container>
       </section>
@@ -37,7 +37,7 @@ export default function WhatWeDoPage() {
             <div className="space-y-4">
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Strategic Advisory</h2>
               <p className="text-muted-foreground leading-relaxed">
-                We advise governments, investors, and institutions on market entry, sector strategy, and system design. Our advisory work integrates market analysis, policy structuring, and stakeholder alignment to create viable pathways for transformation.
+              Work on market entry, sector strategy, and system design.
               </p>
               <ul className="space-y-3 text-muted-foreground">
                 <li className="flex items-start gap-3">
@@ -75,8 +75,7 @@ export default function WhatWeDoPage() {
             <div className="space-y-4">
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Program Design & Implementation</h2>
               <p className="text-muted-foreground leading-relaxed">
-                We design and deliver high-impact programs with a focus on execution, accountability, and measurable outcomes. Our implementation model combines operational rigor with adaptive management to ensure programs achieve their objectives.
-              </p>
+              Design and delivery of programs with emphasis on execution and accountability.</p>
               <ul className="space-y-3 text-muted-foreground">
                 <li className="flex items-start gap-3">
                   <div className="h-1.5 w-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
@@ -111,7 +110,7 @@ export default function WhatWeDoPage() {
             <div className="space-y-4">
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Market Systems Development</h2>
               <p className="text-muted-foreground leading-relaxed">
-                We build and strengthen ecosystems by aligning stakeholders, incentives, and infrastructure. Our approach to market systems development addresses structural constraints and creates enabling conditions for inclusive, sustainable growth.
+              Structuring of market systems through alignment of stakeholders, incentives, and infrastructure.
               </p>
               <ul className="space-y-3 text-muted-foreground">
                 <li className="flex items-start gap-3">
@@ -128,7 +127,7 @@ export default function WhatWeDoPage() {
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="h-1.5 w-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
-                  <span>Infrastructure and enabling environment strengthening</span>
+                  <span>Infrastructure and enabling conditions</span>
                 </li>
               </ul>
             </div>
@@ -149,7 +148,7 @@ export default function WhatWeDoPage() {
             <div className="space-y-4">
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Venture Building & Incubation</h2>
               <p className="text-muted-foreground leading-relaxed">
-                We originate, incubate, and scale ventures that address systemic gaps and unlock new markets. Our venture building model combines strategic design with operational support to create businesses that are commercially viable and developmentally impactful.
+              Origination and development of ventures addressing structural gaps in markets.
               </p>
               <ul className="space-y-3 text-muted-foreground">
                 <li className="flex items-start gap-3">
@@ -158,7 +157,7 @@ export default function WhatWeDoPage() {
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="h-1.5 w-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
-                  <span>Incubation support and go-to-market strategy</span>
+                  <span>Incubation and go-to-market support </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="h-1.5 w-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
@@ -166,7 +165,7 @@ export default function WhatWeDoPage() {
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="h-1.5 w-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
-                  <span>Scale-up support and operational optimization</span>
+                  <span>Operational scale-up  </span>
                 </li>
               </ul>
             </div>
@@ -185,16 +184,15 @@ export default function WhatWeDoPage() {
             <div className="space-y-4">
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Research & Insights</h2>
               <p className="text-muted-foreground leading-relaxed">
-                We generate data-driven insights to inform decision-making and position ideas that shape markets. Our research combines rigorous analysis with practical application to advance understanding and drive strategic action.
-              </p>
+              Research and analysis to inform decision-making and system design.              </p>
               <ul className="space-y-3 text-muted-foreground">
                 <li className="flex items-start gap-3">
                   <div className="h-1.5 w-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
-                  <span>Market analysis and sector assessments</span>
+                  <span>Market and sector assessments</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="h-1.5 w-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
-                  <span>Policy research and institutional analysis</span>
+                  <span>Policy and institutional research</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="h-1.5 w-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
@@ -202,7 +200,7 @@ export default function WhatWeDoPage() {
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="h-1.5 w-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
-                  <span>Thought leadership and knowledge dissemination</span>
+                  <span>Publication and dissemination</span>
                 </li>
               </ul>
             </div>
@@ -212,7 +210,7 @@ export default function WhatWeDoPage() {
 
       <AccentDivider variant="dotted" className="my-16" />
 
-      <section className="py-16 md:py-24">
+      {/* <section className="py-16 md:py-24">
         <Container>
           <div className="max-w-3xl mx-auto text-center space-y-6">
             <SectionIntro
@@ -225,7 +223,7 @@ export default function WhatWeDoPage() {
             </p>
           </div>
         </Container>
-      </section>
+      </section> */}
 
       <CTASection
         variant="primary"

@@ -12,7 +12,7 @@ export default function WhoWeArePage() {
     <SiteLayout>
       <PageHero
         title="Who We Are"
-        description="A strategy-to-implementation platform built for market transformation in emerging markets."
+        description="A strategy-to-implementation platform operating across business and development contexts."
       />
 
       <section className="py-16 md:py-24">
@@ -28,11 +28,11 @@ export default function WhoWeArePage() {
               title="Where Strategy Meets Implementation"
             />
             <p className="text-lg text-muted-foreground leading-relaxed mt-4">
-              SPX is a strategy-to-implementation platform that works at the intersection of business and development. We design, build, and scale market-shaping systems that unlock sustainable growth across emerging markets.
+            SPX focuses on the design, structuring, and execution of market systems.
             </p>
             <p className="text-muted-foreground mt-4 leading-relaxed">
-              We bridge the gap between ambitious ideas and operational reality by bringing together strategic advisory, capital structuring, program implementation, and venture building under one integrated platform. This full-stack approach ensures that ideas translate into measurable, scalable outcomes.
-            </p>
+            The work spans advisory, capital structuring, program implementation, and venture development.
+              </p>
           </MediaContentBlock>
         </Container>
       </section>
@@ -45,17 +45,17 @@ export default function WhoWeArePage() {
             align="center"
             eyebrow="Vision & Mission"
             title="Unlocking Sustainable Growth"
-            description="To unlock sustainable growth by aligning commercial incentives with development outcomes across emerging markets."
+            description="Alignment of commercial incentives with development outcomes."
           />
 
-          <div className="mt-12 max-w-4xl mx-auto space-y-6">
+          {/* <div className="mt-12 max-w-4xl mx-auto space-y-6">
             <p className="text-lg text-muted-foreground leading-relaxed">
               We believe that the most transformative solutions emerge when commercial viability aligns with development impact. Our platform is built on the principle that market systems can be designed to serve both growth and inclusion—creating value for businesses while advancing broader social and economic outcomes.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               We work with governments, development institutions, investors, and enterprises to structure interventions that are commercially sustainable, operationally scalable, and systemically transformative.
             </p>
-          </div>
+          </div> */}
         </Container>
       </section>
 
@@ -69,20 +69,20 @@ export default function WhoWeArePage() {
           >
             <SectionIntro
               eyebrow="Our Approach"
-              title="Originate, Structure, Execute"
+              title=""
             />
             <div className="space-y-6 mt-6">
               <div>
-                <h3 className="font-semibold text-lg mb-2">We Originate Ideas</h3>
-                <p className="text-muted-foreground">We identify systemic gaps, design interventions, and develop concepts that address market failures at scale.</p>
+                <h3 className="font-semibold text-lg mb-2">Origination</h3>
+                <p className="text-muted-foreground">Focus on structural gaps and intervention design.</p>
               </div>
               <div>
-                <h3 className="font-semibold text-lg mb-2">We Structure Systems</h3>
-                <p className="text-muted-foreground">We design the architecture—aligning policy frameworks, capital flows, stakeholder incentives, and operational models to enable sustainable markets.</p>
+                <h3 className="font-semibold text-lg mb-2">Structuring</h3>
+                <p className="text-muted-foreground">Design of system architecture across policy, capital, incentives, and operations.</p>
               </div>
               <div>
-                <h3 className="font-semibold text-lg mb-2">We Execute Solutions</h3>
-                <p className="text-muted-foreground">We move from concept to delivery, managing programs, building ventures, and scaling platforms with operational rigor and accountability.</p>
+                <h3 className="font-semibold text-lg mb-2">Execution</h3>
+                <p className="text-muted-foreground">Execution across programs, platforms, and ventures.</p>
               </div>
             </div>
           </MediaContentBlock>
@@ -96,11 +96,11 @@ export default function WhoWeArePage() {
           <SectionIntro
             align="center"
             eyebrow="Leadership & Team"
-            title="Multidisciplinary Expertise"
-            description="A team combining strategic, technical, financial, and operational capabilities."
+            title="Multidisciplinary expertise across strategy, finance, operations, and technology."
+            description="Capabilities span system design, capital structuring, and implementation."
           />
 
-          <div className="mt-12 max-w-4xl mx-auto space-y-6">
+          {/* <div className="mt-12 max-w-4xl mx-auto space-y-6">
             <p className="text-lg text-muted-foreground leading-relaxed">
               Our team brings together diverse expertise across strategy, finance, operations, technology, and sector-specific knowledge. We combine the analytical rigor of advisory firms, the execution discipline of implementers, and the entrepreneurial mindset of venture builders.
             </p>
@@ -135,7 +135,7 @@ export default function WhoWeArePage() {
                 </p>
               </div>
             ))}
-          </div>
+          </div> */}
         </Container>
       </section>
 
@@ -145,14 +145,14 @@ export default function WhoWeArePage() {
             <SectionIntro
               align="center"
               eyebrow="Looking Ahead"
-              title="Building the Future of Market Systems"
+              title="Continued work on systems integrating strategy, capital, and execution."
             />
-            <p className="text-lg text-muted-foreground leading-relaxed">
+            {/* <p className="text-lg text-muted-foreground leading-relaxed">
               We are committed to advancing a new model of market development—one that integrates strategy, capital, and operations to create systems that are commercially viable, socially inclusive, and environmentally sustainable.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               Partner with us to design, build, and scale solutions that transform markets and unlock sustainable growth.
-            </p>
+            </p> */}
           </div>
         </Container>
       </section>

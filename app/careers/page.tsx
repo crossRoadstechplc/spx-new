@@ -14,7 +14,7 @@ export default function CareersPage() {
     <SiteLayout>
       <PageHero
         title="Careers"
-        description="Join a team committed to building transformative market systems in emerging markets."
+        description="The work requires individuals comfortable operating across strategy, implementation, and venture contexts."
       />
 
       <section className="py-16 md:py-24">
@@ -26,13 +26,43 @@ export default function CareersPage() {
             imageAlt="Team culture"
           >
             <SectionIntro
-              eyebrow="Our Team"
-              title="Built for Impact and Scale"
-              description="SPX attracts professionals who thrive at the intersection of strategy, implementation, and entrepreneurship—combining analytical rigor with operational excellence."
+              eyebrow=""
+              title="Requirements"
+              description=""
             />
             <p className="text-muted-foreground mt-4">
-              We value depth over speed, collaboration over individual achievement, and sustainable impact over short-term wins. Our team brings diverse expertise across strategy, operations, finance, technology, and sector-specific knowledge.
+            * Analytical capability in complex systems
             </p>
+            <p className="text-muted-foreground mt-4">
+            * Operational discipline in execution environments
+            </p>
+            <p className="text-muted-foreground mt-4">
+            * Comfort with ambiguity and early-stage work
+            </p>
+            <p className="text-muted-foreground mt-4">
+            * Ability to engage across stakeholders and institutions
+            </p>
+          </MediaContentBlock>
+        </Container>
+      </section>
+
+      <section className="py-16 md:py-24">
+        <Container>
+          <MediaContentBlock 
+            layout="image-left" 
+            imageVariant="landscape"
+            imageSrc="/assets/images/about/image3.webp"
+            imageAlt="Team culture"
+          >
+            <SectionIntro
+              eyebrow=""
+              title="Work Context"
+              description=""
+            />
+            <p className="text-muted-foreground mt-4">
+            Work spans multiple sectors and geographies, requiring both analytical depth and operational execution.
+            </p>
+            
           </MediaContentBlock>
         </Container>
       </section>
@@ -42,52 +72,21 @@ export default function CareersPage() {
       <section className="py-16 md:py-24 bg-muted/30">
         <Container>
           <SectionIntro
-            align="center"
-            eyebrow="What We Look For"
-            title="Skills & Mindset"
-            description="We seek professionals with strong analytical capabilities, operational discipline, and entrepreneurial mindset."
+            align="left"
+            eyebrow=""
+            title="Applications"
+            description="No open roles are listed at this time."
           />
-
-          <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Strategic Thinking",
-                description: "Ability to analyze complex systems, identify leverage points, and design interventions that create lasting change."
-              },
-              {
-                title: "Operational Excellence",
-                description: "Strong project management skills with focus on execution, accountability, and delivering measurable results."
-              },
-              {
-                title: "Entrepreneurial Mindset",
-                description: "Comfort with ambiguity, resourcefulness in problem-solving, and willingness to build new capabilities."
-              },
-              {
-                title: "Collaborative Approach",
-                description: "Ability to work across disciplines, engage diverse stakeholders, and build consensus around shared objectives."
-              },
-              {
-                title: "Development Orientation",
-                description: "Commitment to creating solutions that align commercial viability with inclusive, sustainable development outcomes."
-              },
-              {
-                title: "Sector Expertise",
-                description: "Deep knowledge in agriculture, energy, technology, trade, finance, or related domains in emerging markets."
-              }
-            ].map((quality, idx) => (
-              <div key={idx} className="space-y-4 p-6 rounded-lg border border-border/40 bg-card">
-                <div className="h-1 w-12 bg-primary rounded" />
-                <h3 className="text-xl font-semibold">{quality.title}</h3>
-                <p className="text-muted-foreground leading-relaxed text-sm">
-                  {quality.description}
-                </p>
-              </div>
-            ))}
-          </div>
+          <p className="text-muted-foreground mt-4">
+          Relevant profiles may be considered on a rolling basis.
+          </p>
+          <p className="text-muted-foreground mt-4">
+          Submissions may include background, areas of work, and relevant material checks.
+          </p>
         </Container>
       </section>
 
-      <section className="py-16 md:py-24">
+      {/* <section className="py-16 md:py-24">
         <Container>
           <MediaContentBlock 
             layout="image-left" 
@@ -105,10 +104,10 @@ export default function CareersPage() {
             </p>
           </MediaContentBlock>
         </Container>
-      </section>
+      </section> */}
 
       <AccentDivider variant="dotted" className="my-16" />
-
+{/* 
       <section className="py-16 md:py-24 bg-muted/30">
         <Container>
           <div className="max-w-3xl mx-auto text-center space-y-6">
@@ -165,11 +164,11 @@ export default function CareersPage() {
             </div>
           </div>
         </Container>
-      </section>
+      </section> */}
 
       <CTASection
         variant="primary"
-        title="Work With Us"
+        title="Contact us for your enquiries"
         description="Join a team building market systems that unlock sustainable growth in emerging markets."
         primaryCTA={{ label: "Contact Us", href: "/contact" }}
         secondaryCTA={{ label: "Our Work", href: "/our-work" }}

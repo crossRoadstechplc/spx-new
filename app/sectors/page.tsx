@@ -10,27 +10,27 @@ export const metadata = {
 const sectors = [
   {
     title: "Agriculture",
-    description: "Building integrated value chains and improving productivity, resilience, and market access for farmers and agribusinesses.",
+    description: "Value chain development across production, processing, and market access.",
     imageSrc: "/assets/images/focus/image1.webp",
   },
   {
     title: "Technology & Platforms",
-    description: "Developing digital infrastructure and platforms that enable trade, data exchange, and service delivery at scale.",
+    description: "Platforms enabling trade, data exchange, and service delivery.",
     imageSrc: "/assets/images/xtras/image28.webp",
   },
   {
     title: "Energy & Sustainability",
-    description: "Advancing scalable solutions in renewable energy, resource efficiency, and circular economic systems.",
+    description: "Deployment of energy systems and resource-efficient models.",
     imageSrc: "/assets/images/focus/image6.webp",
   },
   {
     title: "Trade & Logistics",
-    description: "Strengthening supply chains, market linkages, and trade facilitation systems to reduce friction and expand access.",
+    description: "Systems supporting movement of goods, coordination, and market access.",
     imageSrc: "/assets/images/focus/image5.webp",
   },
   {
     title: "Finance & Markets",
-    description: "Expanding access to finance and structuring innovative financial solutions for enterprises and institutions.",
+    description: "Financial structures and instruments supporting market participation.",
     imageSrc: "/assets/images/xtras/image38.webp",
   },
 ];
@@ -47,8 +47,8 @@ export default function SectorsPage() {
         <Container>
           <SectionIntro
             align="center"
-            eyebrow="Focus Areas"
-            title="Where We Work"
+            eyebrow=""
+            title="Areas of Focus"
             description="We work across sectors where systemic change creates the greatest opportunity for sustainable growth and inclusive development."
           />
         </Container>

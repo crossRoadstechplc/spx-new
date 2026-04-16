@@ -54,7 +54,7 @@ export function NewsletterSection() {
           align="center"
           eyebrow="Newsletter"
           title="Get SPX Insights in Your Inbox"
-          description="Subscribe for strategic notes, new insight alerts, and practical perspectives from our team."
+          description="Subscribe for notes, updates, and perspectives from our team."
         />
 
         <form className="mx-auto mt-8 max-w-xl" onSubmit={handleSubmit}>
@@ -73,9 +73,7 @@ export function NewsletterSection() {
               {isSubmitting ? "Subscribing..." : "Subscribe"}
             </Button>
           </div>
-          <p className="mt-3 text-center text-xs text-muted-foreground">
-            By subscribing, you will be notified when new insights are published.
-          </p>
+          
           {feedback ? (
             <p
               className={`mt-3 text-center text-sm ${

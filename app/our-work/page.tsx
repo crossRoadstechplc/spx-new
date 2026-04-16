@@ -13,19 +13,8 @@ export default function OurWorkPage() {
     <SiteLayout>
       <PageHero
         title="Our Work"
-        description="Projects, platforms, and ventures designed to transform markets and unlock sustainable growth."
+        description="Projects, Platforms, and Ventures."
       />
-
-      <section className="py-16 md:py-24">
-        <Container>
-          <SectionIntro
-            align="center"
-            eyebrow="Three Modalities"
-            title="How We Create Impact"
-            description="We deliver results through large-scale programs, scalable infrastructure, and market-creating ventures."
-          />
-        </Container>
-      </section>
 
       {/* Projects */}
       <section className="py-16 md:py-24">
@@ -37,13 +26,12 @@ export default function OurWorkPage() {
             imageAlt="Large-scale programs and field delivery"
           >
             <div className="space-y-4">
-              <div className="text-sm font-medium text-primary uppercase tracking-wider">Projects</div>
+              <div className="text-sm font-medium text-primary uppercase tracking-wider"></div>
               <h2 className="text-2xl md:text-3xl font-bold tracking-tight">
-                Large-Scale Programs
+                Projects
               </h2>
               <p className="text-muted-foreground leading-relaxed">
-                We design and deliver multi-year programs in partnership with governments and development institutions. These initiatives address systemic constraints, build capacity, and create enabling conditions for inclusive growth.
-              </p>
+              Multi-year programs addressing system-level constraints.              </p>
               <div className="space-y-3 pt-4">
                 <div className="flex items-start gap-3">
                   <div className="h-1.5 w-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
@@ -79,13 +67,12 @@ export default function OurWorkPage() {
             imageAlt="Digital platforms"
           >
             <div className="space-y-4">
-              <div className="text-sm font-medium text-primary uppercase tracking-wider">Platforms</div>
+              <div className="text-sm font-medium text-primary uppercase tracking-wider"></div>
               <h2 className="text-2xl md:text-3xl font-bold tracking-tight">
-                Scalable Systems & Infrastructure
+                Platforms
               </h2>
               <p className="text-muted-foreground leading-relaxed">
-                We build digital and physical infrastructure that enables markets and transactions. These platforms reduce friction, improve transparency, and create new opportunities for trade, data exchange, and service delivery.
-              </p>
+              Infrastructure enabling transactions, coordination, and data exchange.              </p>
               <div className="space-y-3 pt-4">
                 <div className="flex items-start gap-3">
                   <div className="h-1.5 w-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
@@ -119,13 +106,11 @@ export default function OurWorkPage() {
             imageAlt="Venture building"
           >
             <div className="space-y-4">
-              <div className="text-sm font-medium text-primary uppercase tracking-wider">Ventures</div>
+              <div className="text-sm font-medium text-primary uppercase tracking-wider"></div>
               <h2 className="text-2xl md:text-3xl font-bold tracking-tight">
-                High-Potential Businesses
-              </h2>
+              Ventures              </h2>
               <p className="text-muted-foreground leading-relaxed">
-                We originate, incubate, and scale businesses that address critical market gaps. These ventures are designed to be commercially viable while delivering development outcomes—creating jobs, expanding access, and demonstrating new business models.
-              </p>
+              Businesses addressing structural gaps within markets.              </p>
               <div className="space-y-3 pt-4">
                 <div className="flex items-start gap-3">
                   <div className="h-1.5 w-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
@@ -151,61 +136,31 @@ export default function OurWorkPage() {
 
       <AccentDivider variant="dotted" className="my-16" />
 
-      <section className="py-16 md:py-24 bg-muted/30">
-        <Container>
-          <div className="max-w-3xl mx-auto text-center space-y-6">
-            <SectionIntro
-              align="center"
-              eyebrow="Integrated Impact"
-              title="Complementary Modalities"
-            />
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              Our work across projects, platforms, and ventures creates reinforcing effects. Programs build enabling environments, platforms provide infrastructure, and ventures demonstrate commercial viability. Together, they create sustainable market systems that outlast individual interventions.
-            </p>
-          </div>
-        </Container>
-      </section>
-
       <section className="py-16 md:py-24">
         <Container>
           <SectionIntro
             align="center"
             eyebrow="Case Examples"
             title="Representative Work"
-            description="Due to confidentiality, we share high-level examples that illustrate our approach and impact across sectors."
+            description=""
           />
 
           <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
-                category: "Agriculture Project",
-                title: "Value Chain Development Program",
-                description: "Multi-year initiative strengthening farmer organizations, improving post-harvest handling, and building market linkages across coffee, spices, and horticulture sectors."
+                category: "Agriculture",
+                title: "Agriculture Program",
+                description: "Value chain development across production, processing, and market access."
               },
               {
-                category: "Digital Platform",
-                title: "Agricultural Trade Platform",
-                description: "Digital marketplace connecting farmers, cooperatives, and buyers—providing price discovery, logistics coordination, and quality assurance services."
+                category: "Platform",
+                title: "Digital Platform",
+                description: "Systems enabling coordination between market participants."
               },
               {
-                category: "Energy Venture",
-                title: "Distributed Solar Solutions",
-                description: "Enterprise providing productive-use solar systems to farmers and rural businesses—enabling irrigation, processing, and income-generating activities."
-              },
-              {
-                category: "Trade Project",
-                title: "Export Facilitation Program",
-                description: "Initiative building export capacity for smallholder farmers—addressing quality standards, certification, logistics, and international market access."
-              },
-              {
-                category: "Fintech Platform",
-                title: "Agri-Finance System",
-                description: "Digital platform enabling financial institutions to provide tailored agricultural finance products with improved risk assessment and portfolio management."
-              },
-              {
-                category: "Agritech Venture",
-                title: "Agricultural Waste Processing",
-                description: "Technology-enabled venture converting agricultural residues into high-value compost—supporting circular economy and soil health improvement."
+                category: "Energy",
+                title: "Energy Venture",
+                description: "Deployment of distributed systems for productive use."
               }
             ].map((example, idx) => (
               <div key={idx} className="space-y-3 p-6 rounded-lg border border-border/40 bg-card">

@@ -7,7 +7,7 @@ import { LEGAL_DOCUMENT_META, LEGAL_DOCUMENT_PROSE } from "@/lib/legal-document-
 export const metadata = {
   title: "Cookie Notice",
   description:
-    "How SPX uses cookies and similar technologies on spxafrica.com for essential functionality, preferences, and aggregated analytics.",
+    "Use of cookies and similar technologies on spxafrica.com—strictly necessary, functional, analytics, and third parties.",
 };
 
 export default function CookieNoticePage() {
@@ -17,7 +17,7 @@ export default function CookieNoticePage() {
     <SiteLayout>
       <PageHero
         title="Cookie Notice"
-        description="What cookies and similar technologies we use on our public site, and how you can control them."
+        description={`Use of cookies and similar technologies on ${SITE_DOMAIN_LABEL}.`}
       />
 
       <section className="py-16 md:py-24">
@@ -31,60 +31,37 @@ export default function CookieNoticePage() {
             </div>
 
             <h2>Scope</h2>
+            <p>Applies to visitors of the SPX public website.</p>
+
+            <h2>What Cookies Are</h2>
             <p>
-              This notice applies to visitors of <strong>{SITE_DOMAIN_LABEL}</strong>, the public
-              website of <strong>SPX</strong> (formerly marketed as <strong>Spiralytix</strong>), an
-              Ethiopia-based consulting and strategy-to-implementation firm serving partners across
-              Africa. It explains how we use cookies, local storage, and similar technologies
-              (&quot;cookies&quot;) alongside our <Link href="/privacy">Privacy Policy</Link> and{" "}
+              Cookies are small files stored on devices to support functionality and measure usage.
+            </p>
+
+            <h2>Types Used</h2>
+            <h3>Strictly Necessary</h3>
+            <p>Required for site operation, security, and core functionality.</p>
+            <h3>Functional</h3>
+            <p>Store preferences such as language or form inputs.</p>
+            <h3>Analytics</h3>
+            <p>Used in aggregated form to understand usage and improve content.</p>
+            <h3>Third Parties</h3>
+            <p>
+              External services may set cookies when interacting with embedded content. See also
+              our <Link href="/privacy">Privacy Policy</Link> and{" "}
               <Link href="/privacy-notices">Privacy Notices</Link>.
             </p>
 
-            <h2>What cookies are</h2>
+            <h2>Control</h2>
             <p>
-              Cookies are small text files stored on your device. They help the site remember
-              preferences, keep sessions secure, and understand—in aggregate—which content (such as{" "}
-              <Link href="/insights">SPX Insights</Link>) is useful to readers.
-            </p>
-
-            <h2>Types we use</h2>
-            <h3>Strictly necessary</h3>
-            <p>
-              Required for core operation—for example load balancing, security, remembering cookie
-              choices, or keeping you signed in if we offer authenticated areas. These cannot be
-              switched off without breaking the experience.
-            </p>
-            <h3>Functional</h3>
-            <p>
-              Used to remember choices you make (such as language or form drafts where implemented).
-            </p>
-            <h3>Analytics</h3>
-            <p>
-              Where enabled, we may use first-party or privacy-oriented analytics to collect
-              aggregated usage data (pages viewed, approximate region, device type). We use this to
-              improve navigation between our consulting, sectors, and insights content—not to build
-              individual advertising profiles on this site.
-            </p>
-
-            <h2>Third parties</h2>
-            <p>
-              Embedded media or maps may set their own cookies when you interact with them. Those
-              services have separate policies; we encourage you to review them when you leave our
-              domain.
-            </p>
-
-            <h2>How to control cookies</h2>
-            <p>
-              You can delete or block cookies through your browser settings. You can also read{" "}
-              <Link href="/cookie-settings">Cookie Settings</Link> for how we present choices on
-              this site. Blocking all cookies may affect form behavior or saved preferences.
+              Cookies can be managed through browser settings. Blocking cookies may affect
+              functionality. For how we present choices on this site, see{" "}
+              <Link href="/cookie-settings">Cookie settings</Link>.
             </p>
 
             <h2>Contact</h2>
             <p>
-              Questions about this notice:{" "}
-              <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> or{" "}
-              <Link href="/contact">Contact SPX</Link>.
+              <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
             </p>
           </div>
         </Container>

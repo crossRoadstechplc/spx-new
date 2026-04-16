@@ -26,7 +26,7 @@ export default function ContactPage() {
     <SiteLayout>
       <PageHero
         title="Contact"
-        description="Partner with us to design, build, and scale transformative systems."
+        description="Engagements related to market systems, capital structuring, and implementation."
       />
 
       <section className="py-16 md:py-24">
@@ -96,16 +96,9 @@ export default function ContactPage() {
               <AccentDivider variant="gradient" />
 
               <div>
-                <h3 className="text-lg font-semibold mb-3">Response Time</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  We typically respond to inquiries within 1-2 business days. For urgent matters, please note that in your message.
-                </p>
-              </div>
-
-              <div>
                 <h3 className="text-lg font-semibold mb-3">Confidentiality</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">
-                  All inquiries are treated with strict confidentiality. We understand that strategic conversations often involve sensitive market intelligence and investment considerations.
+                  Information shared is treated as confidential.
                 </p>
               </div>
             </div>
@@ -116,7 +109,7 @@ export default function ContactPage() {
                 <div className="mb-8">
                   <h2 className="text-2xl font-bold mb-2">Send a Message</h2>
                   <p className="text-muted-foreground">
-                    Fill out the form below and we&apos;ll get back to you promptly.
+                    Fill out the form below and we will follow up by email or phone as appropriate.
                   </p>
                 </div>
                 <ContactForm />

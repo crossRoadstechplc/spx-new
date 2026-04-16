@@ -1,13 +1,13 @@
 /* Your Privacy Choices page */
 import Link from "next/link";
 import { SiteLayout, PageHero, Container } from "@/components/layout";
-import { CONTACT_EMAIL } from "@/lib/seo-config";
+import { CONTACT_EMAIL, SITE_DOMAIN_LABEL } from "@/lib/seo-config";
 import { LEGAL_DOCUMENT_META, LEGAL_DOCUMENT_PROSE } from "@/lib/legal-document-classes";
 
 export const metadata = {
   title: "Your Privacy Choices",
   description:
-    "Manage marketing email, understand your rights, and contact SPX about personal data related to spxafrica.com and SPX Insights.",
+    `Manage marketing email, cookies, and personal data requests for ${SITE_DOMAIN_LABEL} and SPX Insights—in line with our Privacy Policy and Privacy Notices.`,
 };
 
 export default function PrivacyChoicesPage() {
@@ -17,7 +17,7 @@ export default function PrivacyChoicesPage() {
     <SiteLayout>
       <PageHero
         title="Your Privacy Choices"
-        description="Control how SPX uses your information for newsletters, inquiries, and analytics—aligned with our work in Ethiopia and across Africa."
+        description={`How to control SPX use of your information on ${SITE_DOMAIN_LABEL}—newsletters, inquiries, cookies, and data requests—consistent with our Privacy Notices.`}
       />
 
       <section className="py-16 md:py-24">
@@ -32,15 +32,15 @@ export default function PrivacyChoicesPage() {
 
             <h2>Marketing and Insights email</h2>
             <p>
-              If you subscribed to updates about <strong>SPX Insights</strong> or events, you can
+              If you subscribed to <strong>SPX Insights</strong> or related updates, you can
               withdraw consent at any time:
             </p>
             <ul>
-              <li>Use the unsubscribe link in the footer of any marketing email we send.</li>
+              <li>Use the unsubscribe link in any marketing email we send.</li>
               <li>
-                Or use our dedicated{" "}
-                <Link href="/newsletter/unsubscribe-email">email unsubscribe</Link> page if you no
-                longer have the original message.
+                Or use our{" "}
+                <Link href="/newsletter/unsubscribe-email">email unsubscribe</Link> page if you
+                no longer have the original message.
               </li>
             </ul>
             <p>
@@ -50,37 +50,34 @@ export default function PrivacyChoicesPage() {
 
             <h2>Access, correction, and deletion</h2>
             <p>
-              Depending on your jurisdiction, you may request access to personal data we hold
-              about you, ask us to correct inaccuracies, or request deletion where no overriding
-              legal obligation applies. SPX is headquartered in <strong>Ethiopia</strong>; we
-              respond to valid requests in a reasonable timeframe.
+              Depending on your jurisdiction, you may request access, correction, or deletion of
+              personal data where no overriding legal obligation applies. SPX is headquartered in{" "}
+              <strong>Addis Ababa, Ethiopia</strong>.
             </p>
             <p>
-              To make a request, email{" "}
-              <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> with &quot;Privacy request&quot;
-              in the subject line, your name, and enough detail for us to verify your identity
-              without collecting excessive sensitive data.
+              Email <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> with
+              &quot;Privacy request&quot; in the subject line, your name, and enough detail to
+              verify your identity without collecting excessive sensitive data.
             </p>
 
-            <h2>Cookies and analytics</h2>
+            <h2>Cookies</h2>
             <p>
-              For choices about cookies and similar technologies, read our{" "}
-              <Link href="/cookie-notice">Cookie notice</Link> and{" "}
-              <Link href="/cookie-settings">Cookie Settings</Link>. Browser-level controls remain
-              the primary way to block non-essential storage.
+              For categories and control, see the <Link href="/cookie-notice">Cookie notice</Link>{" "}
+              and <Link href="/cookie-settings">Cookie settings</Link>. Browser settings remain the
+              primary way to block non-essential storage.
             </p>
 
             <h2>Full policies</h2>
             <p>
-              These choices summarize common actions. The authoritative descriptions of processing
-              are in our <Link href="/privacy">Privacy Policy</Link> and sector-specific{" "}
-              <Link href="/privacy-notices">Privacy Notices</Link>.
+              Authoritative detail is in the <Link href="/privacy">Privacy Policy</Link> and{" "}
+              <Link href="/privacy-notices">Privacy Notices</Link> (overview of handling when using
+              the site, Insights, newsletter, and contact).
             </p>
 
             <h2>Contact</h2>
             <p>
-              Questions: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> or{" "}
-              <Link href="/contact">Contact SPX</Link>.
+              <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> ·{" "}
+              <Link href="/contact">Contact</Link>
             </p>
           </div>
         </Container>

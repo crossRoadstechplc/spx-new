@@ -21,7 +21,7 @@ export default function HowWeWorkPage() {
             align="center"
             eyebrow="Our Methodology"
             title="Four Pillars of Execution"
-            description="We structure interventions that integrate policy, capital, and operations—moving seamlessly from concept to delivery."
+            description=""
           />
         </Container>
       </section>
@@ -36,11 +36,12 @@ export default function HowWeWorkPage() {
             imageAlt="System design"
           >
             <div className="space-y-4">
+              <h3>01</h3>
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight">System Design</h2>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                We take a holistic view of market systems, structuring interventions that integrate policy frameworks, capital flows, stakeholder incentives, and operational models.
+              Market analysis, architecture design, and intervention mapping.
               </p>
-              <div className="space-y-3 pt-4">
+              {/* <div className="space-y-3 pt-4">
                 <div className="flex items-start gap-3">
                   <div className="h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
                     <div className="h-2 w-2 rounded-full bg-primary" />
@@ -68,7 +69,7 @@ export default function HowWeWorkPage() {
                     <p className="text-sm text-muted-foreground">Defining pathways, sequencing, and critical dependencies</p>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </MediaContentBlock>
         </Container>
@@ -86,11 +87,12 @@ export default function HowWeWorkPage() {
             imageAlt="Partnership building"
           >
             <div className="space-y-4">
+              <h3>02</h3>
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Partnerships & Ecosystem Building</h2>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                We convene and align public and private stakeholders to drive coordinated action. Sustainable market systems require multi-stakeholder engagement and shared commitment.
+                Stakeholder coordination, incentive alignment, and governance structures.
               </p>
-              <div className="space-y-3 pt-4">
+              {/* <div className="space-y-3 pt-4">
                 <div className="flex items-start gap-3">
                   <div className="h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
                     <div className="h-2 w-2 rounded-full bg-primary" />
@@ -118,7 +120,7 @@ export default function HowWeWorkPage() {
                     <p className="text-sm text-muted-foreground">Establishing governance structures and collaboration frameworks</p>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </MediaContentBlock>
         </Container>
@@ -134,11 +136,11 @@ export default function HowWeWorkPage() {
             imageAlt="Capital structuring"
           >
             <div className="space-y-4">
+              <h3>03</h3>
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Capital Structuring</h2>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                We design financing solutions that align risk, return, and impact. Our approach to capital structuring ensures interventions are financially sustainable and commercially viable.
-              </p>
-              <div className="space-y-3 pt-4">
+              Financial modeling, blended finance design, and investment structuring.              </p>
+              {/* <div className="space-y-3 pt-4">
                 <div className="flex items-start gap-3">
                   <div className="h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
                     <div className="h-2 w-2 rounded-full bg-primary" />
@@ -166,7 +168,7 @@ export default function HowWeWorkPage() {
                     <p className="text-sm text-muted-foreground">Structuring investment opportunities and managing capital deployment</p>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </MediaContentBlock>
         </Container>
@@ -184,11 +186,11 @@ export default function HowWeWorkPage() {
             imageAlt="Operational execution and delivery"
           >
             <div className="space-y-4">
+              <h3>04</h3>
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Execution Model</h2>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                We move from concept to delivery, ensuring operational rigor and scalability. Our execution model combines strong project management with adaptive learning to achieve measurable outcomes.
-              </p>
-              <div className="space-y-3 pt-4">
+              Program management, performance monitoring, and adaptive delivery.              </p>
+              {/* <div className="space-y-3 pt-4">
                 <div className="flex items-start gap-3">
                   <div className="h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
                     <div className="h-2 w-2 rounded-full bg-primary" />
@@ -216,13 +218,13 @@ export default function HowWeWorkPage() {
                     <p className="text-sm text-muted-foreground">Learning systems that enable continuous improvement and course correction</p>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </MediaContentBlock>
         </Container>
       </section>
 
-      <section className="py-16 md:py-24">
+      {/* <section className="py-16 md:py-24">
         <Container>
           <div className="max-w-3xl mx-auto text-center space-y-6">
             <SectionIntro
@@ -235,7 +237,7 @@ export default function HowWeWorkPage() {
             </p>
           </div>
         </Container>
-      </section>
+      </section> */}
 
       <CTASection
         variant="primary"

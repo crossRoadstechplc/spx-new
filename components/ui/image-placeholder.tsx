@@ -49,12 +49,29 @@ export function ImagePlaceholder({
     "/assets/images/xtras/image13.webp",
     "/assets/images/xtras/image14.webp",
     "/assets/images/xtras/image16.webp",
+    "/assets/images/xtras/image18.webp",
+    "/assets/images/xtras/image21.webp",
+    "/assets/images/xtras/image24.webp",
+    "/assets/images/xtras/image31.webp",
+    "/assets/images/xtras/image42.webp",
   ];
   const [resolvedSrc, setResolvedSrc] = React.useState(src);
+  const [fallbackIndex, setFallbackIndex] = React.useState<number | null>(null);
+
+  const getStableStartIndex = React.useCallback(() => {
+    const seed = src || alt || variant || "spx-image";
+    let hash = 0;
+    for (let i = 0; i < seed.length; i += 1) {
+      hash = (hash << 5) - hash + seed.charCodeAt(i);
+      hash |= 0;
+    }
+    return Math.abs(hash) % fallbackSources.length;
+  }, [alt, src, variant, fallbackSources.length]);
 
   React.useEffect(() => {
     setResolvedSrc(src);
-  }, [src]);
+    setFallbackIndex(null);
+  }, [src, alt, variant]);
 
   return (
     <div className={cn("group relative", className)} {...props}>
@@ -78,9 +95,13 @@ export function ImagePlaceholder({
             className="object-cover"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             onError={() => {
-              const fallback = fallbackSources[Math.floor(Math.random() * fallbackSources.length)];
-              if (resolvedSrc !== fallback) {
-                setResolvedSrc(fallback);
+              const startIndex = fallbackIndex ?? getStableStartIndex();
+              const nextIndex = fallbackIndex === null ? startIndex : (fallbackIndex + 1) % fallbackSources.length;
+              const nextFallback = fallbackSources[nextIndex];
+
+              if (resolvedSrc !== nextFallback) {
+                setFallbackIndex(nextIndex);
+                setResolvedSrc(nextFallback);
               }
             }}
           />

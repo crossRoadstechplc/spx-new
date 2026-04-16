@@ -27,8 +27,8 @@ export default function HomePage() {
       <PageHero
         size="large"
         title="Strategy-to-Implementation"
-        subtitle="Platform"
-        description="We work at the intersection of business and development to design, build, and scale market-shaping systems across emerging markets."
+        subtitle=""
+        description="We work on the design, structuring, and execution of market systems. Across environments where policy, capital, and operations intersect."
         carouselImages={[
           "/assets/images/hero/image1.webp",
           "/assets/images/hero/image3.webp",
@@ -58,10 +58,13 @@ export default function HomePage() {
                 title="A Platform Built for Market Transformation"
               />
               <p className="text-lg text-muted-foreground leading-relaxed">
-                SPX is a strategy-to-implementation platform that bridges the gap between ambitious ideas and operational reality. We work at the intersection of business and development to design, build, and scale systems that unlock sustainable growth in emerging markets.
+              SPX operates at the intersection of business and development.
               </p>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                We originate ideas, structure systems, and execute solutions—bringing together strategic advisory, capital structuring, program implementation, and venture building under one integrated platform.
+              Our work focuses on the design, structuring, and execution of market systems.
+              </p>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+              It moves from origination to structuring to execution, across advisory, capital, and implementation contexts.
               </p>
               <div className="pt-4">
                 <Link
@@ -83,33 +86,32 @@ export default function HomePage() {
       <section className="py-16 md:py-24 bg-muted/30">
         <Container>
           <SectionIntro
-            align="center"
+            align="left"
             eyebrow="What We Do"
-            title="Integrated Capabilities for Market Systems"
-            description="Five core service areas that work together to design, build, and scale transformative solutions."
+            title="Areas of Work"
           />
 
           <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
                 title: "Strategic Advisory",
-                description: "Advising governments, investors, and institutions on market entry, sector strategy, and system design."
+                description: "Work on market entry, sector strategy, and system design."
               },
               {
                 title: "Program Design & Implementation",
-                description: "Designing and delivering high-impact programs with focus on execution, accountability, and measurable outcomes."
+                description: "Design and delivery of programs with emphasis on execution and accountability."
               },
               {
                 title: "Market Systems Development",
-                description: "Building and strengthening ecosystems by aligning stakeholders, incentives, and infrastructure."
+                description: "Structuring market systems through alignment of stakeholders, incentives, and infrastructure."
               },
               {
                 title: "Venture Building & Incubation",
-                description: "Originating, incubating, and scaling ventures that address systemic gaps and unlock new markets."
+                description: "Origination and development of ventures addressing structural gaps in markets."
               },
               {
                 title: "Research & Insights",
-                description: "Generating data-driven insights to inform decision-making and position ideas that shape markets."
+                description: "Research and analysis to inform decision-making and system design."
               }
             ].map((capability, idx) => (
               <div key={idx} className="space-y-4 p-6 rounded-lg border border-border/40 bg-card hover:border-primary/40 transition-all">
@@ -121,6 +123,7 @@ export default function HomePage() {
             ))}
           </div>
 
+        
           <div className="mt-12 text-center">
             <Link
               href="/what-we-do"
@@ -139,7 +142,7 @@ export default function HomePage() {
           <MediaContentBlock 
             layout="image-left" 
             imageVariant="wide"
-            imageSrc="/assets/images/approach/image6.webp"
+            imageSrc="/assets/images/xtras/image17.webp"
             imageAlt="Structured approach from analysis through to delivery"
           >
             <div className="space-y-4">
@@ -148,10 +151,10 @@ export default function HomePage() {
                 title="From Concept to Delivery"
               />
               <p className="text-lg text-muted-foreground leading-relaxed">
-                We take a holistic approach to market systems development—structuring interventions that integrate policy, capital, and operations. Our model moves seamlessly from strategic design to operational execution, ensuring solutions are built for scale and sustainability.
+              We structure interventions that integrate policy, capital, and operations.
               </p>
               <p className="text-muted-foreground">
-                We convene public and private stakeholders, structure financing solutions that align risk and return with impact, and maintain operational rigor throughout delivery.
+              The model moves from strategic design to operational execution.
               </p>
               <div className="pt-4">
                 <Link
@@ -173,10 +176,10 @@ export default function HomePage() {
       <section className="py-16 md:py-24 bg-muted/30">
         <Container>
           <SectionIntro
-            align="center"
+            align="left"
             eyebrow="Focus Areas"
-            title="Sectors Shaping Emerging Markets"
-            description="We work across critical sectors where systemic change creates the greatest opportunity for sustainable growth."
+            title="Sectors"
+            description="Work across sectors where market structure is evolving."
           />
 
           <div className="mt-16">
@@ -185,18 +188,28 @@ export default function HomePage() {
               cards={[
                 {
                   title: "Agriculture",
-                  description: "Building integrated value chains and improving productivity, resilience, and market access.",
-                  imageSrc: "/assets/images/focus/image2.webp"
+                  description: "Value chain development across production, processing, and market access.",
+                  imageSrc: "/assets/images/focus/image6.webp"
                 },
                 {
                   title: "Technology & Platforms",
-                  description: "Developing digital infrastructure and platforms that enable trade, data, and services.",
-                  imageSrc: "/assets/images/xtras/image28.webp"
+                  description: "Platforms enabling trade, data exchange, and service delivery.",
+                  imageSrc: "/assets/images/xtras/image27.webp"
                 },
                 {
                   title: "Energy & Sustainability",
-                  description: "Advancing scalable solutions in renewable energy, resource efficiency, and circular systems.",
-                  imageSrc: "/assets/images/focus/image8.webp"
+                  description: "Deployment of energy systems and resource-efficient models.",
+                  imageSrc: "/assets/images/xtras/image36.webp"
+                },
+                {
+                  title: "Trade and Logistics",
+                  description: "Systems supporting movement of goods, coordination, and market access.",
+                  imageSrc: "/assets/images/xtras/image21.webp"
+                },
+                {
+                  title: "Finance and Markets",
+                  description: "Financial structures and instruments supporting market participation.",
+                  imageSrc: "/assets/images/focus/image1.webp"
                 }
               ]}
             />
@@ -219,24 +232,23 @@ export default function HomePage() {
         <Container>
           <SectionIntro
             align="center"
-            eyebrow="Projects & Impact"
-            title="Building Systems That Scale"
-            description="Our work spans large-scale programs, scalable platforms, and high-potential ventures designed to transform markets."
+            eyebrow="Our Work"
+            title="Projects, Platforms, Ventures"
           />
 
           <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
                 title: "Projects",
-                description: "Large-scale programs delivered in partnership with governments and development institutions."
+                description: "Multi-year programs delivered with governments and institutions, focused on system-level interventions."
               },
               {
                 title: "Platforms",
-                description: "Scalable systems and infrastructure designed to enable markets and transactions."
+                description: "Systems and infrastructure enabling transactions, coordination, and data exchange."
               },
               {
                 title: "Ventures",
-                description: "High-potential businesses incubated and scaled to address critical market gaps."
+                description: "Businesses developed to address structural gaps and operate within the systems created."
               }
             ].map((category, idx) => (
               <div key={idx} className="space-y-3 p-6 rounded-lg border border-border/40 bg-card hover:border-primary/40 transition-all">
@@ -247,6 +259,45 @@ export default function HomePage() {
               </div>
             ))}
           </div>
+
+          <div className="mt-10 space-y-4">
+            <div className="text-center space-y-2">
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+                Case Examples
+              </h3>
+              
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {[
+                {
+                  title: "Agriculture Program",
+                  description:
+                    "Value chain development across production, processing, and market access."
+                },
+                {
+                  title: "Trade Platform",
+                  description:
+                    "Marketplace enabling coordination between producers, intermediaries, and buyers."
+                },
+                {
+                  title: "Energy Venture",
+                  description:
+                    "Deployment of distributed systems for productive use."
+                }
+              ].map((example, idx) => (
+                <div
+                  key={idx}
+                  className="p-4 rounded-lg border border-border/30 bg-background/40 space-y-2"
+                >
+                  <p className="font-medium text-sm">{example.title}</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {example.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
 
           <div className="mt-12 text-center">
             <Link
@@ -269,7 +320,7 @@ export default function HomePage() {
       <CTASection
         variant="primary"
         title="Ready to Transform Markets?"
-        description="Partner with us to design, build, and scale solutions that unlock sustainable growth in emerging markets."
+        description="Partner with us to explore opportunities in market systems design and execution."
         primaryCTA={{ label: "Get in Touch", href: "/contact" }}
         secondaryCTA={{ label: "About SPX", href: "/who-we-are" }}
       />

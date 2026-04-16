@@ -5,7 +5,7 @@ import { SiteLayout, PageHero, Container } from "@/components/layout";
 export const metadata = {
   title: "Sitemap",
   description:
-    "Browse all main sections of spxafrica.com—SPX consulting, strategy-to-implementation, sectors, SPX Insights, partners, and legal pages.",
+    "Main sections of spxafrica.com—who we are, what we do, insights, contact, terms, privacy notices, cookie notice, accessibility, and privacy choices.",
 };
 
 type SitemapGroup = { title: string; links: { href: string; label: string }[] };
@@ -40,7 +40,7 @@ const groups: SitemapGroup[] = [
       { href: "/privacy", label: "Privacy Policy" },
       { href: "/privacy-notices", label: "Privacy Notices" },
       { href: "/privacy-choices", label: "Your Privacy Choices" },
-      { href: "/cookie-notice", label: "Cookie notice" },
+      { href: "/cookie-notice", label: "Cookie Notice" },
       { href: "/cookie-settings", label: "Cookie Settings" },
       { href: "/accessibility", label: "Accessibility" },
       { href: "/sitemap", label: "Sitemap" },
@@ -53,22 +53,22 @@ export default function SitemapPage() {
     <SiteLayout>
       <PageHero
         title="Sitemap"
-        description="Quick links to every main area of the SPX public site—consulting, implementation, insights, and policies."
+        description="Quick links across the SPX public site—capabilities, insights, contact, and policies (terms, privacy notices, cookies, accessibility, privacy choices)."
       />
 
       <section className="py-16 md:py-24">
         <Container>
           <div className="max-w-4xl mx-auto space-y-14 md:space-y-16">
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-3xl">
-              <strong>SPX</strong> (formerly <strong>Spiralytix</strong>) publishes this site for
-              partners exploring advisory, program delivery, and market systems work across{" "}
-              <strong>Ethiopia</strong>, <strong>East Africa</strong>, and the wider{" "}
-              <strong>African</strong> continent. Use the groups below to navigate; individual
-              insight articles are listed on the{" "}
-              <Link href="/insights" className="text-primary font-medium hover:underline">
-                Insights
-              </Link>{" "}
-              index and are included in the machine-readable{" "}
+              Use this page to navigate <strong>spxafrica.com</strong>: company and methodology,
+              sectors and work, <Link href="/insights" className="text-primary font-medium hover:underline">SPX Insights</Link>, and{" "}
+              <Link href="/contact" className="text-primary font-medium hover:underline">contact</Link>. Legal and trust pages include{" "}
+              <Link href="/terms" className="text-primary font-medium hover:underline">Terms and Conditions</Link>,{" "}
+              <Link href="/privacy-notices" className="text-primary font-medium hover:underline">Privacy Notices</Link>,{" "}
+              <Link href="/cookie-notice" className="text-primary font-medium hover:underline">Cookie Notice</Link>,{" "}
+              <Link href="/cookie-settings" className="text-primary font-medium hover:underline">Cookie settings</Link>,{" "}
+              <Link href="/accessibility" className="text-primary font-medium hover:underline">Accessibility</Link>, and{" "}
+              <Link href="/privacy-choices" className="text-primary font-medium hover:underline">Your privacy choices</Link>. Individual insight URLs are listed on the Insights index and in{" "}
               <Link href="/sitemap.xml" className="text-primary font-medium hover:underline">
                 sitemap.xml
               </Link>{" "}

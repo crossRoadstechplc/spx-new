@@ -1,13 +1,13 @@
 /* Cookie Settings page */
 import Link from "next/link";
 import { SiteLayout, PageHero, Container } from "@/components/layout";
-import { CONTACT_EMAIL } from "@/lib/seo-config";
+import { CONTACT_EMAIL, SITE_DOMAIN_LABEL } from "@/lib/seo-config";
 import { LEGAL_DOCUMENT_META, LEGAL_DOCUMENT_PROSE } from "@/lib/legal-document-classes";
 
 export const metadata = {
   title: "Cookie Settings",
   description:
-    "How to manage cookie and privacy preferences for SPX (spxafrica.com), including browser controls and how to reach us.",
+    `How to manage cookies and similar technologies on ${SITE_DOMAIN_LABEL}—browser controls, essential cookies, and contact.`,
 };
 
 export default function CookieSettingsPage() {
@@ -17,7 +17,7 @@ export default function CookieSettingsPage() {
     <SiteLayout>
       <PageHero
         title="Cookie Settings"
-        description="Control how cookies and similar technologies work when you use our public website."
+        description={`Manage cookies and similar technologies when you use ${SITE_DOMAIN_LABEL}, in line with our Cookie notice.`}
       />
 
       <section className="py-16 md:py-24">
@@ -30,12 +30,18 @@ export default function CookieSettingsPage() {
               <p className="mt-2 text-sm text-foreground tabular-nums">{lastUpdated}</p>
             </div>
 
-            <h2>What you can change today</h2>
+            <h2>What this page is for</h2>
             <p>
-              SPX&apos;s public marketing site is designed to use a small set of cookies—mainly
-              for security, essential functionality, and aggregated analytics. We do not run
-              high-frequency behavioral ad networks on this domain. The most effective way to
-              refine tracking is through your browser:
+              The SPX public site uses cookies and similar technologies as described in our{" "}
+              <Link href="/cookie-notice">Cookie notice</Link>: strictly necessary, functional where
+              applicable, analytics in aggregated form, and possible third-party cookies from
+              embedded content. This page explains how you can control them.
+            </p>
+
+            <h2>Browser controls</h2>
+            <p>
+              You can delete or block cookies through your browser. Blocking cookies may affect
+              site functionality (for example forms or saved preferences).
             </p>
             <ul>
               <li>
@@ -54,36 +60,29 @@ export default function CookieSettingsPage() {
               </li>
             </ul>
 
-            <h2>Essential cookies</h2>
+            <h2>Strictly necessary</h2>
             <p>
-              Some cookies are required to operate forms, protect against abuse, or remember that
-              you have dismissed a notice. If you block all cookies, parts of the{" "}
-              <Link href="/contact">contact</Link> experience or admin-adjacent flows may not work
-              as expected.
+              Some storage is required for core operation, security, and remembering essential
+              choices. These cannot be turned off through the site without breaking basic use.
             </p>
 
-            <h2>Analytics preferences</h2>
+            <h2>Analytics and preferences</h2>
             <p>
-              If we enable privacy-preserving analytics on this site, we configure them to reduce
-              personal identifiers and to support improvement of our{" "}
-              <Link href="/insights">Insights</Link> and sector pages. For details on what is
-              stored, see the <Link href="/cookie-notice">Cookie notice</Link>.
+              Non-essential cookies (for example preferences or aggregated analytics) can often be
+              limited via browser settings. Details on categories appear in the{" "}
+              <Link href="/cookie-notice">Cookie notice</Link>.
             </p>
 
             <h2>Privacy choices beyond cookies</h2>
             <p>
-              Marketing email and personal data requests are handled under our{" "}
-              <Link href="/privacy">Privacy Policy</Link> and{" "}
-              <Link href="/privacy-choices">Your Privacy Choices</Link>, not only through cookie
-              controls.
+              Marketing and personal data requests are covered under our{" "}
+              <Link href="/privacy">Privacy Policy</Link>, <Link href="/privacy-notices">Privacy Notices</Link>, and{" "}
+              <Link href="/privacy-choices">Your privacy choices</Link>.
             </p>
 
-            <h2>Need help?</h2>
+            <h2>Contact</h2>
             <p>
-              If you cannot adjust a preference or have a question about tracking on{" "}
-              <strong>spxafrica.com</strong>, email{" "}
-              <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> and we will respond within a
-              reasonable time.
+              <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
             </p>
           </div>
         </Container>

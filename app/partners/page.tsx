@@ -12,10 +12,10 @@ export default function PartnersPage() {
     <SiteLayout>
       <PageHero
         title="Partners"
-        description="Building transformative solutions through strategic collaboration across sectors and stakeholders."
+        description="Engagements span development institutions, enterprises, and governments."
       />
 
-      <section className="py-16 md:py-24">
+      {/* <section className="py-16 md:py-24">
         <Container>
           <SectionIntro
             align="center"
@@ -24,7 +24,7 @@ export default function PartnersPage() {
             description="We work with development institutions, private enterprises, and governments to create market systems that deliver both commercial and development outcomes."
           />
         </Container>
-      </section>
+      </section> */}
 
       <section className="py-16 md:py-24">
         <Container>
@@ -32,15 +32,14 @@ export default function PartnersPage() {
             layout="image-right" 
             imageVariant="landscape"
             imageSrc="/assets/images/xtras/image12.webp"
-            imageAlt="Development partners"
+            imageAlt="Development Institutions"
           >
             <div className="space-y-4">
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
                 Development Partners
               </h2>
               <p className="text-muted-foreground leading-relaxed">
-                We collaborate with donors and multilateral institutions to deliver impactful programs that address systemic challenges in emerging markets. These partnerships combine technical expertise with financial resources to create sustainable solutions.
-              </p>
+              Work on program design, implementation, and evaluation.              </p>
               <div className="space-y-3 pt-4">
                 <div className="flex items-start gap-3">
                   <div className="h-1.5 w-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
@@ -79,8 +78,7 @@ export default function PartnersPage() {
                 Private Sector
               </h2>
               <p className="text-muted-foreground leading-relaxed">
-                We work with companies and investors to unlock commercial opportunities in emerging markets. Our partnerships structure investments, build ventures, and create business models that align profitability with development impact.
-              </p>
+              Engagement on market entry, structuring, and venture development.              </p>
               <div className="space-y-3 pt-4">
                 <div className="flex items-start gap-3">
                   <div className="h-1.5 w-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
@@ -117,8 +115,7 @@ export default function PartnersPage() {
                 Governments
               </h2>
               <p className="text-muted-foreground leading-relaxed">
-                We support governments in policy design, implementation, and institutional capacity building. Our partnerships strengthen enabling environments, improve service delivery, and create conditions for inclusive economic growth.
-              </p>
+              Work on policy, institutional design, and implementation.              </p>
               <div className="space-y-3 pt-4">
                 <div className="flex items-start gap-3">
                   <div className="h-1.5 w-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
