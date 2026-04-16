@@ -3,7 +3,7 @@ import { SiteLayout, PageHero, SectionIntro, Container, CTASection } from "@/com
 import { MediaCardGrid } from "@/components/ui/media-content-block";
 
 export const metadata = {
-  title: "Sectors | SPX",
+  title: "Sectors",
   description: "SPX works across agriculture, technology, energy, trade, and finance to build market systems that unlock sustainable growth.",
 };
 
@@ -11,7 +11,7 @@ const sectors = [
   {
     title: "Agriculture",
     description: "Building integrated value chains and improving productivity, resilience, and market access for farmers and agribusinesses.",
-    imageSrc: "https://images.unsplash.com/photo-1471193945509-9ad0617afabf?auto=format&fit=crop&w=1200&q=80",
+    imageSrc: "/assets/images/focus/image1.webp",
   },
   {
     title: "Technology & Platforms",
@@ -21,12 +21,12 @@ const sectors = [
   {
     title: "Energy & Sustainability",
     description: "Advancing scalable solutions in renewable energy, resource efficiency, and circular economic systems.",
-    imageSrc: "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1200&q=80",
+    imageSrc: "/assets/images/focus/image6.webp",
   },
   {
     title: "Trade & Logistics",
     description: "Strengthening supply chains, market linkages, and trade facilitation systems to reduce friction and expand access.",
-    imageSrc: "https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?auto=format&fit=crop&w=1200&q=80",
+    imageSrc: "/assets/images/focus/image5.webp",
   },
   {
     title: "Finance & Markets",

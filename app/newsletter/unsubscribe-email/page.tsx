@@ -1,7 +1,10 @@
+import type { Metadata } from "next";
 import { UnsubscribeEmailForm } from "./unsubscribe-email-form";
 
-export const metadata = {
-  title: "Unsubscribe | SPX Newsletter",
+export const metadata: Metadata = {
+  title: {
+    absolute: "Unsubscribe | SPX Newsletter",
+  },
   description: "Unsubscribe from SPX insight announcement emails.",
   robots: { index: false, follow: false },
 };

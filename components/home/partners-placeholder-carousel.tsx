@@ -4,14 +4,14 @@ import { motion } from "framer-motion";
 import { Container, SectionIntro } from "@/components/layout";
 
 const PARTNERS = [
-  "Partner 01",
-  "Partner 02",
-  "Partner 03",
-  "Partner 04",
-  "Partner 05",
-  "Partner 06",
-  "Partner 07",
-  "Partner 08",
+  "Partner 1",
+  "Partner 2",
+  "Partner 3",
+  "Partner 4",
+  "Partner 5",
+  "Partner 6",
+  "Partner 7",
+  "Partner 8",
 ];
 
 export function PartnersPlaceholderCarousel() {

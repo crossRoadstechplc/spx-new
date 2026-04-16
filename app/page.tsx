@@ -5,10 +5,19 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { NewsletterSection } from "@/components/home/newsletter-section";
+import type { Metadata } from "next";
+import { DEFAULT_SITE_DESCRIPTION, SEO_KEYWORDS } from "@/lib/seo-config";
 
-export const metadata = {
-  title: "SPX | Strategy-to-Implementation Platform",
-  description: "A strategy-to-implementation platform working at the intersection of business and development to design, build, and scale market-shaping systems.",
+export const metadata: Metadata = {
+  title: {
+    absolute: "SPX | Strategy-to-Implementation Platform",
+  },
+  description: DEFAULT_SITE_DESCRIPTION,
+  keywords: [...SEO_KEYWORDS],
+  openGraph: {
+    title: "SPX | Strategy-to-Implementation Platform",
+    description: DEFAULT_SITE_DESCRIPTION,
+  },
 };
 
 export default function HomePage() {
@@ -21,9 +30,9 @@ export default function HomePage() {
         subtitle="Platform"
         description="We work at the intersection of business and development to design, build, and scale market-shaping systems across emerging markets."
         carouselImages={[
-          "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1600&q=80",
-          "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1600&q=80",
-          "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=1600&q=80",
+          "/assets/images/hero/image1.webp",
+          "/assets/images/hero/image3.webp",
+          "/assets/images/hero/image5.webp",
         ]}
       >
         <Button asChild size="lg" className="font-medium">
@@ -40,8 +49,8 @@ export default function HomePage() {
           <MediaContentBlock 
             layout="image-right" 
             imageVariant="landscape"
-            imageSrc="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80"
-            imageAlt="Strategy platform"
+            imageSrc="/assets/images/xtras/image15.webp"
+            imageAlt="Strategy and advisory collaboration"
           >
             <div className="space-y-4">
               <SectionIntro
@@ -83,35 +92,27 @@ export default function HomePage() {
           <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
-                number: "01",
                 title: "Strategic Advisory",
                 description: "Advising governments, investors, and institutions on market entry, sector strategy, and system design."
               },
               {
-                number: "02",
                 title: "Program Design & Implementation",
                 description: "Designing and delivering high-impact programs with focus on execution, accountability, and measurable outcomes."
               },
               {
-                number: "03",
                 title: "Market Systems Development",
                 description: "Building and strengthening ecosystems by aligning stakeholders, incentives, and infrastructure."
               },
               {
-                number: "04",
                 title: "Venture Building & Incubation",
                 description: "Originating, incubating, and scaling ventures that address systemic gaps and unlock new markets."
               },
               {
-                number: "05",
                 title: "Research & Insights",
                 description: "Generating data-driven insights to inform decision-making and position ideas that shape markets."
               }
             ].map((capability, idx) => (
               <div key={idx} className="space-y-4 p-6 rounded-lg border border-border/40 bg-card hover:border-primary/40 transition-all">
-                <div className="text-sm font-bold text-primary uppercase tracking-wider">
-                  {capability.number}
-                </div>
                 <h3 className="text-xl font-semibold">{capability.title}</h3>
                 <p className="text-muted-foreground leading-relaxed text-sm">
                   {capability.description}
@@ -138,8 +139,8 @@ export default function HomePage() {
           <MediaContentBlock 
             layout="image-left" 
             imageVariant="wide"
-            imageSrc="https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=1200&q=80"
-            imageAlt="Our methodology"
+            imageSrc="/assets/images/approach/image6.webp"
+            imageAlt="Structured approach from analysis through to delivery"
           >
             <div className="space-y-4">
               <SectionIntro
@@ -185,17 +186,17 @@ export default function HomePage() {
                 {
                   title: "Agriculture",
                   description: "Building integrated value chains and improving productivity, resilience, and market access.",
-                  imageSrc: "https://images.unsplash.com/photo-1471193945509-9ad0617afabf?auto=format&fit=crop&w=1200&q=80"
+                  imageSrc: "/assets/images/focus/image2.webp"
                 },
                 {
                   title: "Technology & Platforms",
                   description: "Developing digital infrastructure and platforms that enable trade, data, and services.",
-                  imageSrc: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80"
+                  imageSrc: "/assets/images/xtras/image28.webp"
                 },
                 {
                   title: "Energy & Sustainability",
                   description: "Advancing scalable solutions in renewable energy, resource efficiency, and circular systems.",
-                  imageSrc: "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1200&q=80"
+                  imageSrc: "/assets/images/focus/image8.webp"
                 }
               ]}
             />

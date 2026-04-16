@@ -6,7 +6,7 @@ import { Plus } from "lucide-react";
 import { AuthorList } from "@/components/admin/author-list";
 
 export const metadata = {
-  title: "Authors | SPX Admin",
+  title: "Authors",
   description: "Manage authors",
 };
 

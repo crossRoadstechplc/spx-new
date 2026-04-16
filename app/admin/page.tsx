@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { getTrafficSummary, getRangeForDays } from "@/lib/analytics";
 
 export const metadata = {
-  title: "Dashboard | SPX Admin",
+  title: "Dashboard",
   description: "SPX admin dashboard",
 };
 

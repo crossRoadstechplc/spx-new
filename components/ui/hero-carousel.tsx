@@ -15,9 +15,9 @@ export function HeroCarousel({ images, interval = 5000, children }: HeroCarousel
   const [currentIndex, setCurrentIndex] = useState(0);
   const [failedImages, setFailedImages] = useState<Record<string, boolean>>({});
   const fallbackImages = [
-    "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1600&q=80",
-    "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1600&q=80",
-    "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=1600&q=80",
+    "/assets/images/hero/image2.webp",
+    "/assets/images/hero/image4.webp",
+    "/assets/images/hero/image6.webp",
   ];
 
   useEffect(() => {

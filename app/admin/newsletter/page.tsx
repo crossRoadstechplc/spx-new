@@ -1,7 +1,7 @@
 import { db } from "@/lib/db";
 
 export const metadata = {
-  title: "Newsletter | SPX Admin",
+  title: "Newsletter",
   description: "Newsletter subscribers and delivery tracking.",
 };
 

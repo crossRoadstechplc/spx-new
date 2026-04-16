@@ -3,7 +3,7 @@ import { SiteLayout, PageHero, SectionIntro, Container, CTASection, AccentDivide
 import { MediaContentBlock } from "@/components/ui/media-content-block";
 
 export const metadata = {
-  title: "How We Work | SPX",
+  title: "How We Work",
   description: "Our approach combines system design, partnership building, capital structuring, and operational execution to deliver transformative solutions.",
 };
 
@@ -36,12 +36,7 @@ export default function HowWeWorkPage() {
             imageAlt="System design"
           >
             <div className="space-y-4">
-              <div className="flex items-center gap-4">
-                <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-bold text-lg">
-                  01
-                </div>
-                <h2 className="text-3xl md:text-4xl font-bold tracking-tight">System Design</h2>
-              </div>
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">System Design</h2>
               <p className="text-lg text-muted-foreground leading-relaxed">
                 We take a holistic view of market systems, structuring interventions that integrate policy frameworks, capital flows, stakeholder incentives, and operational models.
               </p>
@@ -91,12 +86,7 @@ export default function HowWeWorkPage() {
             imageAlt="Partnership building"
           >
             <div className="space-y-4">
-              <div className="flex items-center gap-4">
-                <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-bold text-lg">
-                  02
-                </div>
-                <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Partnerships & Ecosystem Building</h2>
-              </div>
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Partnerships & Ecosystem Building</h2>
               <p className="text-lg text-muted-foreground leading-relaxed">
                 We convene and align public and private stakeholders to drive coordinated action. Sustainable market systems require multi-stakeholder engagement and shared commitment.
               </p>
@@ -144,12 +134,7 @@ export default function HowWeWorkPage() {
             imageAlt="Capital structuring"
           >
             <div className="space-y-4">
-              <div className="flex items-center gap-4">
-                <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-bold text-lg">
-                  03
-                </div>
-                <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Capital Structuring</h2>
-              </div>
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Capital Structuring</h2>
               <p className="text-lg text-muted-foreground leading-relaxed">
                 We design financing solutions that align risk, return, and impact. Our approach to capital structuring ensures interventions are financially sustainable and commercially viable.
               </p>
@@ -195,16 +180,11 @@ export default function HowWeWorkPage() {
           <MediaContentBlock 
             layout="image-left" 
             imageVariant="wide"
-            imageSrc="/assets/images/projects/image7.webp"
-            imageAlt="Execution model"
+            imageSrc="/assets/images/projects/image24.webp"
+            imageAlt="Operational execution and delivery"
           >
             <div className="space-y-4">
-              <div className="flex items-center gap-4">
-                <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-bold text-lg">
-                  04
-                </div>
-                <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Execution Model</h2>
-              </div>
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Execution Model</h2>
               <p className="text-lg text-muted-foreground leading-relaxed">
                 We move from concept to delivery, ensuring operational rigor and scalability. Our execution model combines strong project management with adaptive learning to achieve measurable outcomes.
               </p>

@@ -6,7 +6,7 @@ import { Plus } from "lucide-react";
 import { TagList } from "@/components/admin/tag-list";
 
 export const metadata = {
-  title: "Tags | SPX Admin",
+  title: "Tags",
   description: "Manage tags",
 };
 

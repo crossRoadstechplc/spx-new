@@ -5,7 +5,7 @@ import { MediaGrid } from "@/components/admin/media-grid";
 import { MediaUploadDialog } from "@/components/admin/media-upload-dialog";
 
 export const metadata = {
-  title: "Media | SPX Admin",
+  title: "Media",
   description: "Manage media library",
 };
 

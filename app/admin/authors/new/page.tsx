@@ -2,7 +2,7 @@
 import { SimpleCRUDForm } from "@/components/admin/simple-crud-form";
 
 export const metadata = {
-  title: "New Author | SPX Admin",
+  title: "New Author",
   description: "Create a new author",
 };
 

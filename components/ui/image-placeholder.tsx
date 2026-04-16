@@ -46,9 +46,9 @@ export function ImagePlaceholder({
 }: ImagePlaceholderProps) {
   const ratio = aspectRatio || aspectRatioMap[variant];
   const fallbackSources = [
-    "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80",
-    "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80",
+    "/assets/images/xtras/image13.webp",
+    "/assets/images/xtras/image14.webp",
+    "/assets/images/xtras/image16.webp",
   ];
   const [resolvedSrc, setResolvedSrc] = React.useState(src);
 

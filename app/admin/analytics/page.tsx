@@ -3,7 +3,7 @@ import { ArrowDownRight, ArrowUpRight, BarChart3, ExternalLink, Globe, MousePoin
 import { getDailyTrend, getDeviceBreakdown, getKpiMetrics, getRangeForDays, getTopPages, getTopReferrers } from "@/lib/analytics";
 
 export const metadata = {
-  title: "Analytics | SPX Admin",
+  title: "Analytics",
   description: "Website traffic analytics and KPI dashboard.",
 };
 

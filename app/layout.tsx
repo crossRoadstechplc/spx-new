@@ -5,29 +5,38 @@ import "./globals.css";
 import { LoadingProvider } from "@/components/providers/loading-provider";
 import { ParticleBackground } from "@/components/ui/particle-background";
 import { AnalyticsTracker } from "@/components/providers/analytics-tracker";
+import {
+  DEFAULT_SITE_DESCRIPTION,
+  getSiteUrl,
+  LINKEDIN_ORG_URL,
+  ORGANIZATION_MAP_URL,
+  ORGANIZATION_PHONE,
+  SEO_KEYWORDS,
+  shouldNoIndexSite,
+} from "@/lib/seo-config";
 
 const inter = Inter({ subsets: ["latin"] });
-const siteUrl = process.env.APP_URL || "http://localhost:3000";
+
+const siteUrl = getSiteUrl();
 const defaultSeoImage = `${siteUrl}/opengraph-image`;
+const noindex = shouldNoIndexSite();
+
+const googleVerification = process.env.GOOGLE_SITE_VERIFICATION?.trim();
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "SPX — Systems Layer Company",
+    default: "SPX — Consulting & Strategy-to-Implementation",
     template: "%s | SPX",
   },
-  description:
-    "Strategic research, editorial, and systems thinking for organizations navigating complexity across sectors.",
-  keywords: [
-    "systems thinking",
-    "strategic research",
-    "editorial services",
-    "organizational strategy",
-    "complexity management",
-  ],
-  authors: [{ name: "SPX" }],
+  description: DEFAULT_SITE_DESCRIPTION,
+  keywords: [...SEO_KEYWORDS],
+  authors: [{ name: "SPX", url: siteUrl }],
   creator: "SPX",
   publisher: "SPX",
+  ...(googleVerification
+    ? { verification: { google: googleVerification } }
+    : {}),
   alternates: {
     canonical: "/",
   },
@@ -41,36 +50,61 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "/",
     siteName: "SPX",
-    title: "SPX — Systems Layer Company",
-    description:
-      "Strategic research, editorial, and systems thinking for organizations navigating complexity.",
+    title: "SPX — Consulting & Strategy-to-Implementation",
+    description: DEFAULT_SITE_DESCRIPTION,
     images: [
       {
         url: defaultSeoImage,
         width: 1200,
         height: 630,
-        alt: "SPX - Strategy-to-Implementation Platform",
+        alt: "SPX — strategy-to-implementation across Africa",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "SPX — Systems Layer Company",
-    description:
-      "Strategic research, editorial, and systems thinking for organizations navigating complexity.",
+    title: "SPX — Consulting & Strategy-to-Implementation",
+    description: DEFAULT_SITE_DESCRIPTION,
     images: [defaultSeoImage],
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
+  robots: noindex
+    ? { index: false, follow: false, googleBot: { index: false, follow: false } }
+    : {
+        index: true,
+        follow: true,
+        googleBot: {
+          index: true,
+          follow: true,
+          "max-video-preview": -1,
+          "max-image-preview": "large",
+          "max-snippet": -1,
+        },
+      },
+};
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "SPX",
+  alternateName: "Spiralytix",
+  description: DEFAULT_SITE_DESCRIPTION,
+  url: siteUrl,
+  logo: `${siteUrl}/assets/logos/SPX.png`,
+  image: defaultSeoImage,
+  email: "info@spxafrica.com",
+  telephone: ORGANIZATION_PHONE,
+  sameAs: [LINKEDIN_ORG_URL],
+  hasMap: ORGANIZATION_MAP_URL,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Addis Ababa",
+    addressCountry: "ET",
   },
+  areaServed: [
+    { "@type": "Country", name: "Ethiopia" },
+    { "@type": "AdministrativeArea", name: "East Africa" },
+    { "@type": "Place", name: "Africa" },
+  ],
 };
 
 export default function RootLayout({
@@ -84,20 +118,7 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              name: "SPX",
-              url: siteUrl,
-              logo: `${siteUrl}/opengraph-image`,
-              email: "info@spxafrica.com",
-              telephone: "+251930199157",
-              address: {
-                "@type": "PostalAddress",
-                addressLocality: "Addis Ababa",
-                addressCountry: "Ethiopia",
-              },
-            }),
+            __html: JSON.stringify(organizationJsonLd),
           }}
         />
         <LoadingProvider>

@@ -1,11 +1,24 @@
 /* Phase 3: Contact page */
+import type { Metadata } from "next";
 import { SiteLayout, PageHero, Container, AccentDivider } from "@/components/layout";
 import { ContactForm } from "@/components/contact/contact-form";
 import { Mail, MapPin, Phone } from "lucide-react";
+import { DEFAULT_SITE_DESCRIPTION, ORGANIZATION_MAP_URL, SEO_KEYWORDS } from "@/lib/seo-config";
 
-export const metadata = {
-  title: "Contact | SPX",
-  description: "Partner with SPX to design, build, and scale transformative systems in emerging markets.",
+export const metadata: Metadata = {
+  title: "Contact",
+  description:
+    "Contact SPX in Addis Ababa—consulting, strategy-to-implementation, and partnerships across Ethiopia, East Africa, and Africa. Phone +251930199525.",
+  keywords: [
+    "contact SPX",
+    "SPX Addis Ababa",
+    "consulting Ethiopia contact",
+    ...SEO_KEYWORDS.slice(0, 8),
+  ],
+  openGraph: {
+    title: "Contact SPX",
+    description: DEFAULT_SITE_DESCRIPTION,
+  },
 };
 
 export default function ContactPage() {
@@ -66,7 +79,15 @@ export default function ContactPage() {
                   <div>
                     <div className="font-medium mb-1">Location</div>
                     <p className="text-muted-foreground">
-                      Addis Ababa, Ethiopia
+                      Addis Ababa, Ethiopia —{" "}
+                      <a
+                        href={ORGANIZATION_MAP_URL}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        className="text-primary hover:underline font-medium"
+                      >
+                        View on map
+                      </a>
                     </p>
                   </div>
                 </div>

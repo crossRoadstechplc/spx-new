@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { ensureDefaultInsightCategories } from "@/lib/insight-categories";
 
 export const metadata = {
-  title: "Edit Insight | SPX Admin",
+  title: "Edit Insight",
   description: "Edit insight",
 };
 

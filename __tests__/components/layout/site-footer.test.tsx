@@ -11,7 +11,7 @@ describe("SiteFooter", () => {
   it("renders brand description", () => {
     render(<SiteFooter />);
     expect(
-      screen.getByText(/Systems layer company delivering institutional-grade/i)
+      screen.getByText(/strategy-to-implementation platform/i)
     ).toBeInTheDocument();
   });
 
@@ -42,7 +42,11 @@ describe("SiteFooter", () => {
     render(<SiteFooter />);
     expect(screen.getByText("Contact")).toBeInTheDocument();
     expect(screen.getByText("LinkedIn")).toBeInTheDocument();
-    expect(screen.getByText("Twitter")).toBeInTheDocument();
+    const linkedInNav = screen.getByText("LinkedIn").closest("a");
+    expect(linkedInNav).toHaveAttribute(
+      "href",
+      "https://www.linkedin.com/company/spiralytix"
+    );
   });
 
   it("renders copyright with current year", () => {
@@ -53,8 +57,8 @@ describe("SiteFooter", () => {
 
   it("renders legal links", () => {
     render(<SiteFooter />);
-    expect(screen.getByText("Privacy Policy")).toBeInTheDocument();
-    expect(screen.getByText("Terms of Service")).toBeInTheDocument();
+    expect(screen.getByText("Privacy Notices")).toBeInTheDocument();
+    expect(screen.getByText("Terms and Conditions")).toBeInTheDocument();
   });
 
   it("has correct href attributes for navigation links", () => {

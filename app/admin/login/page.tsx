@@ -4,7 +4,7 @@ import { getCurrentUser } from "@/lib/session";
 import { LoginForm } from "@/components/admin/login-form";
 
 export const metadata = {
-  title: "Admin Login | SPX",
+  title: "Admin Login",
   description: "Admin authentication for SPX platform",
 };
 

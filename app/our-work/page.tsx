@@ -4,7 +4,7 @@ import { SiteLayout, PageHero, SectionIntro, Container, CTASection, AccentDivide
 import { MediaContentBlock } from "@/components/ui/media-content-block";
 
 export const metadata = {
-  title: "Our Work | SPX",
+  title: "Our Work",
   description: "SPX delivers large-scale programs, builds scalable platforms, and incubates high-potential ventures across emerging markets.",
 };
 
@@ -33,8 +33,8 @@ export default function OurWorkPage() {
           <MediaContentBlock 
             layout="image-right" 
             imageVariant="landscape"
-            imageSrc="/assets/images/projects/image7.webp"
-            imageAlt="Large-scale projects"
+            imageSrc="/assets/images/projects/image23.webp"
+            imageAlt="Large-scale programs and field delivery"
           >
             <div className="space-y-4">
               <div className="text-sm font-medium text-primary uppercase tracking-wider">Projects</div>

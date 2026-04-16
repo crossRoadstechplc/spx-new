@@ -23,8 +23,7 @@ interface InsightsSpotlightProps {
   items: HomeInsight[];
 }
 
-const FALLBACK_IMAGE =
-  "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=80";
+const FALLBACK_IMAGE = "/assets/images/xtras/image42.webp";
 
 export function InsightsSpotlight({ items }: InsightsSpotlightProps) {
   const [featuredIndex, setFeaturedIndex] = useState(0);

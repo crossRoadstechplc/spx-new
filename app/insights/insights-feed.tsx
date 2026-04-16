@@ -36,8 +36,7 @@ export function InsightsFeed({ initialItems, initialHasMore }: InsightsFeedProps
   const [isLoading, setIsLoading] = useState(false);
   const [failedImageIds, setFailedImageIds] = useState<Record<string, boolean>>({});
   const sentinelRef = useRef<HTMLDivElement | null>(null);
-  const fallbackImage =
-    "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=80";
+  const fallbackImage = "/assets/images/xtras/image42.webp";
 
   const loadMore = useCallback(async () => {
     if (isLoading || !hasMore) return;

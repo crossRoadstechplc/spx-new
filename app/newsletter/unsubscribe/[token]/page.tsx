@@ -2,7 +2,7 @@ import Link from "next/link";
 import { unsubscribeFromNewsletter } from "@/lib/newsletter";
 
 export const metadata = {
-  title: "Newsletter Preferences | SPX",
+  title: "Newsletter Preferences",
   description: "Manage your SPX newsletter subscription preferences.",
   robots: {
     index: false,

@@ -3,7 +3,7 @@ import { SiteLayout, PageHero, SectionIntro, Container, CTASection, AccentDivide
 import { MediaContentBlock } from "@/components/ui/media-content-block";
 
 export const metadata = {
-  title: "Partners | SPX",
+  title: "Partners",
   description: "SPX collaborates with development partners, private sector entities, and governments to design, build, and scale transformative market systems.",
 };
 

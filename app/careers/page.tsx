@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export const metadata = {
-  title: "Careers | SPX",
+  title: "Careers",
   description: "Join SPX and work with a team committed to building impactful, scalable solutions that transform markets in emerging economies.",
 };
 

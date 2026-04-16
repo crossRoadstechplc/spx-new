@@ -1,16 +1,24 @@
 /* Phase 6: Insights listing page with database integration */
+import type { Metadata } from "next";
 import { SiteLayout, PageHero, Container } from "@/components/layout";
 import { db } from "@/lib/db";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { InsightsFeed } from "./insights-feed";
+import { DEFAULT_SITE_DESCRIPTION, SEO_KEYWORDS } from "@/lib/seo-config";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-export const metadata = {
-  title: "Insights | SPX",
-  description: "Strategic research, editorial analysis, and systems thinking from SPX—exploring complexity across sectors and organizational challenges.",
+export const metadata: Metadata = {
+  title: "Insights",
+  description:
+    "SPX Insights — research, analysis, and strategy-to-implementation perspectives from Ethiopia and across Africa (formerly Spiralytix).",
+  keywords: ["SPX Insights", "SPX research", "Africa strategy", ...SEO_KEYWORDS.slice(0, 10)],
+  openGraph: {
+    title: "SPX Insights",
+    description: DEFAULT_SITE_DESCRIPTION,
+  },
 };
 
 export default async function InsightsPage() {

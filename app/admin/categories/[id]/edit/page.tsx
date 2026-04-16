@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { SimpleCRUDForm } from "@/components/admin/simple-crud-form";
 
 export const metadata = {
-  title: "Edit Category | SPX Admin",
+  title: "Edit Category",
   description: "Edit category",
 };
 

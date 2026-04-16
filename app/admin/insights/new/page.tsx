@@ -4,7 +4,7 @@ import { InsightForm } from "@/components/admin/insight-form";
 import { ensureDefaultInsightCategories } from "@/lib/insight-categories";
 
 export const metadata = {
-  title: "New Insight | SPX Admin",
+  title: "New Insight",
   description: "Create a new insight",
 };
 

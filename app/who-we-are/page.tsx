@@ -3,7 +3,7 @@ import { SiteLayout, PageHero, SectionIntro, Container, CTASection, AccentDivide
 import { MediaContentBlock } from "@/components/ui/media-content-block";
 
 export const metadata = {
-  title: "Who We Are | SPX",
+  title: "Who We Are",
   description: "A strategy-to-implementation platform working at the intersection of business and development to design, build, and scale market-shaping systems.",
 };
 

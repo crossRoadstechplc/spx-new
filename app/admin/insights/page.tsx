@@ -7,7 +7,7 @@ import { Plus, Search } from "lucide-react";
 import { InsightsListTable } from "@/components/admin/insights-list-table";
 
 export const metadata = {
-  title: "Insights | SPX Admin",
+  title: "Insights",
   description: "Manage insights content",
 };
 

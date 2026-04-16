@@ -1,7 +1,8 @@
 import type { MetadataRoute } from "next";
 import { db } from "@/lib/db";
+import { getSiteUrl, shouldNoIndexSite } from "@/lib/seo-config";
 
-const siteUrl = process.env.APP_URL || "http://localhost:3000";
+const siteUrl = getSiteUrl();
 
 const staticRoutes = [
   "",
@@ -19,6 +20,10 @@ const staticRoutes = [
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  if (shouldNoIndexSite()) {
+    return [];
+  }
+
   const insights = await db.insight.findMany({
     where: { status: "PUBLISHED" },
     select: { slug: true, updatedAt: true },

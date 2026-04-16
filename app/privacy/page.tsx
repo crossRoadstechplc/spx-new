@@ -1,13 +1,16 @@
 /* Phase 7: Privacy policy page */
 import { SiteLayout, PageHero, Container } from "@/components/layout";
+import { CONTACT_EMAIL, SITE_DOMAIN_LABEL } from "@/lib/seo-config";
+import { LEGAL_DOCUMENT_META, LEGAL_DOCUMENT_PROSE } from "@/lib/legal-document-classes";
 
 export const metadata = {
-  title: "Privacy Policy | SPX",
-  description: "SPX privacy policy and data handling practices.",
+  title: "Privacy Policy",
+  description:
+    "SPX privacy policy for spxafrica.com—data we collect for consulting inquiries, SPX Insights, and newsletters (formerly Spiralytix).",
 };
 
 export default function PrivacyPage() {
-  const lastUpdated = "March 26, 2026";
+  const lastUpdated = "April 16, 2026";
 
   return (
     <SiteLayout>
@@ -18,16 +21,23 @@ export default function PrivacyPage() {
 
       <section className="py-16 md:py-24">
         <Container size="narrow">
-          <div className="prose prose-slate prose-lg max-w-none">
-            <p className="text-sm text-muted-foreground mb-8">
-              Last updated: {lastUpdated}
-            </p>
+          <div className={LEGAL_DOCUMENT_PROSE}>
+            <div className={LEGAL_DOCUMENT_META}>
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                Last updated
+              </p>
+              <p className="mt-2 text-sm text-foreground tabular-nums">{lastUpdated}</p>
+            </div>
 
             <h2>Overview</h2>
             <p>
               SPX (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) is committed to protecting
-              your privacy. This Privacy Policy explains how we collect, use, disclose, and
-              safeguard your information when you visit our website or use our services.
+              your privacy. We are an Ethiopia-headquartered consulting and strategy-to-implementation
+              organization serving partners across Africa; we may refer to our prior public name,{" "}
+              <strong>Spiralytix</strong>, during the brand transition. This Privacy Policy explains
+              how we collect, use, disclose, and safeguard your information when you visit{" "}
+              <strong>{SITE_DOMAIN_LABEL}</strong> or interact with our public services (including
+              contact forms and SPX Insights).
             </p>
 
             <h2>Information We Collect</h2>
@@ -123,10 +133,10 @@ export default function PrivacyPage() {
             </p>
             <ul>
               <li>
-                Email: <a href="mailto:hello@spx.com">hello@spx.com</a>
+                Email: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
               </li>
               <li>
-                Contact Form: <a href="/contact">spx.com/contact</a>
+                Contact form: <a href="/contact">{SITE_DOMAIN_LABEL}/contact</a>
               </li>
             </ul>
           </div>

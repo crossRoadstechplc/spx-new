@@ -1,33 +1,42 @@
 /* Phase 7: Terms of service page */
 import { SiteLayout, PageHero, Container } from "@/components/layout";
+import { CONTACT_EMAIL, SITE_DOMAIN_LABEL } from "@/lib/seo-config";
+import { LEGAL_DOCUMENT_META, LEGAL_DOCUMENT_PROSE } from "@/lib/legal-document-classes";
 
 export const metadata = {
-  title: "Terms of Service | SPX",
-  description: "SPX terms of service and engagement terms.",
+  title: "Terms and Conditions",
+  description:
+    "Terms and conditions for using spxafrica.com and engaging with SPX (formerly Spiralytix)—Ethiopia-based consulting and strategy-to-implementation.",
 };
 
 export default function TermsPage() {
-  const lastUpdated = "March 26, 2026";
+  const lastUpdated = "April 16, 2026";
 
   return (
     <SiteLayout>
       <PageHero
-        title="Terms of Service"
-        description="Terms and conditions for using SPX services"
+        title="Terms and Conditions"
+        description="Rules for using our public website and how they relate to professional engagements with SPX."
       />
 
       <section className="py-16 md:py-24">
         <Container size="narrow">
-          <div className="prose prose-slate prose-lg max-w-none">
-            <p className="text-sm text-muted-foreground mb-8">
-              Last updated: {lastUpdated}
-            </p>
+          <div className={LEGAL_DOCUMENT_PROSE}>
+            <div className={LEGAL_DOCUMENT_META}>
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                Last updated
+              </p>
+              <p className="mt-2 text-sm text-foreground tabular-nums">{lastUpdated}</p>
+            </div>
 
             <h2>Agreement to Terms</h2>
             <p>
-              By accessing or using the SPX website and services, you agree to be bound by these
-              Terms of Service. If you do not agree to these terms, please do not use our
-              services.
+              By accessing or using the SPX public website at <strong>{SITE_DOMAIN_LABEL}</strong>{" "}
+              (&quot;Site&quot;), you agree to these Terms and Conditions.{" "}
+              <strong>SPX</strong> is the trading name we use alongside our prior public brand,{" "}
+              <strong>Spiralytix</strong>, as we complete the transition. If you do not agree,
+              please stop using the Site. Separate written agreements apply to paid consulting,
+              research, or implementation work.
             </p>
 
             <h2>Use of Services</h2>
@@ -60,7 +69,7 @@ export default function TermsPage() {
             <h2>Service Engagement</h2>
             <p>
               Any professional engagement with SPX will be governed by a separate agreement. These
-              Terms of Service do not constitute an engagement agreement or create any client
+              Terms and Conditions do not constitute an engagement agreement or create any client
               relationship.
             </p>
 
@@ -92,18 +101,18 @@ export default function TermsPage() {
 
             <h2>Governing Law</h2>
             <p>
-              These Terms of Service are governed by applicable law. Any disputes will be resolved
+              These Terms and Conditions are governed by applicable law. Any disputes will be resolved
               through appropriate legal channels.
             </p>
 
             <h2>Contact</h2>
-            <p>For questions about these Terms of Service, please contact us:</p>
+            <p>For questions about these Terms and Conditions, please contact us:</p>
             <ul>
               <li>
-                Email: <a href="mailto:hello@spx.com">hello@spx.com</a>
+                Email: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
               </li>
               <li>
-                Contact Form: <a href="/contact">spx.com/contact</a>
+                Contact form: <a href="/contact">{SITE_DOMAIN_LABEL}/contact</a>
               </li>
             </ul>
           </div>

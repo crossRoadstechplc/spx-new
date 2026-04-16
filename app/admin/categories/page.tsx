@@ -4,7 +4,7 @@ import { CategoryList } from "@/components/admin/category-list";
 import { ensureDefaultInsightCategories } from "@/lib/insight-categories";
 
 export const metadata = {
-  title: "Categories | SPX Admin",
+  title: "Categories",
   description: "Manage categories",
 };
 

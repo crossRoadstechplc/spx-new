@@ -3,7 +3,7 @@ import { SiteLayout, PageHero, SectionIntro, Container, CTASection, AccentDivide
 import { MediaContentBlock } from "@/components/ui/media-content-block";
 
 export const metadata = {
-  title: "What We Do | SPX",
+  title: "What We Do",
   description: "Strategic advisory, program implementation, market systems development, venture building, and research insights for emerging markets.",
 };
 
@@ -35,7 +35,6 @@ export default function WhatWeDoPage() {
             imageAlt="Strategic advisory"
           >
             <div className="space-y-4">
-              <div className="text-sm font-medium text-primary uppercase tracking-wider">01</div>
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Strategic Advisory</h2>
               <p className="text-muted-foreground leading-relaxed">
                 We advise governments, investors, and institutions on market entry, sector strategy, and system design. Our advisory work integrates market analysis, policy structuring, and stakeholder alignment to create viable pathways for transformation.
@@ -70,11 +69,10 @@ export default function WhatWeDoPage() {
           <MediaContentBlock 
             layout="image-left" 
             imageVariant="wide"
-            imageSrc="/assets/images/about/image6.webp"
-            imageAlt="Program implementation"
+            imageSrc="/assets/images/approach/image2.webp"
+            imageAlt="Program design and implementation"
           >
             <div className="space-y-4">
-              <div className="text-sm font-medium text-primary uppercase tracking-wider">02</div>
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Program Design & Implementation</h2>
               <p className="text-muted-foreground leading-relaxed">
                 We design and deliver high-impact programs with a focus on execution, accountability, and measurable outcomes. Our implementation model combines operational rigor with adaptive management to ensure programs achieve their objectives.
@@ -111,7 +109,6 @@ export default function WhatWeDoPage() {
             imageAlt="Market systems development"
           >
             <div className="space-y-4">
-              <div className="text-sm font-medium text-primary uppercase tracking-wider">03</div>
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Market Systems Development</h2>
               <p className="text-muted-foreground leading-relaxed">
                 We build and strengthen ecosystems by aligning stakeholders, incentives, and infrastructure. Our approach to market systems development addresses structural constraints and creates enabling conditions for inclusive, sustainable growth.
@@ -150,7 +147,6 @@ export default function WhatWeDoPage() {
             imageAlt="Venture building"
           >
             <div className="space-y-4">
-              <div className="text-sm font-medium text-primary uppercase tracking-wider">04</div>
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Venture Building & Incubation</h2>
               <p className="text-muted-foreground leading-relaxed">
                 We originate, incubate, and scale ventures that address systemic gaps and unlock new markets. Our venture building model combines strategic design with operational support to create businesses that are commercially viable and developmentally impactful.
@@ -187,7 +183,6 @@ export default function WhatWeDoPage() {
             imageAlt="Research and insights"
           >
             <div className="space-y-4">
-              <div className="text-sm font-medium text-primary uppercase tracking-wider">05</div>
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Research & Insights</h2>
               <p className="text-muted-foreground leading-relaxed">
                 We generate data-driven insights to inform decision-making and position ideas that shape markets. Our research combines rigorous analysis with practical application to advance understanding and drive strategic action.
