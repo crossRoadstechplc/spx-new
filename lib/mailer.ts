@@ -16,7 +16,7 @@ export interface EmailOptions {
   subject: string;
   text: string;
   html: string;
-  /** Blind carbon copy — recipients do not see each other's addresses */
+  /** Blind carbon copy: recipients do not see each other's addresses */
   bcc?: string | string[];
 }
 

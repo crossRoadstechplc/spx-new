@@ -26,7 +26,7 @@ const googleVerification = process.env.GOOGLE_SITE_VERIFICATION?.trim();
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "SPX — Consulting & Strategy-to-Implementation",
+    default: "SPX: Consulting & Strategy-to-Implementation",
     template: "%s | SPX",
   },
   description: DEFAULT_SITE_DESCRIPTION,
@@ -50,20 +50,20 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "/",
     siteName: "SPX",
-    title: "SPX — Consulting & Strategy-to-Implementation",
+    title: "SPX: Consulting & Strategy-to-Implementation",
     description: DEFAULT_SITE_DESCRIPTION,
     images: [
       {
         url: defaultSeoImage,
         width: 1200,
         height: 630,
-        alt: "SPX — strategy-to-implementation across Africa",
+        alt: "SPX: strategy-to-implementation across Africa",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "SPX — Consulting & Strategy-to-Implementation",
+    title: "SPX: Consulting & Strategy-to-Implementation",
     description: DEFAULT_SITE_DESCRIPTION,
     images: [defaultSeoImage],
   },

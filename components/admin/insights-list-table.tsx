@@ -149,7 +149,7 @@ export function InsightsListTable({ insights }: InsightsListTableProps) {
       if (updated === 0) {
         setToast({
           variant: "success",
-          message: `No changes needed — selected insights were already ${label}.`,
+          message: `No changes needed: selected insights were already ${label}.`,
         });
       } else {
         setToast({
@@ -343,10 +343,10 @@ export function InsightsListTable({ insights }: InsightsListTableProps) {
                   )}
                 </td>
                 <td className="px-4 py-3 text-sm text-muted-foreground">
-                  {insight.authorName || "—"}
+                  {insight.authorName || ":"}
                 </td>
                 <td className="px-4 py-3 text-sm text-muted-foreground">
-                  {insight.categoryName || "—"}
+                  {insight.categoryName || ":"}
                 </td>
                 <td className="px-4 py-3">
                   <select

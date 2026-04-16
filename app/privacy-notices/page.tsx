@@ -7,7 +7,7 @@ import { LEGAL_DOCUMENT_META, LEGAL_DOCUMENT_PROSE } from "@/lib/legal-document-
 export const metadata = {
   title: "Privacy Notices",
   description:
-    "How information is handled when using spxafrica.com, reading SPX Insights, or contacting the team—Addis Ababa, Ethiopia; SPX and Spiralytix refer to the same entity.",
+    "How information is handled when using spxafrica.com, reading SPX Insights, or contacting the team-Addis Ababa, Ethiopia; SPX and Spiralytix refer to the same entity.",
 };
 
 export default function PrivacyNoticesPage() {

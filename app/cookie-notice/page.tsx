@@ -7,7 +7,7 @@ import { LEGAL_DOCUMENT_META, LEGAL_DOCUMENT_PROSE } from "@/lib/legal-document-
 export const metadata = {
   title: "Cookie Notice",
   description:
-    "Use of cookies and similar technologies on spxafrica.com—strictly necessary, functional, analytics, and third parties.",
+    "Use of cookies and similar technologies on spxafrica.com, strictly necessary, functional, analytics, and third parties.",
 };
 
 export default function CookieNoticePage() {

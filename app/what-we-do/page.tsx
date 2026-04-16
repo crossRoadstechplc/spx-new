@@ -184,7 +184,7 @@ export default function WhatWeDoPage() {
             <div className="space-y-4">
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Research & Insights</h2>
               <p className="text-muted-foreground leading-relaxed">
-              Research and analysis to inform decision-making and system design.              </p>
+              Research and analysis to inform decision making and system design.              </p>
               <ul className="space-y-3 text-muted-foreground">
                 <li className="flex items-start gap-3">
                   <div className="h-1.5 w-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
@@ -219,7 +219,7 @@ export default function WhatWeDoPage() {
               title="Capabilities That Reinforce Each Other"
             />
             <p className="text-lg text-muted-foreground leading-relaxed">
-              Our capabilities are designed to work together—strategy informs implementation, ecosystem building enables ventures, research strengthens advisory, and operational experience refines strategic thinking. This integration is what allows us to deliver comprehensive, sustainable solutions.
+              Our capabilities are designed to work together: strategy informs implementation, ecosystem building enables ventures, research strengthens advisory, and operational experience refines strategic thinking. This integration is what allows us to deliver comprehensive, sustainable solutions.
             </p>
           </div>
         </Container>

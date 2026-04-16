@@ -33,7 +33,7 @@ export const SITE_DOMAIN_LABEL = "spxafrica.com";
 
 /** Spiralytix → SPX transition: both names for discoverability (≈155 chars for snippets). */
 export const DEFAULT_SITE_DESCRIPTION =
-  "SPX (formerly Spiralytix): consulting and strategy-to-implementation for Ethiopia, East Africa, and Africa—insights, advisory, programs, and systems from design to delivery.";
+  "SPX (formerly Spiralytix): consulting and strategy-to-implementation for Ethiopia, East Africa, and Africa insights, advisory, programs, and systems from design to delivery.";
 
 export const SEO_KEYWORDS = [
   "SPX",

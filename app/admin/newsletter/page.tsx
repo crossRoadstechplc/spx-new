@@ -91,7 +91,7 @@ export default async function AdminNewsletterPage() {
                     <td className="px-3 py-2 text-muted-foreground">
                       {subscriber.unsubscribedAt
                         ? new Date(subscriber.unsubscribedAt).toLocaleString()
-                        : "—"}
+                        : "-"}
                     </td>
                     <td className="px-3 py-2 text-muted-foreground">{subscriber._count.dispatches}</td>
                   </tr>

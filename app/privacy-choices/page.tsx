@@ -7,7 +7,7 @@ import { LEGAL_DOCUMENT_META, LEGAL_DOCUMENT_PROSE } from "@/lib/legal-document-
 export const metadata = {
   title: "Your Privacy Choices",
   description:
-    `Manage marketing email, cookies, and personal data requests for ${SITE_DOMAIN_LABEL} and SPX Insights—in line with our Privacy Policy and Privacy Notices.`,
+    `Manage marketing email, cookies, and personal data requests for ${SITE_DOMAIN_LABEL} and SPX Insights-in line with our Privacy Policy and Privacy Notices.`,
 };
 
 export default function PrivacyChoicesPage() {
@@ -17,7 +17,7 @@ export default function PrivacyChoicesPage() {
     <SiteLayout>
       <PageHero
         title="Your Privacy Choices"
-        description={`How to control SPX use of your information on ${SITE_DOMAIN_LABEL}—newsletters, inquiries, cookies, and data requests—consistent with our Privacy Notices.`}
+        description={`How to control SPX use of your information on ${SITE_DOMAIN_LABEL}: newsletters, inquiries, cookies, and data requests—consistent with our Privacy Notices.`}
       />
 
       <section className="py-16 md:py-24">

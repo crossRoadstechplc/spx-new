@@ -60,7 +60,7 @@ describe("admin insight status & bulk actions", () => {
     it("returns invalid status when status is not a valid enum", async () => {
       const result = await setInsightStatusAction(
         "insight-1",
-        // @ts-expect-error — exercise Zod rejection for invalid status
+        // @ts-expect-error exercise Zod rejection for invalid status
         "NOT_A_STATUS"
       );
       expect(result).toEqual({ success: false, error: "Invalid status." });

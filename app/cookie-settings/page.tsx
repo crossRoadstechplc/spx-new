@@ -7,7 +7,7 @@ import { LEGAL_DOCUMENT_META, LEGAL_DOCUMENT_PROSE } from "@/lib/legal-document-
 export const metadata = {
   title: "Cookie Settings",
   description:
-    `How to manage cookies and similar technologies on ${SITE_DOMAIN_LABEL}—browser controls, essential cookies, and contact.`,
+    `How to manage cookies and similar technologies on ${SITE_DOMAIN_LABEL}: browser controls, essential cookies, and contact.`,
 };
 
 export default function CookieSettingsPage() {

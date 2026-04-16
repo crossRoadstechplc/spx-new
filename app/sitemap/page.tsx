@@ -5,7 +5,7 @@ import { SiteLayout, PageHero, Container } from "@/components/layout";
 export const metadata = {
   title: "Sitemap",
   description:
-    "Main sections of spxafrica.com—who we are, what we do, insights, contact, terms, privacy notices, cookie notice, accessibility, and privacy choices.",
+    "Main sections of spxafrica.com: who we are, what we do, insights, contact, terms, privacy notices, cookie notice, accessibility, and privacy choices.",
 };
 
 type SitemapGroup = { title: string; links: { href: string; label: string }[] };
@@ -53,7 +53,7 @@ export default function SitemapPage() {
     <SiteLayout>
       <PageHero
         title="Sitemap"
-        description="Quick links across the SPX public site—capabilities, insights, contact, and policies (terms, privacy notices, cookies, accessibility, privacy choices)."
+        description="Quick links across the SPX public site: capabilities, insights, contact, and policies (terms, privacy notices, cookies, accessibility, privacy choices)."
       />
 
       <section className="py-16 md:py-24">

@@ -8,7 +8,7 @@ import { DEFAULT_SITE_DESCRIPTION, ORGANIZATION_MAP_URL, SEO_KEYWORDS } from "@/
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Contact SPX in Addis Ababa—consulting, strategy-to-implementation, and partnerships across Ethiopia, East Africa, and Africa. Phone +251930199525.",
+    "Contact SPX in Addis Ababa: consulting, strategy-to-implementation, and partnerships across Ethiopia, East Africa, and Africa. Phone +251930199525.",
   keywords: [
     "contact SPX",
     "SPX Addis Ababa",
@@ -79,7 +79,7 @@ export default function ContactPage() {
                   <div>
                     <div className="font-medium mb-1">Location</div>
                     <p className="text-muted-foreground">
-                      Addis Ababa, Ethiopia —{" "}
+                      Addis Ababa, Ethiopia: {" "}
                       <a
                         href={ORGANIZATION_MAP_URL}
                         target="_blank"

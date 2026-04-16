@@ -85,7 +85,7 @@ export default function SectorsPage() {
               <div className="h-1 w-12 bg-primary rounded" />
               <h3 className="text-2xl font-bold">Agriculture</h3>
               <p className="text-muted-foreground leading-relaxed">
-                We work across the agricultural value chain—from input supply and production systems to post-harvest handling, processing, and market linkages. Our interventions strengthen farmer organizations, improve productivity, build market access, and create sustainable economic opportunities in rural areas.
+                We work across the agricultural value chain from input supply and production systems to post-harvest handling, processing, and market linkages. Our interventions strengthen farmer organizations, improve productivity, build market access, and create sustainable economic opportunities in rural areas.
               </p>
             </div>
             <div className="space-y-4">

@@ -50,7 +50,7 @@ export default function WhoWeArePage() {
 
           {/* <div className="mt-12 max-w-4xl mx-auto space-y-6">
             <p className="text-lg text-muted-foreground leading-relaxed">
-              We believe that the most transformative solutions emerge when commercial viability aligns with development impact. Our platform is built on the principle that market systems can be designed to serve both growth and inclusion—creating value for businesses while advancing broader social and economic outcomes.
+              We believe that the most transformative solutions emerge when commercial viability aligns with development impact. Our platform is built on the principle that market systems can be designed to serve both growth and inclusion-creating value for businesses while advancing broader social and economic outcomes.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               We work with governments, development institutions, investors, and enterprises to structure interventions that are commercially sustainable, operationally scalable, and systemically transformative.
@@ -96,7 +96,7 @@ export default function WhoWeArePage() {
           <SectionIntro
             align="center"
             eyebrow="Leadership & Team"
-            title="Multidisciplinary expertise across strategy, finance, operations, and technology."
+            title="Multidisciplinary expertise across strategy finance, operations, and technology."
             description="Capabilities span system design, capital structuring, and implementation."
           />
 
@@ -148,7 +148,7 @@ export default function WhoWeArePage() {
               title="Continued work on systems integrating strategy, capital, and execution."
             />
             {/* <p className="text-lg text-muted-foreground leading-relaxed">
-              We are committed to advancing a new model of market development—one that integrates strategy, capital, and operations to create systems that are commercially viable, socially inclusive, and environmentally sustainable.
+              We are committed to advancing a new model of market development-one that integrates strategy, capital, and operations to create systems that are commercially viable, socially inclusive, and environmentally sustainable.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               Partner with us to design, build, and scale solutions that transform markets and unlock sustainable growth.

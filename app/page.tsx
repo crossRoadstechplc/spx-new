@@ -199,7 +199,7 @@ export default function HomePage() {
                 },
                 {
                   title: "Energy & Sustainability",
-                  description: "Deployment of energy systems and resource-efficient models.",
+                  description: "Deployment of energy systems and resource efficient models.",
                   imageSrc: "/assets/images/xtras/image36.webp"
                 },
                 {
@@ -234,7 +234,7 @@ export default function HomePage() {
           <SectionIntro
             align="center"
             eyebrow="Our Work"
-            title="Projects, Platforms, Ventures"
+            title="Projects Platforms Ventures"
           />
 
           <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">

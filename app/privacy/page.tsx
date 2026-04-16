@@ -6,7 +6,7 @@ import { LEGAL_DOCUMENT_META, LEGAL_DOCUMENT_PROSE } from "@/lib/legal-document-
 export const metadata = {
   title: "Privacy Policy",
   description:
-    "SPX privacy policy for spxafrica.com—data we collect for consulting inquiries, SPX Insights, and newsletters (formerly Spiralytix).",
+    "SPX privacy policy for spxafrica.com: data we collect for consulting inquiries, SPX Insights, and newsletters (formerly Spiralytix).",
 };
 
 export default function PrivacyPage() {

@@ -13,7 +13,7 @@ export const revalidate = 0;
 export const metadata: Metadata = {
   title: "Insights",
   description:
-    "SPX Insights — research, analysis, and strategy-to-implementation perspectives from Ethiopia and across Africa (formerly Spiralytix).",
+    "SPX Insights: research, analysis, and strategy-to-implementation perspectives from Ethiopia and across Africa (formerly Spiralytix).",
   keywords: ["SPX Insights", "SPX research", "Africa strategy", ...SEO_KEYWORDS.slice(0, 10)],
   openGraph: {
     title: "SPX Insights",
