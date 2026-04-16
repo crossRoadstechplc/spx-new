@@ -32,7 +32,7 @@ export default function HowWeWorkPage() {
           <MediaContentBlock 
             layout="image-right" 
             imageVariant="landscape"
-            imageSrc="/assets/images/xtras/image32.webp"
+            imageSrc="/assets/images/xtras/image44.webp"
             imageAlt="System design"
           >
             <div className="space-y-4">
@@ -132,7 +132,7 @@ export default function HowWeWorkPage() {
           <MediaContentBlock 
             layout="image-right" 
             imageVariant="landscape"
-            imageSrc="/assets/images/xtras/image40.webp"
+            imageSrc="/assets/images/xtras/image45.png"
             imageAlt="Capital structuring"
           >
             <div className="space-y-4">

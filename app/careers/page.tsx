@@ -75,7 +75,7 @@ export default function CareersPage() {
             align="left"
             eyebrow=""
             title="Applications"
-            description="No open roles are listed at this time."
+            description="No open roles are listed."
           />
           <p className="text-muted-foreground mt-4">
           Relevant profiles may be considered on a rolling basis.

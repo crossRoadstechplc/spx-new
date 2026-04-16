@@ -179,8 +179,8 @@ export default function OurWorkPage() {
 
       <CTASection
         variant="primary"
-        title="Build Solutions That Scale"
-        description="Partner with SPX to design and deliver programs, platforms, or ventures that transform markets and unlock sustainable growth."
+        title="At the level of systems, build solutions that scale"
+        description="Programs, Platforms, and Ventures."
         primaryCTA={{ label: "Get in Touch", href: "/contact" }}
         secondaryCTA={{ label: "Our Capabilities", href: "/what-we-do" }}
       />

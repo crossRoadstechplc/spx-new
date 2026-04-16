@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { NewsletterSection } from "@/components/home/newsletter-section";
+import { CookieConsentBanner } from "@/components/home/cookie-consent-banner";
 import type { Metadata } from "next";
 import { DEFAULT_SITE_DESCRIPTION, SEO_KEYWORDS } from "@/lib/seo-config";
 
@@ -324,6 +325,8 @@ export default function HomePage() {
         primaryCTA={{ label: "Get in Touch", href: "/contact" }}
         secondaryCTA={{ label: "About SPX", href: "/who-we-are" }}
       />
+
+      <CookieConsentBanner />
     </SiteLayout>
   );
 }

@@ -17,7 +17,7 @@ export default function AccessibilityPage() {
     <SiteLayout>
       <PageHero
         title="Accessibility"
-        description={`We aim to make ${SITE_DOMAIN_LABEL} usable for visitors exploring SPX—insights, sectors, and contact—regardless of ability.`}
+        description={`We aim to make ${SITE_DOMAIN_LABEL} usable for visitors exploring SPX insights, sectors, and contact regardless of ability.`}
       />
 
       <section className="py-16 md:py-24">

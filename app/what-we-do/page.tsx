@@ -31,7 +31,7 @@ export default function WhatWeDoPage() {
           <MediaContentBlock 
             layout="image-right" 
             imageVariant="landscape"
-            imageSrc="/assets/images/xtras/image30.webp"
+            imageSrc="/assets/images/xtras/image34.webp"
             imageAlt="Strategic advisory"
           >
             <div className="space-y-4">

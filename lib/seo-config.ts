@@ -20,7 +20,7 @@ export function shouldNoIndexSite(): boolean {
   return u.includes("ankuaru.com");
 }
 
-export const LINKEDIN_ORG_URL = "https://www.linkedin.com/company/spiralytix";
+export const LINKEDIN_ORG_URL = "https://www.linkedin.com/company/spxafrica/";
 
 export const ORGANIZATION_MAP_URL = "https://maps.app.goo.gl/HJr1r1RDFpMRwUoe6";
 

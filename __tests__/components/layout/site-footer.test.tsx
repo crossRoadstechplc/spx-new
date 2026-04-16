@@ -45,7 +45,7 @@ describe("SiteFooter", () => {
     const linkedInNav = screen.getByText("LinkedIn").closest("a");
     expect(linkedInNav).toHaveAttribute(
       "href",
-      "https://www.linkedin.com/company/spiralytix"
+      "https://www.linkedin.com/company/spxafrica/"
     );
   });
 
