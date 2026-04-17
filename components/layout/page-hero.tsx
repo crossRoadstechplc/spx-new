@@ -32,9 +32,10 @@ function PageHeroCarouselBody({
   subtitle,
   description,
   children,
-  isLarge,
+  size = "default",
   className,
 }: Omit<PageHeroProps, "carouselImages">) {
+  const isLarge = size === "large";
   const hasSubtitle = Boolean(subtitle);
 
   return (
@@ -147,7 +148,7 @@ export function PageHero({
           subtitle={subtitle}
           description={description}
           children={children}
-          isLarge={isLarge}
+          size={size}
           className={className}
         />
       </HeroCarousel>

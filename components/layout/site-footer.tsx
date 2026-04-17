@@ -45,7 +45,12 @@ const footerSections: FooterSection[] = [
   },
 ];
 
-export function SiteFooter() {
+interface SiteFooterProps {
+  /** When false, hides the Insights link (e.g. no published posts). Defaults to true. */
+  showInsightsLink?: boolean;
+}
+
+export function SiteFooter({ showInsightsLink = true }: SiteFooterProps) {
   const currentYear = new Date().getFullYear();
 
   return (
@@ -86,19 +91,24 @@ export function SiteFooter() {
               <div key={section.title}>
                 <h3 className="font-semibold text-sm mb-4">{section.title}</h3>
                 <ul className="space-y-3">
-                  {section.links.map((link) => (
-                    <li key={link.href}>
-                      <Link
-                        href={link.href}
-                        className={cn(
-                          "text-sm text-muted-foreground transition-colors",
-                          "hover:text-primary"
-                        )}
-                      >
-                        {link.label}
-                      </Link>
-                    </li>
-                  ))}
+                  {section.links
+                    .filter(
+                      (link) =>
+                        showInsightsLink || link.href !== "/insights"
+                    )
+                    .map((link) => (
+                      <li key={link.href}>
+                        <Link
+                          href={link.href}
+                          className={cn(
+                            "text-sm text-muted-foreground transition-colors",
+                            "hover:text-primary"
+                          )}
+                        >
+                          {link.label}
+                        </Link>
+                      </li>
+                    ))}
                 </ul>
               </div>
             ))}
