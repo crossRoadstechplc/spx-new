@@ -1,6 +1,7 @@
 /* How We Work page - Methodology and approach */
-import { SiteLayout, PageHero, SectionIntro, Container, CTASection, AccentDivider } from "@/components/layout";
+import { SiteLayout, PageHero, SectionIntro, Container, ClosingCTASection, AccentDivider } from "@/components/layout";
 import { MediaContentBlock } from "@/components/ui/media-content-block";
+import { proseBodyClass } from "@/lib/typography";
 
 export const metadata = {
   title: "How We Work",
@@ -12,7 +13,7 @@ export default function HowWeWorkPage() {
     <SiteLayout>
       <PageHero
         title="How We Work"
-        description="A holistic methodology that integrates strategy, capital, and operations to build market systems that scale."
+        description="An end to end methodology that integrates strategy, capital, and operations to build market systems that scale."
       />
 
       <section className="py-16 md:py-24">
@@ -38,7 +39,7 @@ export default function HowWeWorkPage() {
             <div className="space-y-4">
               <h3>01</h3>
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight">System Design</h2>
-              <p className="text-lg text-muted-foreground leading-relaxed">
+              <p className={proseBodyClass}>
               Market analysis, architecture design, and intervention mapping.
               </p>
               {/* <div className="space-y-3 pt-4">
@@ -77,19 +78,19 @@ export default function HowWeWorkPage() {
 
       <AccentDivider variant="gradient" className="my-16" />
 
-      {/* Partnerships & Ecosystem Building */}
+      {/* Partnerships and Ecosystem Building */}
       <section className="py-16 md:py-24 bg-muted/30">
         <Container>
           <MediaContentBlock 
             layout="image-left" 
             imageVariant="wide"
-            imageSrc="/assets/images/about/image6.webp"
+            imageSrc="/assets/images/xtras/image 47.png"
             imageAlt="Partnership building"
           >
             <div className="space-y-4">
               <h3>02</h3>
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Partnerships & Ecosystem Building</h2>
-              <p className="text-lg text-muted-foreground leading-relaxed">
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Partnerships and Ecosystem Building</h2>
+              <p className={proseBodyClass}>
                 Stakeholder coordination, incentive alignment, and governance structures.
               </p>
               {/* <div className="space-y-3 pt-4">
@@ -138,7 +139,7 @@ export default function HowWeWorkPage() {
             <div className="space-y-4">
               <h3>03</h3>
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Capital Structuring</h2>
-              <p className="text-lg text-muted-foreground leading-relaxed">
+              <p className={proseBodyClass}>
               Financial modeling, blended finance design, and investment structuring.              </p>
               {/* <div className="space-y-3 pt-4">
                 <div className="flex items-start gap-3">
@@ -182,13 +183,13 @@ export default function HowWeWorkPage() {
           <MediaContentBlock 
             layout="image-left" 
             imageVariant="wide"
-            imageSrc="/assets/images/projects/image24.webp"
+            imageSrc="/assets/images/xtras/image48.png"
             imageAlt="Operational execution and delivery"
           >
             <div className="space-y-4">
               <h3>04</h3>
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Execution Model</h2>
-              <p className="text-lg text-muted-foreground leading-relaxed">
+              <p className={proseBodyClass}>
               Program management, performance monitoring, and adaptive delivery.              </p>
               {/* <div className="space-y-3 pt-4">
                 <div className="flex items-start gap-3">
@@ -232,20 +233,14 @@ export default function HowWeWorkPage() {
               eyebrow="Integrated Approach"
               title="Strategy Through Implementation"
             />
-            <p className="text-lg text-muted-foreground leading-relaxed">
+            <p className={proseBodyClass}>
               Our methodology ensures that strategic design translates into operational execution. By integrating system thinking with capital structuring and implementation discipline, we create solutions that are both transformative and sustainable.
             </p>
           </div>
         </Container>
       </section> */}
 
-      <CTASection
-        variant="primary"
-        title="See Our Methodology in Action"
-        description="Explore projects and ventures where SPX has applied this integrated approach to deliver measurable outcomes."
-        primaryCTA={{ label: "View Our Work", href: "/our-work" }}
-        secondaryCTA={{ label: "Contact Us", href: "/contact" }}
-      />
+      <ClosingCTASection />
     </SiteLayout>
   );
 }

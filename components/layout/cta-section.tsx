@@ -2,6 +2,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { proseBodyClass } from "@/lib/typography";
 import { Button } from "@/components/ui/button";
 import { Container } from "./container";
 
@@ -54,7 +55,7 @@ export function CTASection({
             {title}
           </h2>
           {description && (
-            <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
+            <p className={cn(proseBodyClass, "mt-4")}>
               {description}
             </p>
           )}
@@ -83,5 +84,18 @@ export function CTASection({
         </>
       )}
     </section>
+  );
+}
+
+/** Standard site-wide closing band: single “Get in Touch” to Contact. */
+export function ClosingCTASection({ className }: { className?: string }) {
+  return (
+    <CTASection
+      variant="primary"
+      className={className}
+      title="Reach Out"
+      description="Partner with us to explore opportunities in market systems design and execution."
+      primaryCTA={{ label: "Get in Touch", href: "/contact" }}
+    />
   );
 }

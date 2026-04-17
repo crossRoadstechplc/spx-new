@@ -5,5 +5,5 @@ export { SiteLayout } from "./site-layout";
 export { Container } from "./container";
 export { PageHero } from "./page-hero";
 export { SectionIntro } from "./section-intro";
-export { CTASection } from "./cta-section";
+export { CTASection, ClosingCTASection } from "./cta-section";
 export { AccentDivider } from "./accent-divider";

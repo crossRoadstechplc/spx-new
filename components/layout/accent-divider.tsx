@@ -11,7 +11,7 @@ interface AccentDividerProps {
 
 /**
  * Accent divider component for subtle visual separation between sections.
- * Uses Deep Sky Blue accent for refined visual rhythm.
+ * Uses theme primary accent (#112241) for refined visual rhythm.
  */
 export function AccentDivider({
   variant = "default",

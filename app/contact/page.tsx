@@ -4,6 +4,7 @@ import { SiteLayout, PageHero, Container, AccentDivider } from "@/components/lay
 import { ContactForm } from "@/components/contact/contact-form";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { DEFAULT_SITE_DESCRIPTION, ORGANIZATION_MAP_URL, SEO_KEYWORDS } from "@/lib/seo-config";
+import { proseBodyClass } from "@/lib/typography";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -26,7 +27,7 @@ export default function ContactPage() {
     <SiteLayout>
       <PageHero
         title="Contact"
-        description="Engagements related to market systems, capital structuring, and implementation."
+        description=""
       />
 
       <section className="py-16 md:py-24">
@@ -36,7 +37,7 @@ export default function ContactPage() {
             <div className="lg:col-span-2 space-y-8">
               <div>
                 <h2 className="text-2xl font-bold mb-4">Partner With Us</h2>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className={proseBodyClass}>
                   Whether you&apos;re exploring a program partnership, seeking strategic advisory, considering investment opportunities, or interested in market systems development, we&apos;d like to hear from you.
                 </p>
               </div>
@@ -78,7 +79,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <div className="font-medium mb-1">Location</div>
-                    <p className="text-muted-foreground">
+                    <p className={proseBodyClass}>
                       Addis Ababa, Ethiopia: {" "}
                       <a
                         href={ORGANIZATION_MAP_URL}
@@ -97,7 +98,7 @@ export default function ContactPage() {
 
               <div>
                 <h3 className="text-lg font-semibold mb-3">Confidentiality</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
+                <p className={proseBodyClass}>
                   Information shared is treated as confidential.
                 </p>
               </div>
@@ -108,7 +109,7 @@ export default function ContactPage() {
               <div className="p-8 lg:p-10 rounded-lg border border-border/40 bg-card">
                 <div className="mb-8">
                   <h2 className="text-2xl font-bold mb-2">Send a Message</h2>
-                  <p className="text-muted-foreground">
+                  <p className={proseBodyClass}>
                     Fill out the form below and we will follow up by email or phone as appropriate.
                   </p>
                 </div>
@@ -125,7 +126,7 @@ export default function ContactPage() {
             <h2 className="text-2xl md:text-3xl font-bold">
               Prefer a Direct Conversation?
             </h2>
-            <p className="text-muted-foreground leading-relaxed">
+            <p className={proseBodyClass}>
               If you&apos;d rather discuss your market opportunity directly, feel free to email us at{" "}
               <a href="mailto:info@spxafrica.com" className="text-primary hover:underline font-medium">
                 info@spxafrica.com

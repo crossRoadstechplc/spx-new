@@ -129,7 +129,7 @@ ${data.message}
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; }
     .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-    .header { background: #00BFFF; color: white; padding: 20px; border-radius: 8px 8px 0 0; }
+    .header { background: #112241; color: white; padding: 20px; border-radius: 8px 8px 0 0; }
     .content { background: #f9fafb; padding: 30px; border: 1px solid #e5e7eb; border-radius: 0 0 8px 8px; }
     .field { margin-bottom: 15px; }
     .label { font-weight: 600; color: #374151; margin-bottom: 5px; }
@@ -207,7 +207,7 @@ The SPX Team
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; }
     .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-    .header { background: #00BFFF; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
+    .header { background: #112241; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
     .content { background: white; padding: 30px; border: 1px solid #e5e7eb; border-radius: 0 0 8px 8px; }
     .footer { text-align: center; margin-top: 20px; padding: 20px; color: #6b7280; font-size: 14px; }
   </style>
@@ -220,7 +220,7 @@ The SPX Team
     <div class="content">
       <p>Dear ${data.name},</p>
       <p>Thank you for reaching out to SPX. We've received your inquiry regarding <strong>"${data.inquiryType}"</strong> and will respond within 1-2 business days.</p>
-      <p>For urgent matters, please contact us directly at <a href="mailto:${process.env.CONTACT_TO_EMAIL || "hello@spx.com"}" style="color: #00BFFF;">${process.env.CONTACT_TO_EMAIL || "hello@spx.com"}</a>.</p>
+      <p>For urgent matters, please contact us directly at <a href="mailto:${process.env.CONTACT_TO_EMAIL || "hello@spx.com"}" style="color: #112241;">${process.env.CONTACT_TO_EMAIL || "hello@spx.com"}</a>.</p>
       <p>Best regards,<br>The SPX Team</p>
     </div>
     <div class="footer">
@@ -285,7 +285,7 @@ SPX Team
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; }
     .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-    .header { background: #00BFFF; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
+    .header { background: #112241; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
     .content { background: white; padding: 30px; border: 1px solid #e5e7eb; border-radius: 0 0 8px 8px; }
     .footer { margin-top: 20px; color: #6b7280; font-size: 14px; }
   </style>
@@ -376,7 +376,7 @@ ${genericUnsubscribeUrl}
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; }
     .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-    .header { background: #00BFFF; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
+    .header { background: #112241; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
     .content { background: white; padding: 30px; border: 1px solid #e5e7eb; border-radius: 0 0 8px 8px; }
     .btn { display: inline-block; margin-top: 16px; background: #111827; color: white !important; text-decoration: none; padding: 10px 16px; border-radius: 6px; font-weight: 600; }
   </style>

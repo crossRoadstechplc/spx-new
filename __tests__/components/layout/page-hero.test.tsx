@@ -34,7 +34,7 @@ describe("PageHero", () => {
 
   it("applies default size classes", () => {
     render(<PageHero title="Title" />);
-    const heading = screen.getByText("Title");
+    const heading = screen.getByRole("heading", { level: 1 });
     expect(heading).toHaveClass("text-3xl");
     expect(heading).toHaveClass("md:text-4xl");
     expect(heading).toHaveClass("lg:text-5xl");
@@ -42,7 +42,7 @@ describe("PageHero", () => {
 
   it("applies large size classes", () => {
     render(<PageHero title="Title" size="large" />);
-    const heading = screen.getByText("Title");
+    const heading = screen.getByRole("heading", { level: 1 });
     expect(heading).toHaveClass("text-4xl");
     expect(heading).toHaveClass("md:text-5xl");
     expect(heading).toHaveClass("lg:text-6xl");

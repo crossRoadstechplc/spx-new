@@ -1,11 +1,12 @@
 /* Phase 6: Insights listing page with database integration */
 import type { Metadata } from "next";
-import { SiteLayout, PageHero, Container } from "@/components/layout";
+import { SiteLayout, PageHero, Container, ClosingCTASection } from "@/components/layout";
 import { db } from "@/lib/db";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { InsightsFeed } from "./insights-feed";
 import { DEFAULT_SITE_DESCRIPTION, SEO_KEYWORDS } from "@/lib/seo-config";
+import { proseBodyClass } from "@/lib/typography";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -13,7 +14,7 @@ export const revalidate = 0;
 export const metadata: Metadata = {
   title: "Insights",
   description:
-    "SPX Insights: research, analysis, and strategy-to-implementation perspectives from Ethiopia and across Africa (formerly Spiralytix).",
+    "SPX Insights: research, analysis, and strategy-to-implementation perspectives from Ethiopia and across Africa.",
   keywords: ["SPX Insights", "SPX research", "Africa strategy", ...SEO_KEYWORDS.slice(0, 10)],
   openGraph: {
     title: "SPX Insights",
@@ -75,7 +76,7 @@ export default async function InsightsPage() {
             <h2 className="text-2xl md:text-3xl font-bold">
               More Insights Coming Soon
             </h2>
-            <p className="text-muted-foreground leading-relaxed">
+            <p className={proseBodyClass}>
               We&apos;re building our Insights library with strategic research, sector analysis, and frameworks developed through our client work. Check back regularly for new perspectives on navigating organizational complexity.
             </p>
             <div className="pt-4">
@@ -90,6 +91,8 @@ export default async function InsightsPage() {
           </div>
         </Container>
       </section>
+
+      <ClosingCTASection />
     </SiteLayout>
   );
 }

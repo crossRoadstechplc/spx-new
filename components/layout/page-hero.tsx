@@ -4,6 +4,7 @@
 import * as React from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { proseBodyClass } from "@/lib/typography";
 import { Container } from "./container";
 import { HeroCarousel } from "@/components/ui/hero-carousel";
 
@@ -20,14 +21,65 @@ interface PageHeroProps {
   size?: "default" | "large";
   /** Additional className */
   className?: string;
-  /** Optional carousel images */
+  /** Optional carousel background images (full-bleed behind content) */
   carouselImages?: string[];
+  /** When set with a carousel, shows a scroll-down control targeting this section id */
+  scrollToNextSectionId?: string;
 }
 
-/**
- * Page hero component for impactful page introductions.
- * Includes subtle reveal animation on mount.
- */
+function PageHeroCarouselBody({
+  title,
+  subtitle,
+  description,
+  children,
+  isLarge,
+  className,
+}: Omit<PageHeroProps, "carouselImages">) {
+  const hasSubtitle = Boolean(subtitle);
+
+  return (
+    <section
+      className={cn(
+        "relative w-full py-10 md:py-14",
+        className
+      )}
+    >
+      <Container size="default">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="max-w-3xl"
+        >
+          <h1
+            className={cn(
+              "font-bold tracking-tight leading-tight text-white [text-shadow:0_2px_28px_rgba(0,0,0,0.55)]",
+              isLarge
+                ? hasSubtitle
+                  ? "text-3xl sm:text-4xl md:text-5xl lg:text-5xl"
+                  : "text-4xl md:text-5xl lg:text-6xl"
+                : "text-3xl md:text-4xl lg:text-5xl"
+            )}
+          >
+            <span className="block">{title}</span>
+            {subtitle ? <span className="block">{subtitle}</span> : null}
+          </h1>
+          {description ? (
+            <p className="mt-6 text-lg leading-relaxed text-white [text-shadow:0_2px_24px_rgba(0,0,0,0.55)]">
+              {description}
+            </p>
+          ) : null}
+          {children ? (
+            <div className="mt-8 flex flex-wrap gap-4">{children}</div>
+          ) : null}
+        </motion.div>
+      </Container>
+
+      <div className="absolute bottom-0 left-0 h-px w-full bg-gradient-to-r from-primary/20 via-primary/40 to-transparent" />
+    </section>
+  );
+}
+
 export function PageHero({
   title,
   subtitle,
@@ -36,6 +88,7 @@ export function PageHero({
   size = "default",
   className,
   carouselImages,
+  scrollToNextSectionId,
 }: PageHeroProps) {
   const isLarge = size === "large";
   const hasSubtitle = Boolean(subtitle);
@@ -69,26 +122,36 @@ export function PageHero({
             {subtitle && <span className="block">{subtitle}</span>}
           </h1>
           {description && (
-            <p className="mt-6 text-lg md:text-xl text-muted-foreground leading-relaxed">
+            <p className={cn(proseBodyClass, "mt-6")}>
               {description}
             </p>
           )}
           {children && (
-            <div className="mt-8 flex flex-wrap gap-4">
-              {children}
-            </div>
+            <div className="mt-8 flex flex-wrap gap-4">{children}</div>
           )}
         </motion.div>
       </Container>
 
-      {/* Decorative accent */}
       <div className="absolute bottom-0 left-0 h-px w-full bg-gradient-to-r from-primary/20 via-primary/40 to-transparent" />
     </section>
   );
 
-  // If carousel images provided, wrap content in HeroCarousel
   if (carouselImages && carouselImages.length > 0) {
-    return <HeroCarousel images={carouselImages}>{content}</HeroCarousel>;
+    return (
+      <HeroCarousel
+        images={carouselImages}
+        scrollToNextSectionId={scrollToNextSectionId}
+      >
+        <PageHeroCarouselBody
+          title={title}
+          subtitle={subtitle}
+          description={description}
+          children={children}
+          isLarge={isLarge}
+          className={className}
+        />
+      </HeroCarousel>
+    );
   }
 
   return content;

@@ -3,7 +3,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { formatDate } from "@/lib/utils";
+import { cn, formatDate } from "@/lib/utils";
+import { proseBodyClass } from "@/lib/typography";
 import Image from "next/image";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 
@@ -101,7 +102,7 @@ export function InsightsFeed({ initialItems, initialHasMore }: InsightsFeedProps
   if (items.length === 0) {
     return (
       <div className="text-center py-12">
-        <p className="text-muted-foreground text-lg mb-4">
+        <p className={cn(proseBodyClass, "mb-4")}>
           No insights published yet. Check back soon for strategic research and analysis.
         </p>
         <Link
@@ -162,7 +163,7 @@ export function InsightsFeed({ initialItems, initialHasMore }: InsightsFeedProps
                 </Link>
               </h2>
               {insight.excerpt ? (
-                <p className="text-sm text-muted-foreground leading-relaxed">{insight.excerpt}</p>
+                <p className={proseBodyClass}>{insight.excerpt}</p>
               ) : null}
               {insight.tags.length > 0 ? (
                 <div className="flex flex-wrap gap-2">

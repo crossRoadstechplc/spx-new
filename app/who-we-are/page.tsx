@@ -1,6 +1,8 @@
 /* Who We Are page - Platform overview */
-import { SiteLayout, PageHero, SectionIntro, Container, CTASection, AccentDivider } from "@/components/layout";
+import { SiteLayout, PageHero, SectionIntro, Container, ClosingCTASection, AccentDivider } from "@/components/layout";
 import { MediaContentBlock } from "@/components/ui/media-content-block";
+import { cn } from "@/lib/utils";
+import { proseBodyClass } from "@/lib/typography";
 
 export const metadata = {
   title: "Who We Are",
@@ -12,7 +14,7 @@ export default function WhoWeArePage() {
     <SiteLayout>
       <PageHero
         title="Who We Are"
-        description="A strategy-to-implementation platform operating across business and development contexts."
+        description="A strategy-to-implementation organization operating across business and development activities."
       />
 
       <section className="py-16 md:py-24">
@@ -27,11 +29,11 @@ export default function WhoWeArePage() {
               eyebrow="Our Foundation"
               title="Where Strategy Meets Implementation"
             />
-            <p className="text-lg text-muted-foreground leading-relaxed mt-4">
+            <p className={cn(proseBodyClass, "mt-4")}>
             SPX focuses on the design, structuring, and execution of market systems.
             </p>
-            <p className="text-muted-foreground mt-4 leading-relaxed">
-            The work spans advisory, capital structuring, program implementation, and venture development.
+            <p className={cn(proseBodyClass, "mt-4")}>
+            our work spans advisory, capital structuring, program implementation, and venture development.
               </p>
           </MediaContentBlock>
         </Container>
@@ -43,7 +45,7 @@ export default function WhoWeArePage() {
         <Container>
           <SectionIntro
             align="center"
-            eyebrow="Vision & Mission"
+            eyebrow="Vision and Mission"
             title="Unlocking Sustainable Growth"
             description="Alignment of commercial incentives with development outcomes."
           />
@@ -74,15 +76,15 @@ export default function WhoWeArePage() {
             <div className="space-y-6 mt-6">
               <div>
                 <h3 className="font-semibold text-lg mb-2">Origination</h3>
-                <p className="text-muted-foreground">Focus on structural gaps and intervention design.</p>
+                <p className={proseBodyClass}>Focus on structural gaps and intervention design.</p>
               </div>
               <div>
                 <h3 className="font-semibold text-lg mb-2">Structuring</h3>
-                <p className="text-muted-foreground">Design of system architecture across policy, capital, incentives, and operations.</p>
+                <p className={proseBodyClass}>Design of system architecture across policy, capital, incentives, and operations.</p>
               </div>
               <div>
                 <h3 className="font-semibold text-lg mb-2">Execution</h3>
-                <p className="text-muted-foreground">Execution across programs, platforms, and ventures.</p>
+                <p className={proseBodyClass}>Execution across programs, platforms, and ventures.</p>
               </div>
             </div>
           </MediaContentBlock>
@@ -95,9 +97,9 @@ export default function WhoWeArePage() {
         <Container>
           <SectionIntro
             align="center"
-            eyebrow="Leadership & Team"
-            title="Multidisciplinary expertise across strategy finance, operations, and technology."
-            description="Capabilities span system design, capital structuring, and implementation."
+            eyebrow="Leadership and Team"
+            title="Expertise across strategy finance, operations, and technology."
+            description="Capabilities span systems design, capital structuring, and implementation."
           />
 
           {/* <div className="mt-12 max-w-4xl mx-auto space-y-6">
@@ -145,7 +147,7 @@ export default function WhoWeArePage() {
             <SectionIntro
               align="center"
               eyebrow="Looking Ahead"
-              title="Continued work on systems integrating strategy, capital, and execution."
+              title="Work on systems integrating strategy, capital, and execution."
             />
             {/* <p className="text-lg text-muted-foreground leading-relaxed">
               We are committed to advancing a new model of market development-one that integrates strategy, capital, and operations to create systems that are commercially viable, socially inclusive, and environmentally sustainable.
@@ -157,13 +159,7 @@ export default function WhoWeArePage() {
         </Container>
       </section>
 
-      <CTASection
-        variant="primary"
-        title="Explore Our Capabilities"
-        description="Learn how SPX combines strategic advisory, program delivery, market systems development, and venture building to create transformative outcomes."
-        primaryCTA={{ label: "What We Do", href: "/what-we-do" }}
-        secondaryCTA={{ label: "Partner With Us", href: "/contact" }}
-      />
+      <ClosingCTASection />
     </SiteLayout>
   );
 }

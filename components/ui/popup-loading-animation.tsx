@@ -1,12 +1,18 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
+import { SITE_LOGO_PATH } from "@/lib/seo-config";
+
+/** Match yellow accent in spx-logo.png (same as loading-animation). */
+const DOT_LEFT_PCT = 68;
+const DOT_TOP_PCT = 34;
 
 interface PopupLoadingAnimationProps {
   label?: string;
 }
 
-export function PopupLoadingAnimation({ label = "Loading..." }: PopupLoadingAnimationProps) {
+export function PopupLoadingAnimation({ label = "Loading" }: PopupLoadingAnimationProps) {
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-background/70 backdrop-blur-sm">
       <motion.div
@@ -16,59 +22,32 @@ export function PopupLoadingAnimation({ label = "Loading..." }: PopupLoadingAnim
         className="w-[260px] rounded-xl border border-border bg-card/95 p-6 shadow-2xl"
       >
         <div className="flex flex-col items-center gap-5">
-          <motion.div
-            className="flex items-center gap-1 text-3xl font-bold"
-            initial="hidden"
-            animate="visible"
-            variants={{
-              hidden: { opacity: 0 },
-              visible: {
-                opacity: 1,
-                transition: {
-                  staggerChildren: 0.15,
-                },
-              },
-            }}
-          >
-            {["S", "P", "X"].map((letter) => (
-              <motion.span
-                key={letter}
-                variants={{
-                  hidden: { opacity: 0.2, y: 8 },
-                  visible: {
-                    opacity: [0.35, 1, 0.35],
-                    y: [2, -2, 2],
-                    transition: {
-                      duration: 1.2,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    },
-                  },
-                }}
-                className="text-foreground"
-              >
-                {letter}
-              </motion.span>
-            ))}
-          </motion.div>
-
-          <div className="flex gap-1.5">
-            {[0, 1, 2].map((dot) => (
-              <motion.span
-                key={dot}
-                className="h-2 w-2 rounded-full bg-primary"
-                animate={{
-                  y: [0, -6, 0],
-                  opacity: [0.35, 1, 0.35],
-                }}
-                transition={{
-                  duration: 0.9,
-                  repeat: Infinity,
-                  delay: dot * 0.15,
-                  ease: "easeInOut",
-                }}
-              />
-            ))}
+          <div className="relative h-11 w-[140px]">
+            <Image
+              src={SITE_LOGO_PATH}
+              alt=""
+              width={140}
+              height={44}
+              className="h-11 w-auto object-contain object-left"
+              priority
+            />
+            <motion.span
+              className="pointer-events-none absolute h-2 w-2 rounded-full bg-yellow-400 shadow-[0_0_12px_rgba(250,204,21,0.65)]"
+              style={{
+                left: `${DOT_LEFT_PCT}%`,
+                top: `${DOT_TOP_PCT}%`,
+                transform: "translate(-50%, -50%)",
+              }}
+              animate={{
+                scale: [1, 1.2, 1],
+                opacity: [0.65, 1, 0.65],
+              }}
+              transition={{
+                duration: 1.1,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
           </div>
 
           <p className="text-center text-xs uppercase tracking-wider text-muted-foreground">
@@ -79,4 +58,3 @@ export function PopupLoadingAnimation({ label = "Loading..." }: PopupLoadingAnim
     </div>
   );
 }
-

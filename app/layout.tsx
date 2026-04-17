@@ -7,18 +7,20 @@ import { ParticleBackground } from "@/components/ui/particle-background";
 import { AnalyticsTracker } from "@/components/providers/analytics-tracker";
 import {
   DEFAULT_SITE_DESCRIPTION,
+  getSiteLogoUrl,
   getSiteUrl,
   LINKEDIN_ORG_URL,
   ORGANIZATION_MAP_URL,
   ORGANIZATION_PHONE,
   SEO_KEYWORDS,
+  SITE_LOGO_PATH,
   shouldNoIndexSite,
 } from "@/lib/seo-config";
 
 const inter = Inter({ subsets: ["latin"] });
 
 const siteUrl = getSiteUrl();
-const defaultSeoImage = `${siteUrl}/opengraph-image`;
+const defaultSeoImage = getSiteLogoUrl();
 const noindex = shouldNoIndexSite();
 
 const googleVerification = process.env.GOOGLE_SITE_VERIFICATION?.trim();
@@ -26,7 +28,7 @@ const googleVerification = process.env.GOOGLE_SITE_VERIFICATION?.trim();
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "SPX: Consulting & Strategy-to-Implementation",
+    default: "SPX: Consulting and Strategy-to-Implementation",
     template: "%s | SPX",
   },
   description: DEFAULT_SITE_DESCRIPTION,
@@ -45,25 +47,28 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
+  icons: {
+    icon: [{ url: SITE_LOGO_PATH, type: "image/png" }],
+    apple: [{ url: SITE_LOGO_PATH, type: "image/png" }],
+    shortcut: SITE_LOGO_PATH,
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "/",
     siteName: "SPX",
-    title: "SPX: Consulting & Strategy-to-Implementation",
+    title: "SPX: Consulting and Strategy-to-Implementation",
     description: DEFAULT_SITE_DESCRIPTION,
     images: [
       {
-        url: defaultSeoImage,
-        width: 1200,
-        height: 630,
-        alt: "SPX: strategy-to-implementation across Africa",
+        url: SITE_LOGO_PATH,
+        alt: "SPX logo",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "SPX: Consulting & Strategy-to-Implementation",
+    title: "SPX: Consulting and Strategy-to-Implementation",
     description: DEFAULT_SITE_DESCRIPTION,
     images: [defaultSeoImage],
   },
@@ -86,10 +91,9 @@ const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "SPX",
-  alternateName: "Spiralytix",
   description: DEFAULT_SITE_DESCRIPTION,
   url: siteUrl,
-  logo: `${siteUrl}/assets/logos/SPX.png`,
+  logo: defaultSeoImage,
   image: defaultSeoImage,
   email: "info@spxafrica.com",
   telephone: ORGANIZATION_PHONE,

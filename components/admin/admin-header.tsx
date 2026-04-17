@@ -5,6 +5,8 @@ import { logoutAction } from "@/app/admin/actions";
 import { Button } from "@/components/ui/button";
 import { LogOut, User } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
+import { SITE_LOGO_PATH } from "@/lib/seo-config";
 import type { User as UserType } from "@prisma/client";
 
 interface AdminHeaderProps {
@@ -16,14 +18,16 @@ export function AdminHeader({ user }: AdminHeaderProps) {
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between px-4 lg:px-8">
         {/* Logo / Brand */}
-        <Link
-          href="/admin"
-          className="flex items-center space-x-2 text-2xl font-bold tracking-tight"
-        >
-          <span className="text-primary">SPX</span>
-          <span className="text-sm font-medium text-muted-foreground">
-            Admin
-          </span>
+        <Link href="/admin" className="flex items-center gap-3 py-1" aria-label="SPX Admin">
+          <Image
+            src={SITE_LOGO_PATH}
+            alt="SPX"
+            width={120}
+            height={36}
+            className="h-8 w-auto"
+            priority
+          />
+          <span className="text-sm font-semibold text-muted-foreground">Admin</span>
         </Link>
 
         {/* Navigation */}

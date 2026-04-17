@@ -10,7 +10,7 @@ jest.mock("next/navigation", () => ({
 describe("SiteHeader", () => {
   it("renders SPX logo", () => {
     render(<SiteHeader />);
-    expect(screen.getByText("SPX")).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: /SPX/i })).toBeInTheDocument();
   });
 
   it("renders all navigation items on desktop", () => {

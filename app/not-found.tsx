@@ -1,5 +1,6 @@
 /* Phase 7: Custom 404 page */
 import Link from "next/link";
+import { proseBodyClass } from "@/lib/typography";
 
 export const metadata = {
   title: "Page Not Found",
@@ -16,7 +17,7 @@ export default function NotFound() {
         <h1 className="text-5xl font-bold tracking-tight sm:text-6xl">
           Page Not Found
         </h1>
-        <p className="text-lg text-muted-foreground">
+        <p className={proseBodyClass}>
           The page you&apos;re looking for doesn&apos;t exist or may have moved.
         </p>
       </div>

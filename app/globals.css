@@ -1,4 +1,4 @@
-/* Phase 1: Global styles with Deep Sky Blue accent (#00BFFF) */
+/* Brand accent: #112241 (navy) — primary, accent, focus ring */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -11,19 +11,19 @@
     --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-    --primary: 195 100% 50%; /* Deep Sky Blue */
+    --primary: 218 58% 16%; /* #112241 */
     --primary-foreground: 0 0% 100%;
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 195 100% 50%; /* Deep Sky Blue */
+    --accent: 218 58% 16%; /* #112241 */
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 195 100% 50%; /* Deep Sky Blue */
+    --ring: 218 58% 16%; /* #112241 */
     --radius: 0.5rem;
   }
 
@@ -34,19 +34,19 @@
     --card-foreground: 0 0% 98%;
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 0 0% 98%;
-    --primary: 195 100% 50%;
+    --primary: 218 58% 16%;
     --primary-foreground: 0 0% 100%;
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 0 0% 98%;
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
-    --accent: 195 100% 50%;
+    --accent: 218 58% 16%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 195 100% 50%;
+    --ring: 218 58% 16%;
   }
 }
 

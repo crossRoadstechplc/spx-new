@@ -5,13 +5,13 @@ import { SiteFooter } from "@/components/layout/site-footer";
 describe("SiteFooter", () => {
   it("renders SPX brand logo", () => {
     render(<SiteFooter />);
-    expect(screen.getByText("SPX")).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: /SPX/i })).toBeInTheDocument();
   });
 
   it("renders brand description", () => {
     render(<SiteFooter />);
     expect(
-      screen.getByText(/strategy-to-implementation platform/i)
+      screen.getByText(/At the intersection of business and development/i)
     ).toBeInTheDocument();
   });
 

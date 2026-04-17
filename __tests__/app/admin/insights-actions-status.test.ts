@@ -50,7 +50,7 @@ const mockClearDispatches = clearInsightEmailDispatches as jest.MockedFunction<
   typeof clearInsightEmailDispatches
 >;
 
-describe("admin insight status & bulk actions", () => {
+describe("admin insight status and bulk actions", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     mockRequireAuth.mockResolvedValue({ id: "admin-user" } as User);

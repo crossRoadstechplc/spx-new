@@ -634,7 +634,7 @@ export function InsightForm({ insight, authors, categories, tags }: InsightFormP
 
       {/* SEO Section */}
       <div className="bg-card border border-border rounded-lg p-6 space-y-6">
-        <h3 className="text-lg font-semibold">SEO & Metadata</h3>
+        <h3 className="text-lg font-semibold">SEO and Metadata</h3>
 
         <div className="space-y-2">
           <Label htmlFor="metaTitle">Meta Title</Label>

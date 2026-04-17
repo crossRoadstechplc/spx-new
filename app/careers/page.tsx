@@ -1,7 +1,9 @@
 /* Careers page */
-import { SiteLayout, PageHero, SectionIntro, Container, CTASection, AccentDivider } from "@/components/layout";
+import { SiteLayout, PageHero, SectionIntro, Container, ClosingCTASection, AccentDivider } from "@/components/layout";
 import { MediaContentBlock } from "@/components/ui/media-content-block";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { proseBodyClass } from "@/lib/typography";
 import Link from "next/link";
 
 export const metadata = {
@@ -14,7 +16,7 @@ export default function CareersPage() {
     <SiteLayout>
       <PageHero
         title="Careers"
-        description="The work requires individuals comfortable operating across strategy, implementation, and venture contexts."
+        description="Project requires individuals comfortable operating across strategy, implementation, and venture contexts."
       />
 
       <section className="py-16 md:py-24">
@@ -30,23 +32,29 @@ export default function CareersPage() {
               title="Requirements"
               description=""
             />
-            <p className="text-muted-foreground mt-4">
-            * Analytical capability in complex systems
+            <p className={cn(proseBodyClass, "mt-4")}>
+            * Analytical capability in complex systems.
             </p>
-            <p className="text-muted-foreground mt-4">
-            * Operational discipline in execution environments
+            <p className={cn(proseBodyClass, "mt-4")}>
+            * Operational discipline in execution environments.
             </p>
-            <p className="text-muted-foreground mt-4">
-            * Comfort with ambiguity and early-stage work
+            <p className={cn(proseBodyClass, "mt-4")}>
+            * Comfort with ambiguity and early-stage work.
             </p>
-            <p className="text-muted-foreground mt-4">
-            * Ability to engage across stakeholders and institutions
+            <p className={cn(proseBodyClass, "mt-4")}>
+            * Ability to engage across stakeholders and institutions.
+            </p>
+            <p className={cn(proseBodyClass, "mt-4")}>
+            * Comfortable to work in field and rural environments.
+            </p>
+            <p>
+            * Work spans multiple sectors and geographies, requiring both analytical depth and operational execution.
             </p>
           </MediaContentBlock>
         </Container>
       </section>
 
-      <section className="py-16 md:py-24">
+      {/* <section className="py-16 md:py-24">
         <Container>
           <MediaContentBlock 
             layout="image-left" 
@@ -59,13 +67,13 @@ export default function CareersPage() {
               title="Work Context"
               description=""
             />
-            <p className="text-muted-foreground mt-4">
+            <p className={cn(proseBodyClass, "mt-4")}>
             Work spans multiple sectors and geographies, requiring both analytical depth and operational execution.
             </p>
             
           </MediaContentBlock>
         </Container>
-      </section>
+      </section> */}
 
       <AccentDivider variant="gradient" className="my-16" />
 
@@ -75,14 +83,11 @@ export default function CareersPage() {
             align="left"
             eyebrow=""
             title="Applications"
-            description="No open roles are listed."
+            description=""
           />
-          <p className="text-muted-foreground mt-4">
-          Relevant profiles may be considered on a rolling basis.
-          </p>
-          <p className="text-muted-foreground mt-4">
-          Submissions may include background, areas of work, and relevant material checks.
-          </p>
+          <p className={cn(proseBodyClass, "mt-4")}>
+SPX accepts expressions of interest from potential candidates on a rolling basis. If you are interested in joining our team, please submit your details through the contact page for review.          </p>
+          
         </Container>
       </section>
 
@@ -99,7 +104,7 @@ export default function CareersPage() {
               title="How We Work"
               description="A collaborative environment that values intellectual curiosity, analytical rigor, and operational discipline."
             />
-            <p className="text-muted-foreground mt-4">
+            <p className={cn(proseBodyClass, "mt-4")}>
               Our team combines the strategic thinking of advisory firms, the execution discipline of implementers, and the entrepreneurial mindset of venture builders. We work on challenging problems that require both deep analysis and practical solutions.
             </p>
           </MediaContentBlock>
@@ -151,14 +156,14 @@ export default function CareersPage() {
             <div className="space-y-4">
               <div className="h-1 w-12 bg-primary rounded" />
               <h3 className="text-2xl font-bold">Remote-Friendly</h3>
-              <p className="text-muted-foreground leading-relaxed">
+              <p className={proseBodyClass}>
                 We support flexible work arrangements for many roles, though some projects may require field presence. We value focused work and understand that different people thrive in different environments.
               </p>
             </div>
             <div className="space-y-4">
               <div className="h-1 w-12 bg-primary rounded" />
               <h3 className="text-2xl font-bold">Continuous Learning</h3>
-              <p className="text-muted-foreground leading-relaxed">
+              <p className={proseBodyClass}>
                 Working across sectors and geographies means continuous learning. We support professional development, provide access to research and networks, and encourage participation in relevant conferences and workshops.
               </p>
             </div>
@@ -166,13 +171,7 @@ export default function CareersPage() {
         </Container>
       </section> */}
 
-      <CTASection
-        variant="primary"
-        title="Contact us for your enquiries"
-        description="Join a team building market systems that unlock sustainable growth in emerging markets."
-        primaryCTA={{ label: "Contact Us", href: "/contact" }}
-        secondaryCTA={{ label: "Our Work", href: "/our-work" }}
-      />
+      <ClosingCTASection />
     </SiteLayout>
   );
 }

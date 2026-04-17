@@ -2,6 +2,7 @@
 import * as React from "react";
 import { SiteHeader } from "./site-header";
 import { SiteFooter } from "./site-footer";
+import { getHasPublishedInsights } from "@/lib/insights-availability";
 
 interface SiteLayoutProps {
   children: React.ReactNode;
@@ -11,12 +12,13 @@ interface SiteLayoutProps {
  * Main layout wrapper for public-facing pages.
  * Includes sticky header and footer.
  */
-export function SiteLayout({ children }: SiteLayoutProps) {
+export async function SiteLayout({ children }: SiteLayoutProps) {
+  const showInsights = await getHasPublishedInsights();
   return (
     <div className="relative flex min-h-screen flex-col">
-      <SiteHeader />
+      <SiteHeader showInsightsNav={showInsights} />
       <main className="flex-1">{children}</main>
-      <SiteFooter />
+      <SiteFooter showInsightsLink={showInsights} />
     </div>
   );
 }

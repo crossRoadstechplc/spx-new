@@ -17,7 +17,7 @@ export default function PrivacyChoicesPage() {
     <SiteLayout>
       <PageHero
         title="Your Privacy Choices"
-        description={`How to control SPX use of your information on ${SITE_DOMAIN_LABEL}: newsletters, inquiries, cookies, and data requests—consistent with our Privacy Notices.`}
+        description={`How to control SPX use of your information on ${SITE_DOMAIN_LABEL}: newsletters, inquiries, cookies, and data requests-consistent with our Privacy Notices.`}
       />
 
       <section className="py-16 md:py-24">

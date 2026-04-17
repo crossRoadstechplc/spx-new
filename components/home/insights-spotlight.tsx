@@ -5,7 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import { formatDate } from "@/lib/utils";
+import { cn, formatDate } from "@/lib/utils";
+import { proseBodyClass } from "@/lib/typography";
 import { Container, SectionIntro } from "@/components/layout";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -114,7 +115,7 @@ export function InsightsSpotlight({ items }: InsightsSpotlightProps) {
                     </Link>
                   </h4>
                   {item.excerpt ? (
-                    <p className="text-sm text-muted-foreground line-clamp-3">{item.excerpt}</p>
+                    <p className={cn(proseBodyClass, "line-clamp-3")}>{item.excerpt}</p>
                   ) : null}
                 </CardContent>
               </Card>

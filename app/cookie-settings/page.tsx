@@ -52,7 +52,7 @@ export default function CookieSettingsPage() {
                 <strong>Safari:</strong> Settings → Privacy → Manage Website Data
               </li>
               <li>
-                <strong>Firefox:</strong> Settings → Privacy &amp; Security → Cookies and Site Data
+                <strong>Firefox:</strong> Settings → Privacy and Security → Cookies and Site Data
               </li>
               <li>
                 <strong>Edge:</strong> Settings → Cookies and site permissions → Manage and delete

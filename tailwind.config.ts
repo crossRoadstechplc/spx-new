@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  /* Phase 1: Tailwind configuration with Deep Sky Blue accent */
+  /* Tailwind maps to CSS variables in app/globals.css (accent #112241) */
   darkMode: ["class"],
   content: [
     "./pages/**/*.{ts,tsx}",

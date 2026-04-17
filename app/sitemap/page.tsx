@@ -1,6 +1,8 @@
 /* Sitemap page */
 import Link from "next/link";
 import { SiteLayout, PageHero, Container } from "@/components/layout";
+import { cn } from "@/lib/utils";
+import { proseBodyClass } from "@/lib/typography";
 
 export const metadata = {
   title: "Sitemap",
@@ -21,7 +23,7 @@ const groups: SitemapGroup[] = [
     ],
   },
   {
-    title: "Expertise & work",
+    title: "Expertise and work",
     links: [
       { href: "/sectors", label: "Sectors" },
       { href: "/our-work", label: "Our Work" },
@@ -34,7 +36,7 @@ const groups: SitemapGroup[] = [
     links: [{ href: "/contact", label: "Contact" }],
   },
   {
-    title: "Legal & trust",
+    title: "Legal and trust",
     links: [
       { href: "/terms", label: "Terms and Conditions" },
       { href: "/privacy", label: "Privacy Policy" },
@@ -59,7 +61,7 @@ export default function SitemapPage() {
       <section className="py-16 md:py-24">
         <Container>
           <div className="max-w-4xl mx-auto space-y-14 md:space-y-16">
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-3xl">
+            <p className={cn(proseBodyClass, "max-w-3xl")}>
               Use this page to navigate <strong>spxafrica.com</strong>: company and methodology,
               sectors and work, <Link href="/insights" className="text-primary font-medium hover:underline">SPX Insights</Link>, and{" "}
               <Link href="/contact" className="text-primary font-medium hover:underline">contact</Link>. Legal and trust pages include{" "}

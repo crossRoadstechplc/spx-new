@@ -31,13 +31,19 @@ export const CONTACT_EMAIL = "info@spxafrica.com";
 
 export const SITE_DOMAIN_LABEL = "spxafrica.com";
 
-/** Spiralytix → SPX transition: both names for discoverability (≈155 chars for snippets). */
+/** Primary logo under `/public` (nav, footer, PageHero, metadata icons, JSON-LD, default OG). */
+export const SITE_LOGO_PATH = "/assets/logos/spx-logo.png";
+
+export function getSiteLogoUrl(): string {
+  return `${getSiteUrl()}${SITE_LOGO_PATH}`;
+}
+
+/** Default meta description (≈155 chars for snippets). */
 export const DEFAULT_SITE_DESCRIPTION =
-  "SPX (formerly Spiralytix): consulting and strategy-to-implementation for Ethiopia, East Africa, and Africa insights, advisory, programs, and systems from design to delivery.";
+  "SPX: consulting and strategy-to-implementation for Ethiopia, East Africa, and Africa—insights, advisory, programs, and systems from design to delivery.";
 
 export const SEO_KEYWORDS = [
   "SPX",
-  "Spiralytix",
   "strategy to implementation",
   "consulting Ethiopia",
   "East Africa consulting",

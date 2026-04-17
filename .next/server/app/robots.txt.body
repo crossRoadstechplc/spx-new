@@ -1,7 +1,0 @@
-User-Agent: *
-Allow: /
-Disallow: /admin/
-Disallow: /api/
-
-Host: http://localhost:3012
-Sitemap: http://localhost:3012/sitemap.xml

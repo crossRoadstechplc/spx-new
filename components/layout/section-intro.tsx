@@ -4,6 +4,7 @@
 import * as React from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { proseBodyClass } from "@/lib/typography";
 
 interface SectionIntroProps {
   /** Optional eyebrow label */
@@ -57,7 +58,7 @@ export function SectionIntro({
         {title}
       </h2>
       {description && (
-        <p className="text-lg text-muted-foreground leading-relaxed">
+        <p className={proseBodyClass}>
           {description}
         </p>
       )}

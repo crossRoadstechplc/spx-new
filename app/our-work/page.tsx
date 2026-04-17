@@ -1,7 +1,8 @@
 /* Our Work page - Projects, Platforms, Ventures */
 import * as React from "react";
-import { SiteLayout, PageHero, SectionIntro, Container, CTASection, AccentDivider } from "@/components/layout";
+import { SiteLayout, PageHero, SectionIntro, Container, ClosingCTASection, AccentDivider } from "@/components/layout";
 import { MediaContentBlock } from "@/components/ui/media-content-block";
+import { proseBodyClass } from "@/lib/typography";
 
 export const metadata = {
   title: "Our Work",
@@ -63,7 +64,7 @@ export default function OurWorkPage() {
           <MediaContentBlock 
             layout="image-left" 
             imageVariant="wide"
-            imageSrc="/assets/images/innovation/shutterstock_2231928525.webp"
+            imageSrc="/assets/images/innovation/shutterstock_1817852297.webp"
             imageAlt="Digital platforms"
           >
             <div className="space-y-4">
@@ -71,7 +72,7 @@ export default function OurWorkPage() {
               <h2 className="text-2xl md:text-3xl font-bold tracking-tight">
                 Platforms
               </h2>
-              <p className="text-muted-foreground leading-relaxed">
+              <p className={proseBodyClass}>
               Infrastructure enabling transactions, coordination, and data exchange.              </p>
               <div className="space-y-3 pt-4">
                 <div className="flex items-start gap-3">
@@ -114,7 +115,7 @@ export default function OurWorkPage() {
               <div className="space-y-3 pt-4">
                 <div className="flex items-start gap-3">
                   <div className="h-1.5 w-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
-                  <span className="text-sm text-muted-foreground">Idea origination and business model design</span>
+                  <span className="text-sm text-muted-foreground">Ideation and business model design</span>
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="h-1.5 w-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
@@ -136,7 +137,7 @@ export default function OurWorkPage() {
 
       <AccentDivider variant="dotted" className="my-16" />
 
-      <section className="py-16 md:py-24">
+      {/* <section className="py-16 md:py-24">
         <Container>
           <SectionIntro
             align="center"
@@ -168,22 +169,16 @@ export default function OurWorkPage() {
                   {example.category}
                 </div>
                 <h3 className="text-lg font-semibold">{example.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
+                <p className={proseBodyClass}>
                   {example.description}
                 </p>
               </div>
             ))}
           </div>
         </Container>
-      </section>
+      </section> */}
 
-      <CTASection
-        variant="primary"
-        title="At the level of systems, build solutions that scale"
-        description="Programs, Platforms, and Ventures."
-        primaryCTA={{ label: "Get in Touch", href: "/contact" }}
-        secondaryCTA={{ label: "Our Capabilities", href: "/what-we-do" }}
-      />
+      <ClosingCTASection />
     </SiteLayout>
   );
 }

@@ -32,11 +32,10 @@ export default function AccessibilityPage() {
 
             <h2>Our commitment</h2>
             <p>
-              <strong>SPX</strong> (trading name alongside <strong>Spiralytix</strong> during the
-              transition) publishes the public site for partners and readers. We work toward clear
-              structure, readable typography, keyboard access, and descriptive labels for
-              interactive elements, using <strong>WCAG 2.1 Level AA</strong> as our target for new
-              and updated public pages where feasible.
+              <strong>SPX</strong> publishes the public site for partners and readers. We work
+              toward clear structure, readable typography, keyboard access, and descriptive labels
+              for interactive elements, using <strong>WCAG 2.1 Level AA</strong> as our target for
+              new and updated public pages where feasible.
             </p>
 
             <h2>What we review</h2>

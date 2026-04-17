@@ -89,7 +89,7 @@ test.describe("Contact Form", () => {
     expect(options.join(',')).toContain('Project Discussion');
     expect(options.join(',')).toContain('Partnership Opportunity');
     expect(options.join(',')).toContain('Career Inquiry');
-    expect(options.join(',')).toContain('Media & Press');
+    expect(options.join(',')).toContain('Media and Press');
   });
 
   test("privacy policy link works", async ({ page }) => {

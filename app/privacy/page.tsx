@@ -6,7 +6,7 @@ import { LEGAL_DOCUMENT_META, LEGAL_DOCUMENT_PROSE } from "@/lib/legal-document-
 export const metadata = {
   title: "Privacy Policy",
   description:
-    "SPX privacy policy for spxafrica.com: data we collect for consulting inquiries, SPX Insights, and newsletters (formerly Spiralytix).",
+    "SPX privacy policy for spxafrica.com: data we collect for consulting inquiries, SPX Insights, and newsletters.",
 };
 
 export default function PrivacyPage() {
@@ -33,9 +33,8 @@ export default function PrivacyPage() {
             <p>
               SPX (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) is committed to protecting
               your privacy. We are an Ethiopia-headquartered consulting and strategy-to-implementation
-              organization serving partners across Africa; we may refer to our prior public name,{" "}
-              <strong>Spiralytix</strong>, during the brand transition. This Privacy Policy explains
-              how we collect, use, disclose, and safeguard your information when you visit{" "}
+              organization serving partners across Africa. This Privacy Policy explains how we
+              collect, use, disclose, and safeguard your information when you visit{" "}
               <strong>{SITE_DOMAIN_LABEL}</strong> or interact with our public services (including
               contact forms and SPX Insights).
             </p>

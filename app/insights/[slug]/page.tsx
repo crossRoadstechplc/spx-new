@@ -2,11 +2,12 @@
 import { db } from "@/lib/db";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/layout/container";
-import { SiteLayout } from "@/components/layout";
+import { SiteLayout, ClosingCTASection } from "@/components/layout";
 import { renderTiptapContent, type TiptapContent } from "@/lib/tiptap-renderer";
 import { renderStrictInsightContent } from "@/lib/insight-block-renderer";
 import { isStrictInsightContent } from "@/lib/insight-blocks";
 import type { Metadata } from "next";
+import { getSiteLogoUrl, getSiteUrl } from "@/lib/seo-config";
 import { formatDate } from "@/lib/utils";
 import Link from "next/link";
 import Image from "next/image";
@@ -22,7 +23,8 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const siteUrl = process.env.APP_URL || "http://localhost:3000";
+  const siteUrl = getSiteUrl();
+  const defaultOgImage = getSiteLogoUrl();
   const insight = await db.insight.findUnique({
     where: { slug },
     include: {
@@ -56,9 +58,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       authors: insight.author?.name ? [insight.author.name] : undefined,
       images: [
         {
-          url: insight.coverImage?.url
-            ? `${siteUrl}${insight.coverImage.url}`
-            : `${siteUrl}/opengraph-image`,
+          url: insight.coverImage?.url ? `${siteUrl}${insight.coverImage.url}` : defaultOgImage,
           alt: insight.coverImage?.alt || insight.title,
         },
       ],
@@ -68,7 +68,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: insight.metaTitle || insight.title,
       description: insight.metaDescription || insight.excerpt || undefined,
       images: [
-        insight.coverImage?.url ? `${siteUrl}${insight.coverImage.url}` : `${siteUrl}/opengraph-image`,
+        insight.coverImage?.url ? `${siteUrl}${insight.coverImage.url}` : defaultOgImage,
       ],
     },
   };
@@ -143,7 +143,7 @@ export default async function InsightDetailPage({ params }: PageProps) {
                 {insight.title}
               </h1>
               {insight.excerpt ? (
-                <p className="text-lg md:text-2xl text-foreground/80 leading-relaxed mb-6 max-w-3xl font-light">
+                <p className="text-lg leading-relaxed text-foreground/85 mb-6 max-w-3xl font-light">
                   {insight.excerpt}
                 </p>
               ) : null}
@@ -252,6 +252,8 @@ export default async function InsightDetailPage({ params }: PageProps) {
           </aside>
         </div>
       </Container>
+
+      <ClosingCTASection />
     </SiteLayout>
   );
 }

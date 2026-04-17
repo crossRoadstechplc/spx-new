@@ -15,7 +15,7 @@ const inquiryTypes = [
   { value: "project", label: "Project Discussion" },
   { value: "partnership", label: "Partnership Opportunity" },
   { value: "career", label: "Career Inquiry" },
-  { value: "media", label: "Media & Press" },
+  { value: "media", label: "Media and Press" },
 ];
 
 function SubmitButton() {

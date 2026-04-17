@@ -3,6 +3,7 @@
 
 import * as React from "react";
 import { cn } from "@/lib/utils";
+import { proseBodyClass } from "@/lib/typography";
 import { ImagePlaceholder, type AspectRatio } from "./image-placeholder";
 
 interface MediaContentBlockProps {
@@ -150,7 +151,7 @@ export function MediaCardGrid({ columns = 3, cards, className }: MediaCardGridPr
           />
           <div className="space-y-2">
             <h3 className="text-lg font-semibold tracking-tight">{card.title}</h3>
-            <p className="text-sm text-muted-foreground">{card.description}</p>
+            <p className={proseBodyClass}>{card.description}</p>
           </div>
         </div>
       ))}

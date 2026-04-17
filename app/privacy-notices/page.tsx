@@ -7,7 +7,7 @@ import { LEGAL_DOCUMENT_META, LEGAL_DOCUMENT_PROSE } from "@/lib/legal-document-
 export const metadata = {
   title: "Privacy Notices",
   description:
-    "How information is handled when using spxafrica.com, reading SPX Insights, or contacting the team-Addis Ababa, Ethiopia; SPX and Spiralytix refer to the same entity.",
+    "How information is handled when using spxafrica.com, reading SPX Insights, or contacting the team in Addis Ababa, Ethiopia.",
 };
 
 export default function PrivacyNoticesPage() {
@@ -35,8 +35,7 @@ export default function PrivacyNoticesPage() {
               These notices apply to users of the SPX public website, including{" "}
               <Link href="/insights">Insights</Link>, newsletter sign-ups, and{" "}
               <Link href="/contact">contact</Link> forms. SPX is headquartered in{" "}
-              <strong>Addis Ababa, Ethiopia</strong> and operates across Africa. References to{" "}
-              <strong>Spiralytix</strong> and <strong>SPX</strong> refer to the same entity.
+              <strong>Addis Ababa, Ethiopia</strong> and operates across Africa.
             </p>
 
             <h2>Relationship to Privacy Policy</h2>

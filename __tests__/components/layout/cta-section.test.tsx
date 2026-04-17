@@ -1,6 +1,6 @@
 /* Phase 2: Unit tests for CTASection component */
 import { render, screen } from "@testing-library/react";
-import { CTASection } from "@/components/layout/cta-section";
+import { CTASection, ClosingCTASection } from "@/components/layout/cta-section";
 
 describe("CTASection", () => {
   it("renders title", () => {
@@ -74,5 +74,19 @@ describe("CTASection", () => {
     const { container } = render(<CTASection title="Title" variant="primary" />);
     const accents = container.querySelectorAll(".bg-gradient-to-r, .bg-gradient-to-l");
     expect(accents.length).toBe(2);
+  });
+});
+
+describe("ClosingCTASection", () => {
+  it("renders site-wide closing copy and a single contact CTA", () => {
+    render(<ClosingCTASection />);
+    expect(screen.getByRole("heading", { name: "Reach Out" })).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        "Partner with us to explore opportunities in market systems design and execution."
+      )
+    ).toBeInTheDocument();
+    const link = screen.getByRole("link", { name: "Get in Touch" });
+    expect(link).toHaveAttribute("href", "/contact");
   });
 });

@@ -1,9 +1,11 @@
 /* Phase 2: Site footer with clear information hierarchy */
 import * as React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Linkedin } from "lucide-react";
-import { LINKEDIN_ORG_URL } from "@/lib/seo-config";
+import { LINKEDIN_ORG_URL, SITE_LOGO_PATH } from "@/lib/seo-config";
+import { proseBodyClass } from "@/lib/typography";
 
 interface FooterLink {
   label: string;
@@ -53,13 +55,16 @@ export function SiteFooter() {
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-5 lg:gap-8 lg:items-start">
           {/* Brand Section */}
           <div className="lg:col-span-2">
-            <Link
-              href="/"
-              className="inline-block mb-4"
-            >
-              <span className="text-4xl font-bold tracking-tight text-foreground">SPX</span>
+            <Link href="/" className="mb-4 inline-block" aria-label="SPX home">
+              <Image
+                src={SITE_LOGO_PATH}
+                alt="SPX"
+                width={160}
+                height={48}
+                className="h-11 w-auto md:h-12"
+              />
             </Link>
-            <p className="text-sm text-muted-foreground leading-relaxed max-w-md">
+            <p className={cn(proseBodyClass, "max-w-md")}>
             At the intersection of business and development.
             </p>
             <div className="mt-5 flex items-center gap-3">

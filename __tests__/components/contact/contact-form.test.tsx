@@ -44,7 +44,7 @@ describe("ContactForm", () => {
     expect(screen.getByText("Project Discussion")).toBeInTheDocument();
     expect(screen.getByText("Partnership Opportunity")).toBeInTheDocument();
     expect(screen.getByText("Career Inquiry")).toBeInTheDocument();
-    expect(screen.getByText("Media & Press")).toBeInTheDocument();
+    expect(screen.getByText("Media and Press")).toBeInTheDocument();
   });
 
   it("renders submit button", () => {

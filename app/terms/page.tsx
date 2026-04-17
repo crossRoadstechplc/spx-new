@@ -1,4 +1,5 @@
 /* Phase 7: Terms of service page */
+import Link from "next/link";
 import { SiteLayout, PageHero, Container } from "@/components/layout";
 import { CONTACT_EMAIL, SITE_DOMAIN_LABEL } from "@/lib/seo-config";
 import { LEGAL_DOCUMENT_META, LEGAL_DOCUMENT_PROSE } from "@/lib/legal-document-classes";
@@ -6,7 +7,7 @@ import { LEGAL_DOCUMENT_META, LEGAL_DOCUMENT_PROSE } from "@/lib/legal-document-
 export const metadata = {
   title: "Terms and Conditions",
   description:
-    "Rules governing use of spxafrica.com and how they relate to professional engagements with SPX (trading name alongside Spiralytix during the transition).",
+    "Rules governing use of spxafrica.com and how they relate to professional engagements with SPX.",
 };
 
 export default function TermsPage() {
@@ -31,10 +32,13 @@ export default function TermsPage() {
 
             <h2>Agreement to Terms</h2>
             <p>
-              By accessing or using <strong>{SITE_DOMAIN_LABEL}</strong> (&quot;Site&quot;), you
-              agree to these Terms. <strong>SPX</strong> is the trading name used alongside{" "}
-              <strong>Spiralytix</strong> during the transition. If you do not agree, discontinue
-              use. Separate written agreements govern paid engagements.
+              These Terms and Conditions (&quot;Terms&quot;) govern access to and use of{" "}
+              <strong>{SITE_DOMAIN_LABEL}</strong> (the &quot;Site&quot;), operated by{" "}
+              <strong>SPX</strong>. By using the Site, you agree to these Terms and to our{" "}
+              <Link href="/privacy" className="text-primary underline underline-offset-2">
+                Privacy Policy
+              </Link>
+              Advisory, implementation, or other services SPX may provide are subject to separate agreements where those apply.
             </p>
 
             <h2>Use of Services</h2>

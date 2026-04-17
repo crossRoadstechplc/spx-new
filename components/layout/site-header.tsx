@@ -3,6 +3,8 @@
 
 import * as React from "react";
 import Link from "next/link";
+import Image from "next/image";
+import { SITE_LOGO_PATH } from "@/lib/seo-config";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
@@ -20,15 +22,23 @@ const navItems: NavItem[] = [
   { label: "What We Do", href: "/what-we-do", description: "Strategic services" },
   { label: "How We Work", href: "/how-we-work", description: "Our methodology" },
   { label: "Sectors", href: "/sectors", description: "Focus areas" },
-  { label: "Our Work", href: "/our-work", description: "Projects & ventures" },
-  { label: "Insights", href: "/insights", description: "Research & perspectives" },
+  { label: "Our Work", href: "/our-work", description: "Projects and ventures" },
+  { label: "Insights", href: "/insights", description: "Research and perspectives" },
   { label: "Partners", href: "/partners", description: "Collaborations" },
   { label: "Careers", href: "/careers", description: "Join us" },
 ];
 
-export function SiteHeader() {
+export function SiteHeader({
+  showInsightsNav = true,
+}: {
+  /** When false, the Insights link is hidden (no published insights yet). */
+  showInsightsNav?: boolean;
+}) {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const pathname = usePathname();
+  const visibleNavItems = showInsightsNav
+    ? navItems
+    : navItems.filter((item) => item.href !== "/insights");
 
   // Close mobile menu on route change
   React.useEffect(() => {
@@ -51,16 +61,20 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <nav className="container flex h-16 items-center justify-between px-4 lg:px-8">
         {/* Logo */}
-        <Link
-          href="/"
-          className="flex items-center space-x-2"
-        >
-          <span className="text-[2.625rem] font-bold tracking-tight text-foreground leading-none">SPX</span>
+        <Link href="/" className="flex items-center py-1" aria-label="SPX home">
+          <Image
+            src={SITE_LOGO_PATH}
+            alt="SPX"
+            width={140}
+            height={40}
+            className="h-9 w-auto sm:h-10"
+            priority
+          />
         </Link>
 
         {/* Desktop Navigation */}
         <div className="hidden lg:flex lg:items-center lg:gap-1">
-          {navItems.map((item) => {
+          {visibleNavItems.map((item) => {
             const isActive = pathname === item.href;
             return (
               <Link
@@ -121,7 +135,7 @@ export function SiteHeader() {
             className="lg:hidden border-t border-border/40 bg-background"
           >
             <div className="container px-4 py-6 space-y-1">
-              {navItems.map((item) => {
+              {visibleNavItems.map((item) => {
                 const isActive = pathname === item.href;
                 return (
                   <Link

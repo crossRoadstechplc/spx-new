@@ -1,6 +1,7 @@
 /* What We Do page - Core service areas */
-import { SiteLayout, PageHero, SectionIntro, Container, CTASection, AccentDivider } from "@/components/layout";
+import { SiteLayout, PageHero, SectionIntro, Container, ClosingCTASection, AccentDivider } from "@/components/layout";
 import { MediaContentBlock } from "@/components/ui/media-content-block";
+import { proseBodyClass } from "@/lib/typography";
 
 export const metadata = {
   title: "What We Do",
@@ -31,12 +32,12 @@ export default function WhatWeDoPage() {
           <MediaContentBlock 
             layout="image-right" 
             imageVariant="landscape"
-            imageSrc="/assets/images/xtras/image34.webp"
+            imageSrc="/assets/images/xtras/image46.webp"
             imageAlt="Strategic advisory"
           >
             <div className="space-y-4">
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Strategic Advisory</h2>
-              <p className="text-muted-foreground leading-relaxed">
+              <p className={proseBodyClass}>
               Work on market entry, sector strategy, and system design.
               </p>
               <ul className="space-y-3 text-muted-foreground">
@@ -69,13 +70,13 @@ export default function WhatWeDoPage() {
           <MediaContentBlock 
             layout="image-left" 
             imageVariant="wide"
-            imageSrc="/assets/images/approach/image2.webp"
+            imageSrc="/assets/images/approach/image5.webp"
             imageAlt="Program design and implementation"
           >
             <div className="space-y-4">
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Program Design & Implementation</h2>
-              <p className="text-muted-foreground leading-relaxed">
-              Design and delivery of programs with emphasis on execution and accountability.</p>
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Program Design and Implementation</h2>
+              <p className={proseBodyClass}>
+              Design and delivery of programs with emphasis on efficiency and accountability.</p>
               <ul className="space-y-3 text-muted-foreground">
                 <li className="flex items-start gap-3">
                   <div className="h-1.5 w-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
@@ -109,7 +110,7 @@ export default function WhatWeDoPage() {
           >
             <div className="space-y-4">
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Market Systems Development</h2>
-              <p className="text-muted-foreground leading-relaxed">
+              <p className={proseBodyClass}>
               Structuring of market systems through alignment of stakeholders, incentives, and infrastructure.
               </p>
               <ul className="space-y-3 text-muted-foreground">
@@ -146,14 +147,14 @@ export default function WhatWeDoPage() {
             imageAlt="Venture building"
           >
             <div className="space-y-4">
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Venture Building & Incubation</h2>
-              <p className="text-muted-foreground leading-relaxed">
-              Origination and development of ventures addressing structural gaps in markets.
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Venture Building and Incubation</h2>
+              <p className={proseBodyClass}>
+              Ideation and development of ventures addressing structural gaps in markets.
               </p>
               <ul className="space-y-3 text-muted-foreground">
                 <li className="flex items-start gap-3">
                   <div className="h-1.5 w-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
-                  <span>Venture origination and business model design</span>
+                  <span>Venture ideation and business model design</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="h-1.5 w-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
@@ -182,8 +183,8 @@ export default function WhatWeDoPage() {
             imageAlt="Research and insights"
           >
             <div className="space-y-4">
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Research & Insights</h2>
-              <p className="text-muted-foreground leading-relaxed">
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Research and Insights</h2>
+              <p className={proseBodyClass}>
               Research and analysis to inform decision making and system design.              </p>
               <ul className="space-y-3 text-muted-foreground">
                 <li className="flex items-start gap-3">
@@ -225,13 +226,7 @@ export default function WhatWeDoPage() {
         </Container>
       </section> */}
 
-      <CTASection
-        variant="primary"
-        title="Ready to Build Solutions?"
-        description="Partner with SPX to design, implement, and scale market systems that unlock sustainable growth."
-        primaryCTA={{ label: "View Our Work", href: "/our-work" }}
-        secondaryCTA={{ label: "Contact Us", href: "/contact" }}
-      />
+      <ClosingCTASection />
     </SiteLayout>
   );
 }
