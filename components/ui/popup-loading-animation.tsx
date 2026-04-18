@@ -1,5 +1,7 @@
 "use client";
 
+import * as React from "react";
+import { createPortal } from "react-dom";
 import { LazyImage } from "@/components/ui/lazy-image";
 import { motion } from "framer-motion";
 import { SITE_LOGO_PATH } from "@/lib/seo-config";
@@ -8,13 +10,27 @@ import { SITE_LOGO_PATH } from "@/lib/seo-config";
 const DOT_LEFT_PCT = 68;
 const DOT_TOP_PCT = 34;
 
+const useIsoLayoutEffect =
+  typeof window !== "undefined" ? React.useLayoutEffect : React.useEffect;
+
 interface PopupLoadingAnimationProps {
   label?: string;
 }
 
 export function PopupLoadingAnimation({ label = "Loading" }: PopupLoadingAnimationProps) {
-  return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-background/70 backdrop-blur-sm">
+  const [mounted, setMounted] = React.useState(false);
+
+  useIsoLayoutEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const overlay = (
+    <div
+      className="fixed inset-0 z-[200] flex min-h-dvh items-center justify-center bg-background/70 p-4 backdrop-blur-sm"
+      role="status"
+      aria-live="polite"
+      aria-busy="true"
+    >
       <motion.div
         initial={{ opacity: 0, scale: 0.96, y: 8 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -57,4 +73,10 @@ export function PopupLoadingAnimation({ label = "Loading" }: PopupLoadingAnimati
       </motion.div>
     </div>
   );
+
+  if (!mounted) {
+    return null;
+  }
+
+  return createPortal(overlay, document.body);
 }
