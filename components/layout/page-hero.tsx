@@ -75,8 +75,6 @@ function PageHeroCarouselBody({
           ) : null}
         </motion.div>
       </Container>
-
-      <div className="absolute bottom-0 left-0 h-px w-full bg-gradient-to-r from-primary/20 via-primary/40 to-transparent" />
     </section>
   );
 }
@@ -132,8 +130,6 @@ export function PageHero({
           )}
         </motion.div>
       </Container>
-
-      <div className="absolute bottom-0 left-0 h-px w-full bg-gradient-to-r from-primary/20 via-primary/40 to-transparent" />
     </section>
   );
 

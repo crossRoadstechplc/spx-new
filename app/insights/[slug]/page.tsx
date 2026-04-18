@@ -10,7 +10,7 @@ import type { Metadata } from "next";
 import { getSiteLogoUrl, getSiteUrl } from "@/lib/seo-config";
 import { formatDate } from "@/lib/utils";
 import Link from "next/link";
-import Image from "next/image";
+import { LazyImage } from "@/components/ui/lazy-image";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -199,7 +199,7 @@ export default async function InsightDetailPage({ params }: PageProps) {
                   >
                     <div className="relative aspect-[16/9] bg-muted">
                       {item.coverImage ? (
-                        <Image
+                        <LazyImage
                           src={item.coverImage.url}
                           alt={item.coverImage.alt || item.title}
                           fill
@@ -230,7 +230,7 @@ export default async function InsightDetailPage({ params }: PageProps) {
                   >
                     <div className="relative aspect-[16/9] bg-muted">
                       {item.coverImage ? (
-                        <Image
+                        <LazyImage
                           src={item.coverImage.url}
                           alt={item.coverImage.alt || item.title}
                           fill

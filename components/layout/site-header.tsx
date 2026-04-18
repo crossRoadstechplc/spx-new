@@ -3,7 +3,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import Image from "next/image";
+import { LazyImage } from "@/components/ui/lazy-image";
 import { SITE_LOGO_PATH } from "@/lib/seo-config";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -62,7 +62,7 @@ export function SiteHeader({
       <nav className="container flex h-16 items-center justify-between px-4 lg:px-8">
         {/* Logo */}
         <Link href="/" className="flex items-center py-1" aria-label="SPX home">
-          <Image
+          <LazyImage
             src={SITE_LOGO_PATH}
             alt="SPX"
             width={140}

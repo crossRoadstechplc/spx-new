@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Image from "next/image";
+import { LazyImage } from "@/components/ui/lazy-image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
@@ -66,7 +66,7 @@ export function InsightsSpotlight({ items }: InsightsSpotlightProps) {
             >
               <Card className="h-full overflow-hidden border-border/40">
                 <div className="relative aspect-[16/9] bg-muted">
-                  <Image
+                  <LazyImage
                     src={featured.coverImage?.url || FALLBACK_IMAGE}
                     alt={featured.coverImage?.alt || featured.title}
                     fill

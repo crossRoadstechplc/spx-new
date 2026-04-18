@@ -3,7 +3,7 @@
 
 import * as React from "react";
 import { useState, useEffect, useCallback } from "react";
-import Image from "next/image";
+import { LazyImage } from "@/components/ui/lazy-image";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronsDown } from "lucide-react";
 
@@ -83,7 +83,7 @@ export function HeroCarousel({
             transition={slideTransition}
             className="absolute inset-0 h-full w-full"
           >
-            <Image
+            <LazyImage
               src={
                 failedImages[images[currentIndex]!]
                   ? FALLBACK_HERO_IMAGES[

@@ -5,7 +5,7 @@ import { logoutAction } from "@/app/admin/actions";
 import { Button } from "@/components/ui/button";
 import { LogOut, User } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
+import { LazyImage } from "@/components/ui/lazy-image";
 import { SITE_LOGO_PATH } from "@/lib/seo-config";
 import type { User as UserType } from "@prisma/client";
 
@@ -19,7 +19,7 @@ export function AdminHeader({ user }: AdminHeaderProps) {
       <div className="container flex h-16 items-center justify-between px-4 lg:px-8">
         {/* Logo / Brand */}
         <Link href="/admin" className="flex items-center gap-3 py-1" aria-label="SPX Admin">
-          <Image
+          <LazyImage
             src={SITE_LOGO_PATH}
             alt="SPX"
             width={120}

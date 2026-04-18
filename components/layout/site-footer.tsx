@@ -1,7 +1,7 @@
 /* Phase 2: Site footer with clear information hierarchy */
 import * as React from "react";
 import Link from "next/link";
-import Image from "next/image";
+import { LazyImage } from "@/components/ui/lazy-image";
 import { cn } from "@/lib/utils";
 import { Linkedin } from "lucide-react";
 import { LINKEDIN_ORG_URL, SITE_LOGO_PATH } from "@/lib/seo-config";
@@ -61,7 +61,7 @@ export function SiteFooter({ showInsightsLink = true }: SiteFooterProps) {
           {/* Brand Section */}
           <div className="lg:col-span-2">
             <Link href="/" className="mb-4 inline-block" aria-label="SPX home">
-              <Image
+              <LazyImage
                 src={SITE_LOGO_PATH}
                 alt="SPX"
                 width={160}

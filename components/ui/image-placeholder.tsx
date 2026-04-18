@@ -2,8 +2,8 @@
 "use client";
 
 import * as React from "react";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { LazyImage } from "@/components/ui/lazy-image";
 import { ImageIcon } from "lucide-react";
 
 export type AspectRatio = "square" | "landscape" | "portrait" | "wide" | "ultrawide";
@@ -68,7 +68,7 @@ export function ImagePlaceholder({
       >
         {/* Actual Image */}
         {resolvedSrc && !loadError && (
-          <Image
+          <LazyImage
             src={resolvedSrc}
             alt={alt || ""}
             fill

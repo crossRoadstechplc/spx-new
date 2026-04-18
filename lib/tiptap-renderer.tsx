@@ -1,5 +1,5 @@
 /* Phase 6: Tiptap JSON to React renderer */
-import Image from "next/image";
+import { LazyImage } from "@/components/ui/lazy-image";
 import Link from "next/link";
 
 export interface TiptapNode {
@@ -77,7 +77,7 @@ function renderNode(node: TiptapNode, key: number): React.ReactNode {
       
       return (
         <div key={key} className="my-8">
-          <Image
+          <LazyImage
             src={imgSrc}
             alt={imgAlt}
             width={800}

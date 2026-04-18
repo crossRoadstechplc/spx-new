@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { deleteMediaAction } from "@/app/admin/media/actions";
 import { Trash2, ExternalLink, X } from "lucide-react";
-import Image from "next/image";
+import { LazyImage } from "@/components/ui/lazy-image";
 import type { Media } from "@prisma/client";
 
 interface MediaGridProps {
@@ -41,7 +41,7 @@ export function MediaGrid({ media }: MediaGridProps) {
           {/* Image Preview */}
           <div className="aspect-video bg-muted relative">
             {item.type === "IMAGE" ? (
-              <Image
+              <LazyImage
                 src={item.url}
                 alt={item.alt || item.filename}
                 fill
@@ -114,7 +114,7 @@ export function MediaGrid({ media }: MediaGridProps) {
             </div>
             <div className="relative w-full h-[70vh] bg-muted">
               {previewItem.type === "IMAGE" ? (
-                <Image
+                <LazyImage
                   src={previewItem.url}
                   alt={previewItem.alt || previewItem.filename}
                   fill

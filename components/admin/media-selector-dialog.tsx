@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { X } from "lucide-react";
-import Image from "next/image";
+import { LazyImage } from "@/components/ui/lazy-image";
 import type { Media } from "@prisma/client";
 
 interface MediaSelectorDialogProps {
@@ -86,7 +86,7 @@ export function MediaSelectorDialog({ isOpen, onClose, onSelect }: MediaSelector
                 >
                   <div className="aspect-video bg-muted relative">
                     {item.type === "IMAGE" && (
-                      <Image
+                      <LazyImage
                         src={item.url}
                         alt={item.alt || item.filename}
                         fill

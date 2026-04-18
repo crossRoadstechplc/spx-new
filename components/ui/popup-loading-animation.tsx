@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { LazyImage } from "@/components/ui/lazy-image";
 import { motion } from "framer-motion";
 import { SITE_LOGO_PATH } from "@/lib/seo-config";
 
@@ -23,7 +23,7 @@ export function PopupLoadingAnimation({ label = "Loading" }: PopupLoadingAnimati
       >
         <div className="flex flex-col items-center gap-5">
           <div className="relative h-11 w-[140px]">
-            <Image
+            <LazyImage
               src={SITE_LOGO_PATH}
               alt=""
               width={140}

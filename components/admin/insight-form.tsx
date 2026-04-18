@@ -13,7 +13,7 @@ import { uploadMediaAction } from "@/app/admin/media/actions";
 import { compressImage, needsCompression } from "@/lib/image-compression";
 import { isStrictInsightContent, type InsightBlock, type StrictInsightContent } from "@/lib/insight-blocks";
 import type { Author, Category, Tag, Insight, InsightTag, Media } from "@prisma/client";
-import Image from "next/image";
+import { LazyImage } from "@/components/ui/lazy-image";
 import { AlertCircle, Loader2, Trash2, MoveUp, MoveDown, Link2, Quote, Minus, ImagePlus, Video, Type } from "lucide-react";
 
 interface InsightFormProps {
@@ -377,7 +377,7 @@ export function InsightForm({ insight, authors, categories, tags }: InsightFormP
         {featuredImage ? (
           <div className="border rounded-lg p-3 flex items-center gap-3">
             <div className="relative h-16 w-24 overflow-hidden rounded">
-              <Image src={featuredImage.url} alt={featuredImage.alt || featuredImage.filename} fill className="object-cover" />
+              <LazyImage src={featuredImage.url} alt={featuredImage.alt || featuredImage.filename} fill className="object-cover" />
             </div>
             <div className="text-sm">
               <p className="font-medium">{featuredImage.filename}</p>
@@ -510,7 +510,7 @@ export function InsightForm({ insight, authors, categories, tags }: InsightFormP
                     {block.url && (
                       <div className="border rounded p-2">
                         <div className="relative aspect-video w-full overflow-hidden rounded">
-                          <Image src={block.url} alt={block.alt || ""} fill className="object-cover" />
+                          <LazyImage src={block.url} alt={block.alt || ""} fill className="object-cover" />
                         </div>
                         <p className="text-xs text-muted-foreground mt-2 break-all">{block.url}</p>
                       </div>

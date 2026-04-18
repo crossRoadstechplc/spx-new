@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { LazyImage } from "@/components/ui/lazy-image";
 import Link from "next/link";
 import { isStrictInsightContent, type StrictInsightContent } from "@/lib/insight-blocks";
 
@@ -43,7 +43,7 @@ export function renderStrictInsightContent(value: unknown): React.ReactNode {
     if (block.type === "image") {
       return (
         <figure key={block.id} className="my-8">
-          <Image
+          <LazyImage
             src={block.url}
             alt={block.alt || ""}
             width={1200}

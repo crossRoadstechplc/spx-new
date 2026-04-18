@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { cn, formatDate } from "@/lib/utils";
 import { proseBodyClass } from "@/lib/typography";
-import Image from "next/image";
+import { LazyImage } from "@/components/ui/lazy-image";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 
 type InsightItem = {
@@ -123,7 +123,7 @@ export function InsightsFeed({ initialItems, initialHasMore }: InsightsFeedProps
           <Card key={insight.id} className="overflow-hidden border-border/40 hover:border-primary/40 transition-colors">
             <div className="relative aspect-[16/9] bg-muted">
               {insight.coverImage && !failedImageIds[insight.id] ? (
-                <Image
+                <LazyImage
                   src={insight.coverImage.url}
                   alt={insight.coverImage.alt || insight.title}
                   fill
@@ -136,7 +136,7 @@ export function InsightsFeed({ initialItems, initialHasMore }: InsightsFeedProps
                   }
                 />
               ) : failedImageIds[insight.id] ? (
-                <Image
+                <LazyImage
                   src={fallbackImage}
                   alt={insight.title}
                   fill
