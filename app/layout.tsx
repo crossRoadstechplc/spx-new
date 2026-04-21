@@ -6,21 +6,24 @@ import { LoadingProvider } from "@/components/providers/loading-provider";
 import { ParticleBackground } from "@/components/ui/particle-background";
 import { AnalyticsTracker } from "@/components/providers/analytics-tracker";
 import {
+  APPLE_TOUCH_ICON_PATH,
   DEFAULT_SITE_DESCRIPTION,
+  FAVICON_ICO_PATH,
+  FAVICON_PNG_PATHS,
   getSiteLogoUrl,
   getSiteUrl,
   LINKEDIN_ORG_URL,
   ORGANIZATION_MAP_URL,
   ORGANIZATION_PHONE,
   SEO_KEYWORDS,
-  SITE_LOGO_PATH,
+  SITE_WEB_MANIFEST_PATH,
   shouldNoIndexSite,
 } from "@/lib/seo-config";
 
 const inter = Inter({ subsets: ["latin"] });
 
 const siteUrl = getSiteUrl();
-const defaultSeoImage = getSiteLogoUrl();
+const organizationImageUrl = getSiteLogoUrl();
 const noindex = shouldNoIndexSite();
 
 const googleVerification = process.env.GOOGLE_SITE_VERIFICATION?.trim();
@@ -42,15 +45,28 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  manifest: SITE_WEB_MANIFEST_PATH,
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
   },
   icons: {
-    icon: [{ url: SITE_LOGO_PATH, type: "image/png" }],
-    apple: [{ url: SITE_LOGO_PATH, type: "image/png" }],
-    shortcut: SITE_LOGO_PATH,
+    icon: [
+      { url: FAVICON_ICO_PATH, sizes: "any" },
+      {
+        url: FAVICON_PNG_PATHS["16"],
+        sizes: "16x16",
+        type: "image/png",
+      },
+      {
+        url: FAVICON_PNG_PATHS["32"],
+        sizes: "32x32",
+        type: "image/png",
+      },
+    ],
+    apple: [{ url: APPLE_TOUCH_ICON_PATH, type: "image/png" }],
+    shortcut: FAVICON_ICO_PATH,
   },
   openGraph: {
     type: "website",
@@ -59,18 +75,11 @@ export const metadata: Metadata = {
     siteName: "SPX",
     title: "SPX: Consulting and Strategy-to-Implementation",
     description: DEFAULT_SITE_DESCRIPTION,
-    images: [
-      {
-        url: SITE_LOGO_PATH,
-        alt: "SPX logo",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "SPX: Consulting and Strategy-to-Implementation",
     description: DEFAULT_SITE_DESCRIPTION,
-    images: [defaultSeoImage],
   },
   robots: noindex
     ? { index: false, follow: false, googleBot: { index: false, follow: false } }
@@ -93,8 +102,8 @@ const organizationJsonLd = {
   name: "SPX",
   description: DEFAULT_SITE_DESCRIPTION,
   url: siteUrl,
-  logo: defaultSeoImage,
-  image: defaultSeoImage,
+  logo: organizationImageUrl,
+  image: organizationImageUrl,
   email: "info@spxafrica.com",
   telephone: ORGANIZATION_PHONE,
   sameAs: [LINKEDIN_ORG_URL],

@@ -1,6 +1,7 @@
 /**
  * Central SEO / site URL configuration.
- * Production: APP_URL=https://spxafrica.com
+ * Production: set APP_URL to your canonical origin (including www if that is the primary host),
+ * e.g. https://www.spxafrica.com — so metadataBase and absolute OG URLs match search engines.
  * Staging (noindex): APP_URL=http://spxtest.ankuaru.com or NOINDEX_SITE=true
  */
 
@@ -31,8 +32,22 @@ export const CONTACT_EMAIL = "info@spxafrica.com";
 
 export const SITE_DOMAIN_LABEL = "spxafrica.com";
 
-/** Primary logo under `/public` (nav, footer, PageHero, metadata icons, JSON-LD, default OG). */
+/** Primary logo under `/public` (nav, footer, PageHero, JSON-LD organization logo). */
 export const SITE_LOGO_PATH = "/assets/logos/spx-logo.png";
+
+/** Served by `app/favicon.ico` (accent circle, same hue as `spx-logo.png` dot; do not duplicate under `public/`). */
+export const FAVICON_ICO_PATH = "/favicon.ico";
+
+/** PNG favicons for `<link rel="icon" type="image/png">`. */
+export const FAVICON_PNG_PATHS = {
+  "16": "/assets/logos/favicon-16x16.png",
+  "32": "/assets/logos/favicon-32x32.png",
+} as const;
+
+export const APPLE_TOUCH_ICON_PATH = "/assets/logos/apple-touch-icon.png";
+
+/** Web app manifest (PWA / install); icon `src` paths are absolute from site root. */
+export const SITE_WEB_MANIFEST_PATH = "/assets/logos/site.webmanifest";
 
 export function getSiteLogoUrl(): string {
   return `${getSiteUrl()}${SITE_LOGO_PATH}`;
