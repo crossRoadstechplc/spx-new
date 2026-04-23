@@ -12,10 +12,24 @@ export default function robots(): MetadataRoute.Robots {
 
   return {
     rules: [
-      // Allow major search engines
+      // Allow Google crawlers (core + specialized + product/AI bots).
       { userAgent: "Googlebot", allow: "/" },
+      { userAgent: "Googlebot-Smartphone", allow: "/" },
+      { userAgent: "Googlebot-Image", allow: "/" },
+      { userAgent: "Googlebot-Video", allow: "/" },
+      { userAgent: "Googlebot-News", allow: "/" },
+      { userAgent: "AdsBot-Google", allow: "/" },
+      { userAgent: "AdsBot-Google-Mobile", allow: "/" },
+      { userAgent: "Mediapartners-Google", allow: "/" },
+      { userAgent: "Storebot-Google", allow: "/" },
+      { userAgent: "Google-InspectionTool", allow: "/" },
+      { userAgent: "Google-Extended", allow: "/" },
+      { userAgent: "Google-CloudVertexBot", allow: "/" },
+      { userAgent: "GoogleOther", allow: "/" },
+
+      // Allow other major search engines.
       { userAgent: "Bingbot", allow: "/" },
-      { userAgent: "Slurp", allow: "/" },        // Yahoo
+      { userAgent: "Slurp", allow: "/" },
       { userAgent: "DuckDuckBot", allow: "/" },
       { userAgent: "Baiduspider", allow: "/" },
       { userAgent: "YandexBot", allow: "/" },
