@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
-import { getSiteUrl, shouldNoIndexSite } from "@/lib/seo-config";
+import { getSitemapBaseUrl, shouldNoIndexSite } from "@/lib/seo-config";
 
-const siteUrl = getSiteUrl();
+const siteUrl = getSitemapBaseUrl();
 
 export default function robots(): MetadataRoute.Robots {
   if (shouldNoIndexSite()) {

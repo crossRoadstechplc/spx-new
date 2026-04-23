@@ -1,8 +1,8 @@
 import type { MetadataRoute } from "next";
 import { db } from "@/lib/db";
-import { getSiteUrl, shouldNoIndexSite } from "@/lib/seo-config";
+import { getSitemapBaseUrl, shouldNoIndexSite } from "@/lib/seo-config";
 
-const siteUrl = getSiteUrl();
+const siteUrl = getSitemapBaseUrl();
 
 const staticRoutes = [
   "",

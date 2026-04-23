@@ -3,13 +3,21 @@
  * Production: set APP_URL to your canonical origin (including www if that is the primary host),
  * e.g. https://www.spxafrica.com — so metadataBase and absolute OG URLs match search engines.
  * Staging (noindex): APP_URL=http://spxtest.ankuaru.com or NOINDEX_SITE=true
+ *
+ * Sitemap.xml and robots.txt always use `PRODUCTION_FALLBACK_URL` (not `APP_URL`) so crawlers never
+ * see localhost; use `getSiteUrl()` everywhere else (VPS, emails, metadata).
  */
 
-const PRODUCTION_FALLBACK_URL = "https://spxafrica.com";
+const PRODUCTION_FALLBACK_URL = "https://www.spxafrica.com";
 
 export function getSiteUrl(): string {
   const raw = process.env.APP_URL?.trim() || PRODUCTION_FALLBACK_URL;
   return raw.replace(/\/$/, "");
+}
+
+/** Canonical origin for sitemap.xml `<loc>` and robots.txt `Sitemap:` / `Host:` only. */
+export function getSitemapBaseUrl(): string {
+  return PRODUCTION_FALLBACK_URL;
 }
 
 /** Staging / preview hosts must not be indexed. */
