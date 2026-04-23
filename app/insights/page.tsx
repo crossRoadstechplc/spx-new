@@ -15,7 +15,12 @@ export const metadata: Metadata = {
   title: "Insights",
   description:
     "SPX Insights: research, analysis, and strategy-to-implementation perspectives from Ethiopia and across Africa.",
-  keywords: ["SPX Insights", "SPX research", "Africa strategy", ...SEO_KEYWORDS.slice(0, 10)],
+  keywords: [
+    "SPX Insights",
+    "SPX research and analysis",
+    "market systems perspectives Africa",
+    ...SEO_KEYWORDS.slice(0, 10),
+  ],
   openGraph: {
     title: "SPX Insights",
     description: DEFAULT_SITE_DESCRIPTION,
