@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import net from "node:net";
 import { trackPageView, shouldTrackPath } from "@/lib/analytics";
 import { recordCountryVisit, resolveCountryFromHeaders } from "@/lib/country-traffic";
 
@@ -7,14 +8,43 @@ type TrackPayload = {
   referrer?: string | null;
 };
 
+function normalizeIpCandidate(ip: string): string | null {
+  const trimmed = ip.trim();
+  if (!trimmed) return null;
+  const normalized = trimmed.startsWith("::ffff:") ? trimmed.slice(7) : trimmed;
+  return net.isIP(normalized) ? normalized : null;
+}
+
+function isPrivateIp(ipAddress: string): boolean {
+  if (ipAddress === "::1" || ipAddress.startsWith("fc") || ipAddress.startsWith("fd") || ipAddress.startsWith("fe80:")) {
+    return true;
+  }
+
+  if (net.isIP(ipAddress) !== 4) return false;
+
+  const [a, b] = ipAddress.split(".").map((part) => Number(part));
+  if (a === 10 || a === 127) return true;
+  if (a === 169 && b === 254) return true;
+  if (a === 192 && b === 168) return true;
+  if (a === 172 && b >= 16 && b <= 31) return true;
+  return false;
+}
+
 function getClientIp(request: Request): string | null {
   const forwardedFor = request.headers.get("x-forwarded-for");
   if (forwardedFor) {
-    const first = forwardedFor.split(",")[0]?.trim();
-    if (first) return first;
+    const ips = forwardedFor.split(",").map((item) => normalizeIpCandidate(item)).filter((ip): ip is string => Boolean(ip));
+    const firstPublic = ips.find((ip) => !isPrivateIp(ip));
+    if (firstPublic) return firstPublic;
+    if (ips[0]) return ips[0];
   }
+
   const realIp = request.headers.get("x-real-ip");
-  if (realIp) return realIp.trim();
+  if (realIp) {
+    const normalizedRealIp = normalizeIpCandidate(realIp);
+    if (normalizedRealIp) return normalizedRealIp;
+  }
+
   return null;
 }
 
@@ -35,13 +65,14 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, reason: "invalid_path" }, { status: 400 });
     }
 
-    const country = resolveCountryFromHeaders(request.headers);
+    const clientIp = getClientIp(request);
+    const country = await resolveCountryFromHeaders(request.headers, clientIp);
 
     await trackPageView({
       path,
       referrer: body?.referrer ?? request.headers.get("referer"),
       userAgent: request.headers.get("user-agent"),
-      ipAddress: getClientIp(request),
+      ipAddress: clientIp,
     });
     await recordCountryVisit(country).catch((error) => {
       console.error("Country traffic tracking failed", error);
