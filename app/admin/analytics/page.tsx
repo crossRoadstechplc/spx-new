@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { ArrowDownRight, ArrowUpRight, BarChart3, ExternalLink, Globe, MousePointerClick, Users } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight, BarChart3, ChevronRight, ExternalLink, Globe, MousePointerClick, Users } from "lucide-react";
 import { getDailyTrend, getDeviceBreakdown, getKpiMetrics, getRangeForDays, getTopPages, getTopReferrers } from "@/lib/analytics";
+import { COUNTRY_TRACKING_STARTED_AT, getCountryTraffic } from "@/lib/country-traffic";
 
 export const metadata = {
   title: "Analytics",
@@ -49,12 +50,13 @@ function KpiCard({
 export default async function AdminAnalyticsPage() {
   const range30 = getRangeForDays(30);
 
-  const [kpis, topPages, topReferrers, dailyTrend, deviceBreakdown] = await Promise.all([
+  const [kpis, topPages, topReferrers, dailyTrend, deviceBreakdown, countryTraffic] = await Promise.all([
     getKpiMetrics(),
     getTopPages(range30, 10),
     getTopReferrers(range30, 10),
     getDailyTrend(range30),
     getDeviceBreakdown(range30),
+    getCountryTraffic(10),
   ]);
 
   return (
@@ -163,11 +165,14 @@ export default async function AdminAnalyticsPage() {
       </div>
 
       <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <section className="rounded-lg border border-border bg-card p-5">
-          <div className="mb-4 flex items-center justify-between">
+        <details className="group rounded-lg border border-border bg-card p-5">
+          <summary className="mb-4 flex cursor-pointer list-none items-center justify-between">
             <h2 className="text-lg font-semibold">Top Pages (30 days)</h2>
-            <Globe className="h-4 w-4 text-muted-foreground" />
-          </div>
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <Globe className="h-4 w-4" />
+              <ChevronRight className="h-4 w-4 transition-transform group-open:rotate-90" />
+            </div>
+          </summary>
           {topPages.length === 0 ? (
             <p className="text-sm text-muted-foreground">No tracked page views yet.</p>
           ) : (
@@ -182,13 +187,16 @@ export default async function AdminAnalyticsPage() {
               ))}
             </div>
           )}
-        </section>
+        </details>
 
-        <section className="rounded-lg border border-border bg-card p-5">
-          <div className="mb-4 flex items-center justify-between">
+        <details className="group rounded-lg border border-border bg-card p-5">
+          <summary className="mb-4 flex cursor-pointer list-none items-center justify-between">
             <h2 className="text-lg font-semibold">Top Referrers (30 days)</h2>
-            <ExternalLink className="h-4 w-4 text-muted-foreground" />
-          </div>
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <ExternalLink className="h-4 w-4" />
+              <ChevronRight className="h-4 w-4 transition-transform group-open:rotate-90" />
+            </div>
+          </summary>
           {topReferrers.length === 0 ? (
             <p className="text-sm text-muted-foreground">No referrer data yet.</p>
           ) : (
@@ -204,18 +212,56 @@ export default async function AdminAnalyticsPage() {
               ))}
             </div>
           )}
-        </section>
+        </details>
+      </div>
+
+      <div className="mb-8">
+        <details className="group rounded-lg border border-border bg-card p-5">
+          <summary className="mb-4 flex cursor-pointer list-none items-center justify-between">
+            <h2 className="text-lg font-semibold">Top Countries</h2>
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <Globe className="h-4 w-4" />
+              <ChevronRight className="h-4 w-4 transition-transform group-open:rotate-90" />
+            </div>
+          </summary>
+          <p className="mb-4 text-sm text-muted-foreground">
+            Since {COUNTRY_TRACKING_STARTED_AT}
+          </p>
+          {countryTraffic.length === 0 ? (
+            <p className="text-sm text-muted-foreground">No country traffic data yet.</p>
+          ) : (
+            <div className="space-y-2">
+              {countryTraffic.map((row) => (
+                <div
+                  key={row.country}
+                  className="flex items-center justify-between rounded-md border border-border/70 p-2 text-sm"
+                >
+                  <span className="font-medium">{row.country === "unknown" ? "Unknown" : row.country}</span>
+                  <span className="text-muted-foreground">{row.visits.toLocaleString()} visits</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </details>
       </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <section className="rounded-lg border border-border bg-card p-5">
-          <h2 className="mb-4 text-lg font-semibold">Daily Traffic Trend (30 days)</h2>
+        <details className="group rounded-lg border border-border bg-card p-5">
+          <summary className="mb-4 flex cursor-pointer list-none items-center justify-between">
+            <h2 className="text-lg font-semibold">Daily Traffic Trend (30 days)</h2>
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <ChevronRight className="h-4 w-4 transition-transform group-open:rotate-90" />
+            </div>
+          </summary>
           {dailyTrend.length === 0 ? (
             <p className="text-sm text-muted-foreground">No daily trend data yet.</p>
           ) : (
             <div className="space-y-2">
               {dailyTrend.map((row) => (
-                <div key={row.date} className="flex items-center justify-between border-b border-border/60 pb-2 text-sm last:border-b-0">
+                <div
+                  key={row.date}
+                  className="flex items-center justify-between border-b border-border/60 pb-2 text-sm last:border-b-0"
+                >
                   <span className="text-muted-foreground">{row.date}</span>
                   <div className="flex items-center gap-4">
                     <span>{row.views} views</span>
@@ -225,23 +271,31 @@ export default async function AdminAnalyticsPage() {
               ))}
             </div>
           )}
-        </section>
+        </details>
 
-        <section className="rounded-lg border border-border bg-card p-5">
-          <h2 className="mb-4 text-lg font-semibold">Device Breakdown (30 days)</h2>
+        <details className="group rounded-lg border border-border bg-card p-5">
+          <summary className="mb-4 flex cursor-pointer list-none items-center justify-between">
+            <h2 className="text-lg font-semibold">Device Breakdown (30 days)</h2>
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <ChevronRight className="h-4 w-4 transition-transform group-open:rotate-90" />
+            </div>
+          </summary>
           {deviceBreakdown.length === 0 ? (
             <p className="text-sm text-muted-foreground">No device data yet.</p>
           ) : (
             <div className="space-y-2">
               {deviceBreakdown.map((row) => (
-                <div key={row.device} className="flex items-center justify-between border-b border-border/60 pb-2 text-sm last:border-b-0">
+                <div
+                  key={row.device}
+                  className="flex items-center justify-between border-b border-border/60 pb-2 text-sm last:border-b-0"
+                >
                   <span className="capitalize text-muted-foreground">{row.device}</span>
                   <span>{row.visits.toLocaleString()} visits</span>
                 </div>
               ))}
             </div>
           )}
-        </section>
+        </details>
       </div>
     </div>
   );

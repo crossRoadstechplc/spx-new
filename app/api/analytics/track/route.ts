@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { trackPageView, shouldTrackPath } from "@/lib/analytics";
+import { recordCountryVisit, resolveCountryFromHeaders } from "@/lib/country-traffic";
 
 type TrackPayload = {
   path?: string;
@@ -34,11 +35,16 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, reason: "invalid_path" }, { status: 400 });
     }
 
+    const country = resolveCountryFromHeaders(request.headers);
+
     await trackPageView({
       path,
       referrer: body?.referrer ?? request.headers.get("referer"),
       userAgent: request.headers.get("user-agent"),
       ipAddress: getClientIp(request),
+    });
+    await recordCountryVisit(country).catch((error) => {
+      console.error("Country traffic tracking failed", error);
     });
 
     return NextResponse.json({ success: true }, { status: 200 });
