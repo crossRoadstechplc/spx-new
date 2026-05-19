@@ -11,6 +11,7 @@ import {
   clearInsightEmailDispatches,
   notifySubscribersForInsight,
 } from "@/lib/newsletter";
+import { revalidatePublicInsightsNav } from "@/lib/revalidate-public-content";
 import { z } from "zod";
 
 const insightSchema = z.object({
@@ -140,6 +141,7 @@ export async function createInsightAction(
       await notifySubscribersForInsight(insight.id);
     }
 
+    revalidatePublicInsightsNav();
     revalidatePath("/admin/insights");
     revalidatePath("/insights");
     redirect("/admin/insights");
@@ -296,6 +298,7 @@ export async function updateInsightAction(
       await notifySubscribersForInsight(id);
     }
 
+    revalidatePublicInsightsNav();
     revalidatePath("/admin/insights");
     revalidatePath(`/admin/insights/${id}/edit`);
     revalidatePath("/insights");
@@ -333,6 +336,7 @@ export async function deleteInsightAction(id: string): Promise<{ success: boolea
     });
     await db.insight.delete({ where: { id } });
 
+    revalidatePublicInsightsNav();
     revalidatePath("/admin/insights");
     revalidatePath("/insights");
     if (row) {
@@ -404,6 +408,7 @@ export async function setInsightStatusAction(
       await notifySubscribersForInsight(id);
     }
 
+    revalidatePublicInsightsNav();
     revalidatePath("/admin/insights");
     revalidatePath("/insights");
     revalidatePath(`/insights/${insight.slug}`);
@@ -458,6 +463,7 @@ export async function bulkSetInsightsStatusAction(
       }
     }
 
+    revalidatePublicInsightsNav();
     revalidatePath("/admin/insights");
     revalidatePath("/insights");
     for (const insight of insights) {
@@ -490,6 +496,7 @@ export async function bulkDeleteInsightsAction(
       where: { id: { in: idList.data } },
     });
 
+    revalidatePublicInsightsNav();
     revalidatePath("/admin/insights");
     revalidatePath("/insights");
     for (const row of rows) {

@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { requireAuth } from "@/lib/session";
 import { notifySubscribersForInsight } from "@/lib/newsletter";
+import { revalidatePublicInsightsNav } from "@/lib/revalidate-public-content";
 import { createInsightAction, updateInsightAction } from "@/app/admin/insights/actions";
 
 jest.mock("@/lib/db", () => ({
@@ -37,6 +38,11 @@ jest.mock("@/lib/newsletter", () => ({
 
 jest.mock("next/cache", () => ({
   revalidatePath: jest.fn(),
+}));
+
+jest.mock("@/lib/revalidate-public-content", () => ({
+  INSIGHTS_NAV_TAG: "insights-nav",
+  revalidatePublicInsightsNav: jest.fn(),
 }));
 
 jest.mock("next/navigation", () => ({
@@ -127,6 +133,7 @@ describe("createInsightAction", () => {
       })
     );
     expect(mockRedirect).toHaveBeenCalledWith("/admin/insights");
+    expect(revalidatePublicInsightsNav).toHaveBeenCalled();
   });
 
   it("links cover image and block media on create", async () => {

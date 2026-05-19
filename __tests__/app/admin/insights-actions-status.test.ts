@@ -9,6 +9,7 @@ import {
   clearInsightEmailDispatches,
   notifySubscribersForInsight,
 } from "@/lib/newsletter";
+import { revalidatePublicInsightsNav } from "@/lib/revalidate-public-content";
 import {
   bulkDeleteInsightsAction,
   bulkSetInsightsStatusAction,
@@ -39,6 +40,11 @@ jest.mock("@/lib/newsletter", () => ({
 
 jest.mock("next/cache", () => ({
   revalidatePath: jest.fn(),
+}));
+
+jest.mock("@/lib/revalidate-public-content", () => ({
+  INSIGHTS_NAV_TAG: "insights-nav",
+  revalidatePublicInsightsNav: jest.fn(),
 }));
 
 const mockDb = db as jest.Mocked<typeof db>;
@@ -111,6 +117,7 @@ describe("admin insight status and bulk actions", () => {
         },
       });
       expect(mockNotify).toHaveBeenCalledWith("i1");
+      expect(revalidatePublicInsightsNav).toHaveBeenCalled();
       expect(revalidatePath).toHaveBeenCalledWith("/admin/insights");
       expect(revalidatePath).toHaveBeenCalledWith("/insights");
       expect(revalidatePath).toHaveBeenCalledWith("/insights/post-a");
@@ -253,6 +260,7 @@ describe("admin insight status and bulk actions", () => {
       expect(mockDb.insight.deleteMany).toHaveBeenCalledWith({
         where: { id: { in: ["id1", "id2"] } },
       });
+      expect(revalidatePublicInsightsNav).toHaveBeenCalled();
       expect(revalidatePath).toHaveBeenCalledWith("/insights/alpha");
       expect(revalidatePath).toHaveBeenCalledWith("/insights/beta");
     });
@@ -273,6 +281,7 @@ describe("admin insight status and bulk actions", () => {
       expect(mockDb.insight.delete).toHaveBeenCalledWith({
         where: { id: "del-id" },
       });
+      expect(revalidatePublicInsightsNav).toHaveBeenCalled();
       expect(revalidatePath).toHaveBeenCalledWith("/insights/gone");
     });
   });
