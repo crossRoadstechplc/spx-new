@@ -14,7 +14,8 @@ import { compressImage, needsCompression } from "@/lib/image-compression";
 import { isStrictInsightContent, type InsightBlock, type StrictInsightContent } from "@/lib/insight-blocks";
 import type { Author, Category, Tag, Insight, InsightTag, Media } from "@prisma/client";
 import { LazyImage } from "@/components/ui/lazy-image";
-import { AlertCircle, Loader2, Trash2, MoveUp, MoveDown, Link2, Quote, Minus, ImagePlus, Video, Type } from "lucide-react";
+import { AlertCircle, Loader2, Trash2, MoveUp, MoveDown, Link2, Quote, Minus, ImagePlus, Video, Type, Eye } from "lucide-react";
+import { InsightPreviewDialog } from "@/components/admin/insight-preview-dialog";
 
 interface InsightFormProps {
   insight?: Insight & { tags: (InsightTag & { tag: Tag })[]; coverImage?: Media | null };
@@ -25,7 +26,7 @@ interface InsightFormProps {
 
 export function InsightForm({ insight, authors, categories, tags }: InsightFormProps) {
   const router = useRouter();
-  const draftToken = insight?.id || `draft-${crypto.randomUUID()}`;
+  const [draftToken] = useState(() => insight?.id ?? `draft-${crypto.randomUUID()}`);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string[]>>({});
@@ -49,6 +50,7 @@ export function InsightForm({ insight, authors, categories, tags }: InsightFormP
   const [mediaTarget, setMediaTarget] = useState<{ type: "featured" } | { type: "block"; blockId: string } | null>(null);
   const [uploadingByBlockId, setUploadingByBlockId] = useState<Record<string, boolean>>({});
   const [isDirty, setIsDirty] = useState(false);
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
 
   const initialSnapshot = useMemo(
     () =>
@@ -286,8 +288,24 @@ export function InsightForm({ insight, authors, categories, tags }: InsightFormP
     }
   };
 
+  const openPreview = () => {
+    if (!insight?.id) {
+      alert("Save this insight as a draft first, then preview how it will look on the site.");
+      return;
+    }
+    setIsPreviewOpen(true);
+  };
+
   return (
     <>
+      {insight && isPreviewOpen ? (
+        <InsightPreviewDialog
+          insightId={insight.id}
+          title={title || insight.title}
+          isOpen={isPreviewOpen}
+          onClose={() => setIsPreviewOpen(false)}
+        />
+      ) : null}
       <MediaSelectorDialog
         isOpen={isMediaSelectorOpen}
         onClose={() => setIsMediaSelectorOpen(false)}
@@ -683,6 +701,15 @@ export function InsightForm({ insight, authors, categories, tags }: InsightFormP
           )}
         </div>
         <div className="flex gap-3">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={openPreview}
+            disabled={isSubmitting}
+          >
+            <Eye className="h-4 w-4 mr-2" />
+            Preview
+          </Button>
           <Button
             type="button"
             variant="outline"

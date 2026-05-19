@@ -5,11 +5,22 @@ test.describe("Analytics track API", () => {
   test("accepts valid path and returns success", async ({ request }) => {
     const res = await request.post("/api/analytics/track", {
       data: { path: "/insights", referrer: null },
-      headers: { "user-agent": "Playwright E2E" },
+      headers: {
+        "user-agent": "Playwright E2E",
+        "cf-ipcountry": "US",
+      },
     });
     expect(res.ok()).toBeTruthy();
     const body = (await res.json()) as { success: boolean };
     expect(body.success).toBe(true);
+  });
+
+  test("records country from cf-ipcountry header", async ({ request }) => {
+    const res = await request.post("/api/analytics/track", {
+      data: { path: "/contact", referrer: null },
+      headers: { "cf-ipcountry": "KE" },
+    });
+    expect(res.ok()).toBeTruthy();
   });
 
   test("rejects invalid path", async ({ request }) => {

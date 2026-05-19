@@ -18,6 +18,7 @@ export function AdminLayoutClient({ user, children }: AdminLayoutClientProps) {
 
   // Check if we're on the login page
   const isLoginPage = pathname === "/admin/login";
+  const isInsightPreviewFrame = pathname?.startsWith("/admin/insights/preview/");
 
   // Redirect to login if not authenticated (except on login page)
   useEffect(() => {
@@ -26,8 +27,8 @@ export function AdminLayoutClient({ user, children }: AdminLayoutClientProps) {
     }
   }, [user, isLoginPage, router]);
 
-  // For login page, just render children without admin chrome
-  if (isLoginPage) {
+  // Login and iframe preview pages render without admin chrome
+  if (isLoginPage || isInsightPreviewFrame) {
     return <>{children}</>;
   }
 

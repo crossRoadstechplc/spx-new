@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import net from "node:net";
 import path from "node:path";
+import geoip from "geoip-lite";
 
 const COUNTRY_TRAFFIC_DIR = path.resolve(process.cwd(), "data");
 const COUNTRY_TRAFFIC_FILE = path.join(COUNTRY_TRAFFIC_DIR, "traffic-countries.json");
@@ -16,11 +17,22 @@ export type CountryTrafficRow = {
 
 const COUNTRY_CODE_REGEX = /^[A-Z]{2}$/;
 
+/** CDN / proxy headers that carry a 2-letter country code (checked in order). */
+const COUNTRY_HEADER_NAMES = [
+  "cf-ipcountry",
+  "x-vercel-ip-country",
+  "cloudfront-viewer-country",
+  "x-country-code",
+  "x-appengine-country",
+  "fastly-client-country",
+] as const;
+
 let writeQueue: Promise<void> = Promise.resolve();
 
 function normalizeCountryCode(input?: string | null): string {
   if (!input || !input.trim()) return "unknown";
   const normalized = input.trim().toUpperCase();
+  if (normalized === "XX" || normalized === "T1") return "unknown";
   return COUNTRY_CODE_REGEX.test(normalized) ? normalized : "unknown";
 }
 
@@ -30,13 +42,11 @@ function normalizeClientIp(ipAddress?: string | null): string | null {
   const trimmed = ipAddress.trim();
   if (!trimmed) return null;
 
-  // x-forwarded-for may include IPv4 mapped IPv6 addresses
   const normalized = trimmed.startsWith("::ffff:") ? trimmed.slice(7) : trimmed;
   return net.isIP(normalized) ? normalized : null;
 }
 
 function isPrivateIp(ipAddress: string): boolean {
-  // IPv6 localhost / link-local / unique local
   if (ipAddress === "::1" || ipAddress.startsWith("fc") || ipAddress.startsWith("fd") || ipAddress.startsWith("fe80:")) {
     return true;
   }
@@ -51,22 +61,22 @@ function isPrivateIp(ipAddress: string): boolean {
   return false;
 }
 
-async function resolveCountryFromGeoIp(ipAddress?: string | null): Promise<string> {
+function resolveCountryFromGeoIp(ipAddress?: string | null): string {
   const normalizedIp = normalizeClientIp(ipAddress);
-  if (!normalizedIp || isPrivateIp(normalizedIp)) return "unknown";
-
-  try {
-    const response = await fetch(`https://geolocation-db.com/json/${encodeURIComponent(normalizedIp)}&position=true`, {
-      signal: AbortSignal.timeout(2000),
-      cache: "no-store",
-    });
-    if (!response.ok) return "unknown";
-
-    const payload = (await response.json()) as { country_code?: string };
-    return normalizeCountryCode(payload.country_code ?? null);
-  } catch {
+  if (!normalizedIp || isPrivateIp(normalizedIp)) {
+    const devOverride = process.env.ANALYTICS_DEV_COUNTRY?.trim();
+    if (devOverride && process.env.NODE_ENV === "development") {
+      return normalizeCountryCode(devOverride);
+    }
     return "unknown";
   }
+
+  const lookup = geoip.lookup(normalizedIp);
+  if (lookup?.country) {
+    return normalizeCountryCode(lookup.country);
+  }
+
+  return "unknown";
 }
 
 async function ensureStorage(): Promise<void> {
@@ -109,11 +119,12 @@ async function writeCountryTrafficMap(map: CountryTrafficMap): Promise<void> {
 }
 
 export async function resolveCountryFromHeaders(headers: Headers, ipAddress?: string | null): Promise<string> {
-  const cfCountry = headers.get("cf-ipcountry");
-  if (cfCountry) return normalizeCountryCode(cfCountry);
-
-  const vercelCountry = headers.get("x-vercel-ip-country");
-  if (vercelCountry) return normalizeCountryCode(vercelCountry);
+  for (const name of COUNTRY_HEADER_NAMES) {
+    const value = headers.get(name);
+    if (value) {
+      return normalizeCountryCode(value);
+    }
+  }
 
   return resolveCountryFromGeoIp(ipAddress);
 }

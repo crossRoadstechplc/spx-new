@@ -1,6 +1,7 @@
 import {
   extractMediaIdsFromStrictContent,
   isStrictInsightContent,
+  normalizeInsightContentMediaUrls,
   strictInsightContentSchema,
 } from "@/lib/insight-blocks";
 
@@ -29,6 +30,27 @@ describe("strictInsightContentSchema", () => {
     };
     expect(strictInsightContentSchema.safeParse(value).success).toBe(false);
     expect(isStrictInsightContent(value)).toBe(false);
+  });
+});
+
+describe("normalizeInsightContentMediaUrls", () => {
+  it("rewrites image block urls to same-origin upload paths", () => {
+    const content = {
+      version: 2 as const,
+      blocks: [
+        { id: "b1", type: "text" as const, content: "Hi" },
+        {
+          id: "b2",
+          type: "image" as const,
+          url: "https://spxafrica.com/uploads/library/x.png",
+        },
+      ],
+    };
+    const normalized = normalizeInsightContentMediaUrls(content);
+    expect(normalized.blocks[1]).toMatchObject({
+      type: "image",
+      url: "/uploads/library/x.png",
+    });
   });
 });
 

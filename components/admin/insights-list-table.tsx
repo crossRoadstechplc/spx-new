@@ -12,6 +12,8 @@ import {
   deleteInsightAction,
   setInsightStatusAction,
 } from "@/app/admin/insights/actions";
+import { InsightPreviewDialog } from "@/components/admin/insight-preview-dialog";
+import { Eye } from "lucide-react";
 
 export type AdminInsightListRow = {
   id: string;
@@ -36,6 +38,10 @@ export function InsightsListTable({ insights }: InsightsListTableProps) {
   const [toast, setToast] = useState<{
     message: string;
     variant: "success" | "error";
+  } | null>(null);
+  const [previewInsight, setPreviewInsight] = useState<{
+    id: string;
+    title: string;
   } | null>(null);
 
   useEffect(() => {
@@ -203,6 +209,14 @@ export function InsightsListTable({ insights }: InsightsListTableProps) {
 
   return (
     <div className="space-y-3">
+      {previewInsight ? (
+        <InsightPreviewDialog
+          insightId={previewInsight.id}
+          title={previewInsight.title}
+          isOpen
+          onClose={() => setPreviewInsight(null)}
+        />
+      ) : null}
       {bulkLoadingLabel ? (
         <PopupLoadingAnimation label={bulkLoadingLabel} />
       ) : null}
@@ -368,6 +382,18 @@ export function InsightsListTable({ insights }: InsightsListTableProps) {
                 </td>
                 <td className="px-4 py-3 text-right whitespace-nowrap">
                   <div className="inline-flex items-center gap-2">
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      disabled={tableBusy}
+                      onClick={() =>
+                        setPreviewInsight({ id: insight.id, title: insight.title })
+                      }
+                    >
+                      <Eye className="h-3 w-3 mr-1" />
+                      Preview
+                    </Button>
                     <Button asChild variant="ghost" size="sm">
                       <Link href={`/admin/insights/${insight.id}/edit`}>
                         Edit

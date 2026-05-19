@@ -74,7 +74,7 @@ export function MediaUploadDialog() {
 
   if (!isOpen) {
     return (
-      <Button onClick={() => setIsOpen(true)}>
+      <Button type="button" data-testid="open-media-upload" onClick={() => setIsOpen(true)}>
         <Upload className="h-4 w-4 mr-2" />
         Upload Media
       </Button>
@@ -82,7 +82,10 @@ export function MediaUploadDialog() {
   }
 
   return (
-    <div className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div
+      data-testid="media-upload-dialog"
+      className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm flex items-center justify-center p-4"
+    >
       <div className="bg-card border border-border rounded-lg p-6 w-full max-w-md shadow-lg">
         <h2 className="text-xl font-bold mb-4">Upload Media</h2>
 

@@ -1,4 +1,5 @@
 /* Final Phase: E2E tests for admin insights management */
+import path from "path";
 import { test, expect } from "@playwright/test";
 import { loginAsAdmin } from "./helpers/admin-login";
 import { fillMinimumInsightBody, setUniqueInsightSlug, submitInsightForm } from "./helpers/insight-form";
@@ -39,25 +40,25 @@ test.describe("Admin Insights Management", () => {
     await expect(page.locator(`text=E2E Test Insight ${runId}`)).toBeVisible({ timeout: 10000 });
   });
 
-  test("upload image for insight", async ({ page }) => {
-    // First create an insight
-    await page.goto("/admin/insights/new");
-    await page.fill('input[name="title"]', "Insight with Image");
-    await page.fill('textarea[name="excerpt"]', "Testing image upload");
+  test("upload image block on new insight", async ({ page }) => {
+    const runId = Date.now();
+    await page.goto("/admin/insights/new", { waitUntil: "networkidle" });
+    await page.locator("#title").fill(`Insight with Image ${runId}`);
+    await page.fill('textarea[name="excerpt"]', "Testing inline image upload");
     await fillMinimumInsightBody(page);
-    
-    // Go to media section
-    await page.goto("/admin/media");
-    
-    // Check if upload dialog exists
-    const uploadButton = page.locator('text=Upload Image');
-    if (await uploadButton.isVisible()) {
-      await uploadButton.click();
-      
-      // In a real test, you'd upload an actual file
-      // For this E2E test, we're verifying the UI flow
-      await expect(page.locator('input[type="file"]')).toBeVisible();
-    }
+    await setUniqueInsightSlug(page, `e2e-image-${runId}`);
+
+    await page.getByRole("button", { name: /Image$/ }).click();
+    const fileInput = page.locator('input[type="file"][accept="image/*"]').last();
+    await fileInput.setInputFiles(path.join(__dirname, "fixtures", "test-upload.png"));
+    await expect(page.getByText("Uploading...")).not.toBeVisible({ timeout: 30000 });
+    await expect(page.locator("img").first()).toBeVisible({ timeout: 15000 });
+
+    await submitInsightForm(page);
+    await expect(page).toHaveURL(/\/admin\/insights\/?$/, { timeout: 30000 });
+    await expect(page.getByRole("link", { name: `Insight with Image ${runId}`, exact: true })).toBeVisible({
+      timeout: 15000,
+    });
   });
 
   test("edit existing insight", async ({ page }) => {

@@ -3,6 +3,8 @@ import net from "node:net";
 import { trackPageView, shouldTrackPath } from "@/lib/analytics";
 import { recordCountryVisit, resolveCountryFromHeaders } from "@/lib/country-traffic";
 
+export const runtime = "nodejs";
+
 type TrackPayload = {
   path?: string;
   referrer?: string | null;

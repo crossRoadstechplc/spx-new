@@ -34,7 +34,15 @@ export function AnalyticsTracker() {
       const blob = new Blob([payload], { type: "application/json" });
       const canSendBeacon = typeof navigator !== "undefined" && typeof navigator.sendBeacon === "function";
       if (canSendBeacon) {
-        navigator.sendBeacon("/api/analytics/track", blob);
+        const sent = navigator.sendBeacon("/api/analytics/track", blob);
+        if (!sent) {
+          void fetch("/api/analytics/track", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: payload,
+            keepalive: true,
+          });
+        }
       } else {
         void fetch("/api/analytics/track", {
           method: "POST",

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { toUploadPath } from "@/lib/media-url";
 
 const baseBlockSchema = z.object({
   id: z.string().min(1),
@@ -59,6 +60,19 @@ export type StrictInsightContent = z.infer<typeof strictInsightContentSchema>;
 
 export function isStrictInsightContent(value: unknown): value is StrictInsightContent {
   return strictInsightContentSchema.safeParse(value).success;
+}
+
+/** Normalize upload URLs in image blocks to same-origin /uploads paths. */
+export function normalizeInsightContentMediaUrls(
+  content: StrictInsightContent
+): StrictInsightContent {
+  return {
+    ...content,
+    blocks: content.blocks.map((block) => {
+      if (block.type !== "image" || !block.url) return block;
+      return { ...block, url: toUploadPath(block.url) };
+    }),
+  };
 }
 
 export function extractMediaIdsFromStrictContent(value: unknown): string[] {

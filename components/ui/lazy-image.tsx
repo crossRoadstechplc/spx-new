@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import NextImage, { type ImageProps } from "next/image";
+import { isUploadPath, normalizeMediaSrc } from "@/lib/media-url";
 import { cn } from "@/lib/utils";
 
 const DEFAULT_DELAY_MS = 200;
@@ -45,6 +46,16 @@ export function LazyImage({
   const [loaded, setLoaded] = React.useState(false);
   const [showDelayedMessage, setShowDelayedMessage] = React.useState(false);
 
+  // Strip legacy absolute URLs (wrong host/port) so the browser loads from the current origin.
+  const resolvedSrc = React.useMemo(() => {
+    if (typeof src !== "string") return src;
+    if (!isUploadPath(src)) return src;
+    return normalizeMediaSrc(src, null);
+  }, [src]);
+
+  const useUnoptimized =
+    typeof resolvedSrc === "string" && isUploadPath(typeof src === "string" ? src : "");
+
   const markLoaded = React.useCallback(() => {
     if (loadedRef.current) return;
     loadedRef.current = true;
@@ -60,14 +71,14 @@ export function LazyImage({
       if (!loadedRef.current) setShowDelayedMessage(true);
     }, loadingDelayMs);
     return () => window.clearTimeout(id);
-  }, [src, loadingDelayMs]);
+  }, [resolvedSrc, loadingDelayMs]);
 
   React.useLayoutEffect(() => {
     const el = imgRef.current;
     if (el?.complete && el.naturalHeight > 0) {
       markLoaded();
     }
-  }, [src, markLoaded]);
+  }, [resolvedSrc, markLoaded]);
 
   const handleLoad: NonNullable<ImageProps["onLoad"]> = (e) => {
     markLoaded();
@@ -88,10 +99,11 @@ export function LazyImage({
     <NextImage
       {...rest}
       ref={setImgRef}
-      src={src}
+      src={resolvedSrc}
       fill={fill}
       priority={priority}
       loading={resolvedLoading}
+      unoptimized={useUnoptimized}
       onLoad={handleLoad}
       onLoadingComplete={handleLoadingComplete}
       className={cn(

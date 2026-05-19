@@ -225,7 +225,11 @@ export default async function AdminAnalyticsPage() {
             </div>
           </summary>
           <p className="mb-4 text-sm text-muted-foreground">
-            Since {COUNTRY_TRACKING_STARTED_AT}
+            Since {COUNTRY_TRACKING_STARTED_AT}. Country is detected from CDN headers when present,
+            otherwise from the visitor IP using an offline GeoIP database. Local/private IPs appear
+            as Unknown unless{" "}
+            <code className="rounded bg-muted px-1 py-0.5 text-xs">ANALYTICS_DEV_COUNTRY</code> is set
+            in development.
           </p>
           {countryTraffic.length === 0 ? (
             <p className="text-sm text-muted-foreground">No country traffic data yet.</p>

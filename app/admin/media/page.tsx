@@ -34,10 +34,9 @@ export default async function AdminMediaPage() {
       {media.length === 0 ? (
         <div className="bg-card border border-border rounded-lg p-12 text-center">
           <ImageIcon className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-          <p className="text-muted-foreground mb-4">
-            No media files yet. Upload your first image or file.
+          <p className="text-muted-foreground">
+            No media files yet. Use <strong>Upload Media</strong> above to add your first file.
           </p>
-          <MediaUploadDialog />
         </div>
       ) : (
         <MediaGrid media={media} />

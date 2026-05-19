@@ -1,7 +1,8 @@
 /* Phase 5: Media grid component */
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { resolveMediaUrl, toUploadPath } from "@/lib/media-url";
 import { Button } from "@/components/ui/button";
 import { deleteMediaAction } from "@/app/admin/media/actions";
 import { Trash2, ExternalLink, X } from "lucide-react";
@@ -10,6 +11,25 @@ import type { Media } from "@prisma/client";
 
 interface MediaGridProps {
   media: (Media & { insight: { title: string } | null })[];
+}
+
+function usePublicMediaUrl(url: string): string {
+  const [publicUrl, setPublicUrl] = useState(() => toUploadPath(url));
+
+  useEffect(() => {
+    setPublicUrl(resolveMediaUrl(url, window.location.origin));
+  }, [url]);
+
+  return publicUrl;
+}
+
+function MediaPublicUrl({ url }: { url: string }) {
+  const publicUrl = usePublicMediaUrl(url);
+  return (
+    <p className="text-xs text-muted-foreground truncate" title={publicUrl}>
+      {publicUrl}
+    </p>
+  );
 }
 
 export function MediaGrid({ media }: MediaGridProps) {
@@ -106,7 +126,7 @@ export function MediaGrid({ media }: MediaGridProps) {
             <div className="flex items-center justify-between px-4 py-3 border-b border-border">
               <div className="min-w-0">
                 <p className="text-sm font-medium truncate">{previewItem.filename}</p>
-                <p className="text-xs text-muted-foreground truncate">{previewItem.url}</p>
+                <MediaPublicUrl url={previewItem.url} />
               </div>
               <Button variant="ghost" size="icon" onClick={() => setPreviewItem(null)} aria-label="Close preview">
                 <X className="h-4 w-4" />

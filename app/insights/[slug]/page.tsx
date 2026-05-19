@@ -3,14 +3,16 @@ import { db } from "@/lib/db";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/layout/container";
 import { SiteLayout, ClosingCTASection } from "@/components/layout";
-import { renderTiptapContent, type TiptapContent } from "@/lib/tiptap-renderer";
-import { renderStrictInsightContent } from "@/lib/insight-block-renderer";
-import { isStrictInsightContent } from "@/lib/insight-blocks";
 import type { Metadata } from "next";
 import { getSiteLogoUrl, getSiteUrl } from "@/lib/seo-config";
+import { resolveMediaUrl, toUploadPath } from "@/lib/media-url";
 import { formatDate } from "@/lib/utils";
 import Link from "next/link";
 import { LazyImage } from "@/components/ui/lazy-image";
+import { InsightArticleView } from "@/components/insights/insight-article-view";
+import { isStrictInsightContent } from "@/lib/insight-blocks";
+import { renderStrictInsightContent } from "@/lib/insight-block-renderer";
+import { renderTiptapContent, type TiptapContent } from "@/lib/tiptap-renderer";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -58,7 +60,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       authors: insight.author?.name ? [insight.author.name] : undefined,
       images: [
         {
-          url: insight.coverImage?.url ? `${siteUrl}${insight.coverImage.url}` : defaultOgImage,
+          url: insight.coverImage?.url
+            ? resolveMediaUrl(toUploadPath(insight.coverImage.url), siteUrl)
+            : defaultOgImage,
           alt: insight.coverImage?.alt || insight.title,
         },
       ],
@@ -68,7 +72,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: insight.metaTitle || insight.title,
       description: insight.metaDescription || insight.excerpt || undefined,
       images: [
-        insight.coverImage?.url ? `${siteUrl}${insight.coverImage.url}` : defaultOgImage,
+        insight.coverImage?.url
+          ? resolveMediaUrl(toUploadPath(insight.coverImage.url), siteUrl)
+          : defaultOgImage,
       ],
     },
   };

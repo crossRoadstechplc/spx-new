@@ -17,18 +17,22 @@ export async function uploadMediaAction(formData: FormData): Promise<UploadResul
   try {
     const user = await requireAuth();
 
-    const file = formData.get("file") as File;
+    const fileEntry = formData.get("file");
     const insightId = formData.get("insightId") as string | null;
     const draftToken = formData.get("draftToken") as string | null;
     const alt = formData.get("alt") as string | null;
     const caption = formData.get("caption") as string | null;
 
-    if (!file || file.size === 0) {
+    if (!(fileEntry instanceof Blob) || fileEntry.size === 0) {
       return { success: false, error: "No file provided" };
     }
 
+    const mimeType = fileEntry.type || "application/octet-stream";
+    const originalName =
+      fileEntry instanceof File && fileEntry.name ? fileEntry.name : "upload.bin";
+
     // Validate file type
-    if (!isAllowedImageType(file.type)) {
+    if (!isAllowedImageType(mimeType)) {
       return {
         success: false,
         error: `Invalid file type. Allowed types: ${envConfig.allowedImageTypes.join(", ")}`,
@@ -36,7 +40,7 @@ export async function uploadMediaAction(formData: FormData): Promise<UploadResul
     }
 
     // Validate file size
-    if (!isAllowedFileSize(file.size)) {
+    if (!isAllowedFileSize(fileEntry.size)) {
       const maxSizeMB = Math.round(envConfig.maxUploadSizeBytes / 1024 / 1024);
       return {
         success: false,
@@ -49,9 +53,9 @@ export async function uploadMediaAction(formData: FormData): Promise<UploadResul
       .toLowerCase()
       .replace(/[^a-z0-9-]+/g, "-")
       .replace(/^-+|-+$/g, "");
-    const baseFilename = sanitizeFilename(file.name);
+    const baseFilename = sanitizeFilename(originalName);
     const filename = `${uploadScope}-${generateUniqueFilename(baseFilename)}`;
-    const bytes = await file.arrayBuffer();
+    const bytes = await fileEntry.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
     // Ensure upload directory exists (post-scoped under /uploads)
@@ -73,13 +77,13 @@ export async function uploadMediaAction(formData: FormData): Promise<UploadResul
         filename,
         filepath: publicUrl,
         url: publicUrl,
-        mimeType: file.type,
-        sizeBytes: file.size,
+        mimeType,
+        sizeBytes: fileEntry.size,
         width,
         height,
         alt: alt || null,
         caption: caption || null,
-        type: file.type.startsWith("image/") ? "IMAGE" : "OTHER",
+        type: mimeType.startsWith("image/") ? "IMAGE" : "OTHER",
         insightId: insightId || null,
         uploadedBy: user.id,
       },

@@ -44,3 +44,5 @@ next-env.d.ts
 
 # Markdown (all *.md; already-tracked files stay until removed with git rm --cached)
 *.md
+
+/public/uploads/
