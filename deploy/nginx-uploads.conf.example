@@ -1,0 +1,17 @@
+# Serve uploaded media from the same directory the app writes to.
+# Replace /var/www/spx with your app root (folder containing package.json and public/).
+#
+# Option A — nginx serves /uploads directly (recommended on VPS):
+#   location /uploads/ {
+#     alias /var/www/spx/public/uploads/;
+#   }
+#
+# Option B — proxy everything to Next.js (no separate block needed; Next serves public/).
+
+location /uploads/ {
+  alias /var/www/spx/public/uploads/;
+  access_log off;
+  expires 30d;
+  add_header Cache-Control "public, max-age=2592000";
+  try_files $uri =404;
+}

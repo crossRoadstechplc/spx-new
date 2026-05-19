@@ -107,8 +107,10 @@ describe("getUploadUrl", () => {
     expect(getUploadUrl("insights/image.jpg")).toBe("/uploads/insights/image.jpg");
   });
 
-  it("strips public/ prefix if present", () => {
-    expect(getUploadUrl("public/uploads/test.jpg")).toBe("/uploads/uploads/test.jpg");
+  it("strips public/uploads prefix if present", () => {
+    expect(getUploadUrl("public/uploads/library/test.jpg")).toBe(
+      "/uploads/library/test.jpg"
+    );
   });
 
   it("handles paths with slashes", () => {

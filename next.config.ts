@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
+    // User uploads: always on disk at public/uploads, URL /uploads/** (see lib/upload-paths.ts)
     localPatterns: [
       {
         pathname: "/uploads/**",

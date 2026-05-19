@@ -29,7 +29,7 @@ const envSchema = z.object({
   CONTACT_RECIPIENT_EMAIL: z.string().optional(),
   CAREERS_RECIPIENT_EMAIL: z.string().optional(),
 
-  // File uploads (Phase 1)
+  // File uploads — stored under public/uploads (see lib/upload-paths.ts; env kept for docs only)
   UPLOAD_DIR: z.string().default("./public/uploads"),
   MAX_UPLOAD_SIZE: z.string().default("10485760"),
   ALLOWED_IMAGE_TYPES: z.string().default("image/jpeg,image/png,image/webp,image/gif"),

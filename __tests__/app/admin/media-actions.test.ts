@@ -211,7 +211,10 @@ describe("deleteMediaAction", () => {
   });
 
   it("deletes media record and revalidates", async () => {
-    mockDb.media.findUnique.mockResolvedValue({ id: "media-1" } as never);
+    mockDb.media.findUnique.mockResolvedValue({
+      id: "media-1",
+      url: "/uploads/library/library-test.png",
+    } as never);
     mockDb.media.delete.mockResolvedValue({} as never);
 
     const result = await deleteMediaAction("media-1");

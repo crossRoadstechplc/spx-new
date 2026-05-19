@@ -1,13 +1,24 @@
 /* Phase 5: Media upload server actions */
 "use server";
 
-import { writeFile, mkdir } from "fs/promises";
-import { join } from "path";
+import { writeFile } from "fs/promises";
 import { revalidatePath } from "next/cache";
 import { db } from "@/lib/db";
 import { requireAuth } from "@/lib/session";
 import { envConfig } from "@/lib/env";
-import { generateUniqueFilename, isAllowedImageType, isAllowedFileSize, sanitizeFilename } from "@/lib/upload-utils";
+import {
+  ensureUploadDir,
+  generateUniqueFilename,
+  isAllowedImageType,
+  isAllowedFileSize,
+  sanitizeFilename,
+  deleteUploadedFile,
+} from "@/lib/upload-utils";
+import {
+  getUploadFilePath,
+  getUploadPublicUrl,
+  sanitizeUploadScope,
+} from "@/lib/upload-paths";
 
 export type UploadResult =
   | { success: true; mediaId: string; url: string }
@@ -31,7 +42,6 @@ export async function uploadMediaAction(formData: FormData): Promise<UploadResul
     const originalName =
       fileEntry instanceof File && fileEntry.name ? fileEntry.name : "upload.bin";
 
-    // Validate file type
     if (!isAllowedImageType(mimeType)) {
       return {
         success: false,
@@ -39,7 +49,6 @@ export async function uploadMediaAction(formData: FormData): Promise<UploadResul
       };
     }
 
-    // Validate file size
     if (!isAllowedFileSize(fileEntry.size)) {
       const maxSizeMB = Math.round(envConfig.maxUploadSizeBytes / 1024 / 1024);
       return {
@@ -49,29 +58,21 @@ export async function uploadMediaAction(formData: FormData): Promise<UploadResul
     }
 
     const uploadScopeRaw = insightId || draftToken || "library";
-    const uploadScope = uploadScopeRaw
-      .toLowerCase()
-      .replace(/[^a-z0-9-]+/g, "-")
-      .replace(/^-+|-+$/g, "");
+    const uploadScope = sanitizeUploadScope(uploadScopeRaw);
     const baseFilename = sanitizeFilename(originalName);
     const filename = `${uploadScope}-${generateUniqueFilename(baseFilename)}`;
     const bytes = await fileEntry.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // Ensure upload directory exists (post-scoped under /uploads)
-    const uploadDir = join(process.cwd(), "public", "uploads", uploadScope);
-    await mkdir(uploadDir, { recursive: true });
+    await ensureUploadDir(uploadScope);
 
-    // Write file
-    const filepath = join(uploadDir, filename);
+    const filepath = getUploadFilePath(uploadScope, filename);
     await writeFile(filepath, buffer);
-    const publicUrl = `/uploads/${uploadScope}/${filename}`;
+    const publicUrl = getUploadPublicUrl(uploadScope, filename);
 
-    // Get image dimensions (basic implementation - to be enhanced in future)
     const width: number | null = null;
     const height: number | null = null;
 
-    // Create database record
     const media = await db.media.create({
       data: {
         filename,
@@ -109,19 +110,15 @@ export async function deleteMediaAction(id: string): Promise<{ success: boolean;
   try {
     await requireAuth();
 
-    // Get media record
     const media = await db.media.findUnique({ where: { id } });
 
     if (!media) {
       return { success: false, error: "Media not found" };
     }
 
-    // Delete from database
-    await db.media.delete({ where: { id } });
+    await deleteUploadedFile(media.url);
 
-    // TODO: Delete file from disk (optional, can be done later)
-    // const filepath = join(process.cwd(), "public", media.filepath);
-    // await unlink(filepath).catch(() => {});
+    await db.media.delete({ where: { id } });
 
     revalidatePath("/admin/media");
 

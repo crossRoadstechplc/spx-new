@@ -1,15 +1,22 @@
 /* Phase 1: File system utilities for upload management */
 import fs from "fs/promises";
 import path from "path";
-import { env, envConfig } from "./env";
+import {
+  getUploadRootDir,
+  resolveUploadDiskPathFromPublicUrl,
+  toUploadPublicPath,
+  UPLOAD_PUBLIC_PREFIX,
+} from "@/lib/upload-paths";
+import { envConfig } from "./env";
 
 /**
- * Ensures the upload directory exists.
- * Creates it if missing (recursive).
+ * Ensures the upload directory exists (`public/uploads`).
  */
-export async function ensureUploadDir(): Promise<void> {
-  const uploadPath = path.resolve(process.cwd(), env.UPLOAD_DIR);
-  await fs.mkdir(uploadPath, { recursive: true });
+export async function ensureUploadDir(scope?: string): Promise<void> {
+  const dir = scope
+    ? path.join(getUploadRootDir(), scope)
+    : getUploadRootDir();
+  await fs.mkdir(dir, { recursive: true });
 }
 
 /**
@@ -58,37 +65,45 @@ export function isAllowedFileSize(sizeBytes: number): boolean {
 }
 
 /**
- * Gets the full filesystem path for an uploaded file.
- * @param relativePath - Path relative to UPLOAD_DIR
+ * Gets the full filesystem path for a file under `public/uploads`.
+ * @param relativePath - Path under upload root, e.g. `library/foo.png`
  */
 export function getUploadPath(relativePath: string): string {
-  const uploadDir = path.resolve(process.cwd(), env.UPLOAD_DIR);
-  return path.join(uploadDir, relativePath);
+  const normalized = relativePath.replace(/\\/g, "/").replace(/^\/+/, "");
+  const withoutPrefix = normalized
+    .replace(/^public\/uploads\//, "")
+    .replace(/^uploads\//, "");
+  return path.join(getUploadRootDir(), withoutPrefix);
 }
 
 /**
- * Gets the public URL for an uploaded file.
- * Assumes uploads are served from /uploads route.
- * @param relativePath - Path relative to UPLOAD_DIR
+ * Gets the public URL for an uploaded file under `/uploads/...`.
+ * @param relativePath - Path under upload root, e.g. `library/foo.png`, or `/uploads/library/foo.png`
  */
 export function getUploadUrl(relativePath: string): string {
-  // Remove 'public/' prefix if present (uploads are in public/uploads)
-  const publicPath = relativePath.startsWith("public/")
-    ? relativePath.substring(7)
-    : relativePath;
-  return `/uploads/${publicPath}`;
+  const normalized = relativePath.replace(/\\/g, "/").trim();
+  if (normalized.startsWith("/uploads") || normalized.startsWith("uploads/")) {
+    return toUploadPublicPath(normalized);
+  }
+  const stripped = normalized
+    .replace(/^public\/uploads\//, "")
+    .replace(/^uploads\//, "");
+  return `${UPLOAD_PUBLIC_PREFIX}/${stripped}`.replace(/\/+/g, "/");
 }
 
 /**
- * Deletes an uploaded file from the filesystem.
- * @param relativePath - Path relative to UPLOAD_DIR
+ * Deletes an uploaded file from the filesystem using its public URL or relative path.
  */
-export async function deleteUploadedFile(relativePath: string): Promise<void> {
-  const fullPath = getUploadPath(relativePath);
+export async function deleteUploadedFile(publicUrlOrRelativePath: string): Promise<void> {
+  if (!publicUrlOrRelativePath?.trim()) {
+    return;
+  }
+  const diskPath =
+    resolveUploadDiskPathFromPublicUrl(publicUrlOrRelativePath) ??
+    getUploadPath(publicUrlOrRelativePath);
   try {
-    await fs.unlink(fullPath);
+    await fs.unlink(diskPath);
   } catch (error) {
-    // File might not exist, ignore error
     if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
       throw error;
     }
