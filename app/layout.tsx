@@ -11,7 +11,7 @@ import {
   FAVICON_ICO_PATH,
   FAVICON_PNG_PATHS,
   getSiteLogoUrl,
-  getSiteUrl,
+  getPublicSiteUrl,
   LINKEDIN_ORG_URL,
   ORGANIZATION_MAP_URL,
   ORGANIZATION_PHONE,
@@ -22,7 +22,7 @@ import {
 
 const inter = Inter({ subsets: ["latin"] });
 
-const siteUrl = getSiteUrl();
+const siteUrl = getPublicSiteUrl();
 const organizationImageUrl = getSiteLogoUrl();
 const noindex = shouldNoIndexSite();
 

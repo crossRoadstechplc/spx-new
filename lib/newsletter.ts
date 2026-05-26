@@ -4,6 +4,7 @@ import {
   sendInsightAnnouncementBcc,
   sendNewsletterWelcome,
 } from "@/lib/mailer";
+import { getPublicSiteUrl } from "@/lib/seo-config";
 
 export type SubscribeResult = {
   status: "subscribed" | "already_subscribed";
@@ -104,10 +105,7 @@ export async function notifySubscribersForInsight(insightId: string): Promise<vo
     return;
   }
 
-  const appUrl = (process.env.APP_URL || "http://localhost:3002").replace(
-    /\/$/,
-    ""
-  );
+  const appUrl = getPublicSiteUrl();
   const genericUnsubscribeUrl = `${appUrl}/newsletter/unsubscribe-email`;
   const envelopeTo = getNewsletterEnvelopeTo();
 

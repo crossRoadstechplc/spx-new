@@ -1,6 +1,7 @@
 /* Phase 7: Email service using Nodemailer */
 import nodemailer from "nodemailer";
 import type { Transporter } from "nodemailer";
+import { getPublicSiteUrl } from "@/lib/seo-config";
 
 let transporter: Transporter | null = null;
 
@@ -264,7 +265,7 @@ function escapeHtml(input: string): string {
 
 export async function sendNewsletterWelcome(email: string, unsubscribeToken: string): Promise<boolean> {
   const contactEmail = process.env.CONTACT_TO_EMAIL || process.env.ADMIN_EMAIL || "hello@spx.com";
-  const appUrl = (process.env.APP_URL || "http://localhost:3002").replace(/\/$/, "");
+  const appUrl = getPublicSiteUrl();
   const unsubscribeUrl = `${appUrl}/newsletter/unsubscribe/${encodeURIComponent(unsubscribeToken)}`;
   const text = `
 You are now subscribed to SPX Insights.
@@ -352,8 +353,8 @@ export async function sendInsightAnnouncementBcc(
     return false;
   }
 
-  const appUrl = process.env.APP_URL || "http://localhost:3002";
-  const insightUrl = `${appUrl.replace(/\/$/, "")}/insights/${insight.slug}`;
+  const appUrl = getPublicSiteUrl();
+  const insightUrl = `${appUrl}/insights/${insight.slug}`;
   const safeTitle = escapeHtml(insight.title);
   const safeExcerpt = insight.excerpt ? escapeHtml(insight.excerpt) : "";
 

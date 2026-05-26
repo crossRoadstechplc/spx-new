@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { Container } from "@/components/layout/container";
 import { SiteLayout, ClosingCTASection } from "@/components/layout";
 import type { Metadata } from "next";
-import { getSiteLogoUrl, getSiteUrl } from "@/lib/seo-config";
+import { getSiteLogoUrl, getPublicSiteUrl } from "@/lib/seo-config";
 import { resolveMediaUrl, toUploadPath } from "@/lib/media-url";
 import { formatDate } from "@/lib/utils";
 import Link from "next/link";
@@ -25,7 +25,7 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const siteUrl = getSiteUrl();
+  const siteUrl = getPublicSiteUrl();
   const defaultOgImage = getSiteLogoUrl();
   const insight = await db.insight.findUnique({
     where: { slug },

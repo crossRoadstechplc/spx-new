@@ -1,23 +1,32 @@
 /**
  * Central SEO / site URL configuration.
- * Production: set APP_URL to your canonical origin (including www if that is the primary host),
- * e.g. https://www.spxafrica.com — so metadataBase and absolute OG URLs match search engines.
- * Staging (noindex): APP_URL=http://spxtest.ankuaru.com or NOINDEX_SITE=true
  *
- * Sitemap.xml and robots.txt always use `PRODUCTION_FALLBACK_URL` (not `APP_URL`) so crawlers never
- * see localhost; use `getSiteUrl()` everywhere else (VPS, emails, metadata).
+ * - `APP_URL`: how the Next app binds / local dev base (often `http://127.0.0.1:3002` on a VPS behind a proxy).
+ * - `PROD_URL`: public HTTPS origin shown in HTML (metadataBase, canonical, JSON-LD, emails). Omit locally.
+ * Fallback if both missing: PRODUCTION_FALLBACK_URL.
+ *
+ * Staging (noindex): APP_URL=http://spxtest.ankuaru.com or NOINDEX_SITE=true
  */
 
 const PRODUCTION_FALLBACK_URL = "https://www.spxafrica.com";
 
-export function getSiteUrl(): string {
-  const raw = process.env.APP_URL?.trim() || PRODUCTION_FALLBACK_URL;
+/** Canonical origin for browsers, crawlers, JSON-LD, and user-facing links in email. */
+export function getPublicSiteUrl(): string {
+  const raw =
+    process.env.PROD_URL?.trim() ||
+    process.env.APP_URL?.trim() ||
+    PRODUCTION_FALLBACK_URL;
   return raw.replace(/\/$/, "");
 }
 
-/** Canonical origin for sitemap.xml `<loc>` and robots.txt `Sitemap:` / `Host:` only. */
+/** Same as {@link getPublicSiteUrl}; kept for existing imports across the codebase. */
+export function getSiteUrl(): string {
+  return getPublicSiteUrl();
+}
+
+/** Canonical origin for sitemap.xml `<loc>` and robots.txt `Sitemap:` / `Host:` — matches metadata. */
 export function getSitemapBaseUrl(): string {
-  return PRODUCTION_FALLBACK_URL;
+  return getPublicSiteUrl();
 }
 
 /** Staging / preview hosts must not be indexed. */
