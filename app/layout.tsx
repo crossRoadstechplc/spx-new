@@ -96,27 +96,44 @@ export const metadata: Metadata = {
       },
 };
 
-const organizationJsonLd = {
+const organizationId = `${siteUrl}#organization`;
+const websiteId = `${siteUrl}#website`;
+
+/** Org + WebSite for sitename signals; brand is SPX while the site URL is spxafrica.com. */
+const structuredDataGraph = {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  name: "SPX",
-  description: DEFAULT_SITE_DESCRIPTION,
-  url: siteUrl,
-  logo: organizationImageUrl,
-  image: organizationImageUrl,
-  email: "info@spxafrica.com",
-  telephone: ORGANIZATION_PHONE,
-  sameAs: [LINKEDIN_ORG_URL],
-  hasMap: ORGANIZATION_MAP_URL,
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Addis Ababa",
-    addressCountry: "ET",
-  },
-  areaServed: [
-    { "@type": "Country", name: "Ethiopia" },
-    { "@type": "AdministrativeArea", name: "East Africa" },
-    { "@type": "Place", name: "Africa" },
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": organizationId,
+      name: "SPX",
+      description: DEFAULT_SITE_DESCRIPTION,
+      url: siteUrl,
+      logo: organizationImageUrl,
+      image: organizationImageUrl,
+      email: "info@spxafrica.com",
+      telephone: ORGANIZATION_PHONE,
+      sameAs: [LINKEDIN_ORG_URL],
+      hasMap: ORGANIZATION_MAP_URL,
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Addis Ababa",
+        addressCountry: "ET",
+      },
+      areaServed: [
+        { "@type": "Country", name: "Ethiopia" },
+        { "@type": "AdministrativeArea", name: "East Africa" },
+        { "@type": "Place", name: "Africa" },
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": websiteId,
+      name: "SPX",
+      url: `${siteUrl}/`,
+      publisher: { "@id": organizationId },
+      inLanguage: "en-US",
+    },
   ],
 };
 
@@ -131,7 +148,7 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organizationJsonLd),
+            __html: JSON.stringify(structuredDataGraph),
           }}
         />
         <LoadingProvider>
